@@ -4,10 +4,10 @@ import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 export const useGetCenter = (locations) => {
   const map = useMap();
   const core = useMapsLibrary("core");
-  const [center, setCenter] = useState();
+  const [center, setCenter] = useState(null);
 
   useEffect(() => {
-    if (!core ) return;
+    if (!core || !locations) return;
 
     const bound = new core.LatLngBounds();
 
@@ -23,6 +23,7 @@ export const useGetCenter = (locations) => {
 
     map.fitBounds(center);
   }, [map, center]);
+
 
   return center
 }
