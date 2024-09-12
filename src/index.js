@@ -19,6 +19,8 @@ const returnProps = () => {
     currentPage: _RootElement.dataset.currentpage,
     eventDriven: _RootElement.dataset.eventdriven,
     variant: _RootElement.dataset.variant,
+    title: _RootElement.dataset.title,
+    width: _RootElement.dataset.width,
   };
 };
 

@@ -11,12 +11,14 @@ const LazMap = ({ markers = [], eventId }) => {
     <>
       <Map
         mapId="basic-map"
-        style={{ width: "100vw", height: "80vh" }}
+        style={{ width: "100%", height: "80vh" }}
         defaultCenter={
           center ? center.getCenter() : { lat: 41.850033, lng: -87.6500523 }
         }
         gestureHandling={"greedy"}
         defaultZoom={5}
+        disableDefaultUI={true}
+        clickableIcons={false}
       >
         {markers?.length > 1 &&
           markers.map(({ ID, Latitude, Longitude }) => (
@@ -60,7 +62,8 @@ const LazMap = ({ markers = [], eventId }) => {
       {selected && (
         <a
           href={`https://go.lazparking.com/buynow?l=${selected}&evid=${eventId}&t=e&wt=evt&isocode=EN&wk=4d7e669231e54990b6c1bbe70dd59758&start=2024-09-12T20%3A10%3A47.172Z&end=2024-09-12T22%3A10%3A47.172Z`}
-          target="_blank" rel="noreferrer"
+          target="_blank"
+          rel="noreferrer"
         >
           Purchase Parking
         </a>

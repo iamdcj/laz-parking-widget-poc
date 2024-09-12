@@ -7,22 +7,40 @@ function App(props) {
     <AppProvider value={props}>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#007dba",
-          padding: 20
+          maxWidth: props.width ? `${props.width}px` : "auto",
         }}
       >
-        <img
-          src="https://go.lazparking.com/static/media/laz-logo.a4d328f3134864d713456684b16773d9.svg"
-          id="laz-logo"
-          class="laz-header-logo"
-          alt=""
-          width={50}
-        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            background: "#007dba",
+            padding: 20,
+          }}
+        >
+          {props.title ? (
+            <p
+              style={{
+                color: "#fff",
+                textTransform: "uppercase",
+                fontWeight: 600,
+              }}
+            >
+              {props.title}
+            </p>
+          ) : (
+            <img
+              src="https://go.lazparking.com/static/media/laz-logo.a4d328f3134864d713456684b16773d9.svg"
+              id="laz-logo"
+              class="laz-header-logo"
+              alt=""
+              width={50}
+            />
+          )}
+        </div>
+        <VariantSwitch />
       </div>
-      <VariantSwitch />
     </AppProvider>
   );
 }
