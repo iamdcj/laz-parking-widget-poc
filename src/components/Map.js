@@ -9,7 +9,6 @@ const LazMap = ({ markers = [], eventId }) => {
 
   return (
     <>
-
       <button onClick={recenter}>Center</button>
       <Map
         mapId="basic-map"
@@ -26,23 +25,33 @@ const LazMap = ({ markers = [], eventId }) => {
           markers.map(({ ID, Latitude, Longitude }) => (
             <AdvancedMarker
               onClick={() => setSelected(ID)}
-              onMouseOver={() => setFocused(ID)}
               key={ID}
               position={{ lat: Latitude, lng: Longitude }}
               style={{
                 pointerEvents: "all",
-                background: "#007dba",
-                padding: "5px",
-                borderRadius: 5,
               }}
             >
-              <img
+              <div
                 onMouseOver={() => setFocused(ID)}
-                src="https://go.lazparking.com/static/media/laz-logo.a4d328f3134864d713456684b16773d9.svg"
-                width={ID === focused ? 64 : 32}
-                height={ID === focused ? 64 : 32}
-                alt=""
-              />
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  transition: 'transform ease-in  200ms',
+                  transform: ID === focused ? 'scale(1.5)' : 'scale(1)',
+                  width: 30,
+                  height: 30,
+                  padding: 5,
+                  borderRadius: 5,
+                  background: "#007dba",
+                }}
+              >
+                <img
+                  onMouseOver={() => setFocused(ID)}
+                  src="https://go.lazparking.com/static/media/laz-logo.a4d328f3134864d713456684b16773d9.svg"
+                  alt=""
+                  style={{ width: '100%'}}
+                />
+              </div>
             </AdvancedMarker>
           ))}
       </Map>
