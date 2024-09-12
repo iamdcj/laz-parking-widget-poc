@@ -1,14 +1,16 @@
 import { AdvancedMarker, Map } from "@vis.gl/react-google-maps";
-import { useGetCenter } from "../utils/maps";
+import { useMapSetup } from "../utils/maps";
 import { useState } from "react";
 
 const LazMap = ({ markers = [], eventId }) => {
-  const center = useGetCenter(markers);
+  const [center, recenter] = useMapSetup(markers);
   const [focused, setFocused] = useState(null);
   const [selected, setSelected] = useState(null);
 
   return (
     <>
+
+      <button onClick={recenter}>Center</button>
       <Map
         mapId="basic-map"
         style={{ width: "100%", height: "80vh" }}
@@ -60,13 +62,15 @@ const LazMap = ({ markers = [], eventId }) => {
           </button>
         ))}
       {selected && (
-        <a
-          href={`https://go.lazparking.com/buynow?l=${selected}&evid=${eventId}&t=e&wt=evt&isocode=EN&wk=4d7e669231e54990b6c1bbe70dd59758&start=2024-09-12T20%3A10%3A47.172Z&end=2024-09-12T22%3A10%3A47.172Z`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Purchase Parking
-        </a>
+        <div>
+          <a
+            href={`https://go.lazparking.com/buynow?l=${selected}&evid=${eventId}&t=e&wt=evt&isocode=EN&wk=4d7e669231e54990b6c1bbe70dd59758&start=2024-09-12T20%3A10%3A47.172Z&end=2024-09-12T22%3A10%3A47.172Z`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Purchase Parking
+          </a>
+        </div>
       )}
     </>
   );

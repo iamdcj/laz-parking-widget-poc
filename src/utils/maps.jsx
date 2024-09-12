@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 
-export const useGetCenter = (locations) => {
+export const useMapSetup = (locations) => {
   const map = useMap();
   const core = useMapsLibrary("core");
   const [center, setCenter] = useState(null);
@@ -24,6 +24,5 @@ export const useGetCenter = (locations) => {
     map.fitBounds(center);
   }, [map, center]);
 
-
-  return center
-}
+  return [center, () => map.fitBounds(center)];
+};
