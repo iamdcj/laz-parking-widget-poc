@@ -60,7 +60,7 @@ const LazMap = ({ markers = [], eventId }) => {
       {selected && (
         <a
           href={`https://go.lazparking.com/buynow?l=${selected}&evid=${eventId}&t=e&wt=evt&isocode=EN&wk=4d7e669231e54990b6c1bbe70dd59758&start=2024-09-12T20%3A10%3A47.172Z&end=2024-09-12T22%3A10%3A47.172Z`}
-          target="_blank"
+          target="_blank" rel="noreferrer"
         >
           Purchase Parking
         </a>
