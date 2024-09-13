@@ -1,6 +1,7 @@
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useCallback, useEffect, useState } from "react";
 import LazMap from "../components/Map";
+import { Autocomplete, Box, TextField } from "@mui/material";
 
 const BasicWidget = ({ results }) => {
   const [markers, setMarkers] = useState(null);
@@ -21,20 +22,24 @@ const BasicWidget = ({ results }) => {
     retrieveLocations();
   }, [selectedEvent, retrieveLocations]);
 
-
   return (
-    <div>
-      <select onChange={(event) => setSelectedEvent(event.target.value)}>
-        {results.map((event) => (
-          <option key={event.EventId} value={event.EventId}>
-            {event.EventName}
-          </option>
-        ))}
-      </select>
+    <Box>
+      <Autocomplete
+        disablePortal
+        onChange={(event, data) => {
+          setSelectedEvent(data?.id)
+        }}
+        sx={{ mb: 1 }}
+        options={results.map(({ EventId: id, EventName: label }) => ({
+          id,
+          label,
+        }))}
+        renderInput={(params) => <TextField {...params} label="Select Event" />}
+      />
       <APIProvider apiKey={""}>
         <LazMap markers={markers} eventId={selectedEvent} />
       </APIProvider>
-    </div>
+    </Box>
   );
 };
 

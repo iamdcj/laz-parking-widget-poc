@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import "./App.css";
 import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
@@ -10,13 +11,16 @@ function App(props) {
           maxWidth: props.width ? `${props.width}px` : "auto",
         }}
       >
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             background: "#007dba",
-            padding: 20,
+            padding: 3,
+            marginBottom: 1,
+            borderRadius: "0 0 5px 5px"
+
           }}
         >
           {props.title ? (
@@ -38,7 +42,7 @@ function App(props) {
               width={50}
             />
           )}
-        </div>
+        </Box>
         <VariantSwitch />
       </div>
     </AppProvider>
