@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import "./App.css";
 import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
 
