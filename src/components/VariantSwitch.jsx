@@ -1,10 +1,13 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppContext } from "../context";
+import BasicWidget from "../variants/BasicWidget";
+import MapWidget from "../variants/MapWidget";
+import InlineWidget from "../variants/InlineWidget";
 
 const Variants = {
-  basic: lazy(() => import("../variants/BasicWidget")),
-  map: lazy(() => import("../variants/MapWidget")),
-  inline: lazy(() => import("../variants/InlineWidget")),
+  basic: BasicWidget,
+  map: MapWidget,
+  inline: InlineWidget,
 };
 
 const VariantSwitch = () => {
@@ -38,11 +41,7 @@ const VariantSwitch = () => {
     fetchResults();
   }, [fetchResults, results]);
 
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {results && <Component results={results} />}
-    </Suspense>
-  );
+  return results && <Component results={results} />;
 };
 
 export default VariantSwitch;

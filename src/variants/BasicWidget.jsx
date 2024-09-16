@@ -1,5 +1,5 @@
 import { APIProvider } from "@vis.gl/react-google-maps";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import LazMap from "../components/Map";
 import {
   Autocomplete,
@@ -50,11 +50,13 @@ const BasicWidget = ({ results }) => {
 
   useEffect(() => {
     if (!selectedEvent) {
-      setMarkers(null);
+      return setMarkers(null);
     }
     retrieveLocations();
   }, [selectedEvent, retrieveLocations]);
 
+  console.log('render');
+  
   return (
     <Box>
       <Autocomplete
