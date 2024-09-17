@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, ThemeProvider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles';
 import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
 import { theme } from "./theme";
