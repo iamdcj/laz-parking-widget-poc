@@ -3,22 +3,24 @@ import { AdvancedMarker, Map } from "@vis.gl/react-google-maps";
 import { useMapSetup } from "../variants/utils/maps";
 import { Box, Button } from "@mui/material";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
+import { useAppContext } from "../context";
 
-const LazMap = ({
-  markers = [],
-  eventId,
-  focused,
-  setFocused,
-  setSelected,
-}) => {
-  const [center, recenter] = useMapSetup(markers);
+const LazMap = () => {
+  const {
+    state: { locations, focusedLocation, selectedEvent },
+    dispatch,
+  } = useAppContext();
+  const [center, recenter] = useMapSetup(locations);
   const [zoomLevel, setZoomLevel] = useState(10);
 
   useEffect(() => {
-    if (!eventId) {
-      setSelected(null);
+    if (!selectedEvent) {
+      dispatch({
+        type: "selected_location",
+        payload: null,
+      });
     }
-  }, [eventId]);
+  }, [selectedEvent]);
 
   return (
     <>
@@ -50,7 +52,7 @@ const LazMap = ({
             justifyContent: "end",
           }}
         >
-          {markers?.length > 1 && (
+          {locations?.length > 1 && (
             <Button
               variant="contained"
               aria-label="delete"
@@ -67,13 +69,17 @@ const LazMap = ({
               <MyLocationIcon sx={{ fontSize: 14 }} />
             </Button>
           )}
-          <Box
-            sx={{ display: 'flex', flexDirection: "column"}}
-          >
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Button
               variant="contained"
               onClick={() => setZoomLevel(zoomLevel + 1)}
-              sx={{ minWidth: "auto", width: 30, height: 30, padding: 0, mb: 0.1 }}
+              sx={{
+                minWidth: "auto",
+                width: 30,
+                height: 30,
+                padding: 0,
+                mb: 0.1,
+              }}
             >
               +
             </Button>
@@ -86,10 +92,12 @@ const LazMap = ({
             </Button>
           </Box>
         </Box>
-        {markers?.length > 1 &&
-          markers.map(({ ID, Latitude, Longitude }) => (
+        {locations?.length > 1 &&
+          locations.map(({ ID, Latitude, Longitude }) => (
             <AdvancedMarker
-              onClick={() => setSelected(ID)}
+              onClick={() =>
+                dispatch({ type: "focused_location", payload: ID })
+              }
               key={ID}
               position={{ lat: Latitude, lng: Longitude }}
               style={{
@@ -97,23 +105,29 @@ const LazMap = ({
               }}
             >
               <div
-                onMouseOver={() => setFocused(ID)}
+                onMouseOver={() =>
+                  dispatch({ type: "focused_location", payload: ID })
+                }
                 style={{
                   display: "flex",
                   alignItems: "center",
                   transition: "transform ease-in  200ms",
-                  transform: ID === focused ? "scale(1.5)" : "scale(1)",
+                  transform: ID === focusedLocation ? "scale(1.5)" : "scale(1)",
                   width: 30,
                   height: 30,
                   padding: 5,
                   borderRadius: 5,
                   pointerEvents: "all",
                   background:
-                    ID === focused ? "#007dba" : "rgba(0, 125, 186, 0.65)",
+                    ID === focusedLocation
+                      ? "#007dba"
+                      : "rgba(0, 125, 186, 0.65)",
                 }}
               >
                 <img
-                  onMouseOver={() => setFocused(ID)}
+                  onMouseOver={() =>
+                    dispatch({ type: "focused_location", payload: ID })
+                  }
                   src="https://go.lazparking.com/static/media/laz-logo.a4d328f3134864d713456684b16773d9.svg"
                   alt=""
                   style={{ width: "100%" }}

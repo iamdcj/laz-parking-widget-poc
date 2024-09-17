@@ -5,10 +5,8 @@ export const initialState = {
 };
 
 export const appReducer = (state, { type, payload }) => {
+  console.log(type);
 
-  console.log(state);
-  console.log( type, payload);
-  
   switch (type) {
     case "loading":
       return {
@@ -18,16 +16,30 @@ export const appReducer = (state, { type, payload }) => {
     case "events":
       return {
         ...state,
-        events: state,
+        events: payload,
       };
     case "locations":
       return {
         ...state,
-        locations: state,
+        locations: payload,
       };
-    default:
+    case "focused_location":
       return {
         ...state,
+        focusedLocation: payload,
       };
+    case "selected_location":
+      return {
+        ...state,
+        selectedLocation: payload,
+      };
+
+    case "selected_event":
+      return {
+        ...state,
+        selectedEvent: payload,
+      };
+    default:
+      return initialState;
   }
 };

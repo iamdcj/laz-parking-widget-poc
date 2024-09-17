@@ -12,26 +12,27 @@ import {
   Button,
 } from "@mui/material";
 import { updateParams } from "./utils/location";
+import { useAppContext } from "../context";
 
 const BasicWidget = ({ results }) => {
-  const [markers, setMarkers] = useState(null);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [focused, setFocused] = useState(null);
-  const [selected, setSelected] = useState(null);
+  const {
+    state: { locations, selectedEvent, selectedLocation },
+    dispatch,
+  } = useAppContext();
 
   const handleOnEventChange = (event, data) => {
     if (data?.id) {
-      setSelectedEvent(data?.id);
+      dispatch({ type: "selected_event", payload: data?.id });
       updateParams("event", data?.id, true);
     } else {
-      setSelectedEvent(null);
+      dispatch({ type: "selected_event", payload: null });
       updateParams(null, null, true);
     }
-  }
+  };
 
   const handleOnLocationChange = (_, data) => {
-    setSelected(data?.props?.value);
-    setFocused(data?.props?.value);
+    dispatch({ type: "selected_location", payload: data?.props?.value });
+    dispatch({ type: "focused_location", payload: data?.props?.value });
     updateParams("lot", data?.props?.value);
   };
 
@@ -42,7 +43,7 @@ const BasicWidget = ({ results }) => {
       );
       const data = await res.json();
 
-      setMarkers(data);
+      dispatch({ type: "locations", payload: data });
     } catch (error) {
       console.error(error.message);
     }
@@ -50,13 +51,11 @@ const BasicWidget = ({ results }) => {
 
   useEffect(() => {
     if (!selectedEvent) {
-      return setMarkers(null);
+      return dispatch({ type: "locations", payload: null });
     }
     retrieveLocations();
-  }, [selectedEvent, retrieveLocations]);
+  }, [selectedEvent]);
 
-  console.log('render');
-  
   return (
     <Box>
       <Autocomplete
@@ -85,27 +84,27 @@ const BasicWidget = ({ results }) => {
         renderInput={(params) => <TextField {...params} label="Select Event" />}
       />
       <APIProvider apiKey={""}>
-        <LazMap
-          markers={markers}
-          setSelected={setSelected}
-          focused={focused}
-          setFocused={setFocused}
-        />
+        <LazMap />
       </APIProvider>
-
-      {markers?.length > 1 && (
+      {locations?.length > 1 && (
         <FormControl fullWidth sx={{ mb: 1 }}>
-          <InputLabel id="demo-simple-select-autowidth-label">Age</InputLabel>
+          <InputLabel id="location">Location</InputLabel>
           <Select
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={selected ? selected : ""}
+            labelId="location"
+            id="location"
+            value={selectedLocation}
             onChange={handleOnLocationChange}
             fullWidth
             label="Age"
           >
-            {markers.map(({ ID, Name }) => (
-              <MenuItem key={ID} value={ID} onMouseOver={() => setFocused(ID)}>
+            {locations.map(({ ID, Name }) => (
+              <MenuItem
+                key={ID}
+                value={ID}
+                onMouseOver={() =>
+                  dispatch({ type: "focused_location", payload: ID })
+                }
+              >
                 {Name}
               </MenuItem>
             ))}
@@ -113,9 +112,9 @@ const BasicWidget = ({ results }) => {
         </FormControl>
       )}
       <div>
-        {selected && (
+        {selectedLocation && (
           <Button
-            href={`https://go.lazparking.com/buynow?l=${selected}&evid=${selectedEvent}&t=e&wt=evt&isocode=EN&wk=4d7e669231e54990b6c1bbe70dd59758&start=2024-09-12T20%3A10%3A47.172Z&end=2024-09-12T22%3A10%3A47.172Z`}
+            href={`https://go.lazparking.com/buynow?l=${selectedLocation}&evid=${selectedEvent}&t=e&wt=evt&isocode=EN&wk=4d7e669231e54990b6c1bbe70dd59758&start=2024-09-12T20%3A10%3A47.172Z&end=2024-09-12T22%3A10%3A47.172Z`}
             variant="outlined"
             fullWidth
             target="_blank"

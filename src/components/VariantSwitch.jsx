@@ -11,15 +11,13 @@ const Variants = {
 };
 
 const VariantSwitch = () => {
-  const [results, setResults] = useState(null);
   const { state, dispatch } = useAppContext();
   const Component = Variants[state.variant];
-  
+  const { locationId, events, ...otherParams } = state;
 
   const fetchResults = useCallback(async () => {
     dispatch({ type: 'loading', payload: true})
-    const { locationId, ...otherParams } = state;
-    
+
     const params = new URLSearchParams({
       eDataLocationId: locationId.split(","),
       ...otherParams,
@@ -31,20 +29,22 @@ const VariantSwitch = () => {
       );
       const data = await res.json();
 
-      setResults(data);
       dispatch({ type: 'loading', payload: false})
+      dispatch({ type: 'events', payload: data})
     } catch (error) {
       console.error("Unable to retrieve parking locations.");
     }
-  }, [state]);
+  }, [otherParams, locationId, events]);
 
   useEffect(() => {
-    if (results) return;
-
     fetchResults();
-  }, [fetchResults, results]);
+  }, []);
 
-  return results && <Component results={results} />;
+
+  console.log(events);
+  
+
+  return events && <Component results={events} />;
 };
 
 export default VariantSwitch;
