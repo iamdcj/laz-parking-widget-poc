@@ -1,9 +1,10 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from "@mui/material/styles";
 import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
 import { theme } from "./theme";
+import Loader from "./components/Loader";
 
 function App(props) {
   return (
@@ -12,8 +13,10 @@ function App(props) {
         <div
           style={{
             maxWidth: props.width ? `${props.width}px` : "auto",
+            position: "relative",
           }}
         >
+          <Loader />
           <Box
             sx={{
               display: "flex",
