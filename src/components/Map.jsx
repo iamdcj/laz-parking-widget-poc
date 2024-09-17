@@ -10,7 +10,7 @@ const LazMap = () => {
     state: { locations, focusedLocation, selectedEvent },
     dispatch,
   } = useAppContext();
-  const [center, recenter] = useMapSetup(locations);
+  const [center, recenter] = useMapSetup();
   const [zoomLevel, setZoomLevel] = useState(10);
 
   useEffect(() => {

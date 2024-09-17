@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
+import { useAppContext } from "../../context";
 
-export const useMapSetup = (locations) => {
+export const useMapSetup = () => {
+  const {
+    state: { locations },
+  } = useAppContext();
   const map = useMap();
   const core = useMapsLibrary("core");
   const [center, setCenter] = useState(null);
