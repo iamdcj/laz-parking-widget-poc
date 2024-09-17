@@ -12,12 +12,14 @@ const Variants = {
 
 const VariantSwitch = () => {
   const [results, setResults] = useState(null);
-  const { variant, ...initialParams } = useAppContext();
-  const Component = Variants[variant];
+  const { state, dispatch } = useAppContext();
+  const Component = Variants[state.variant];
+  
 
   const fetchResults = useCallback(async () => {
-    const { locationId, ...otherParams } = initialParams;
-
+    dispatch({ type: 'loading', payload: true})
+    const { locationId, ...otherParams } = state;
+    
     const params = new URLSearchParams({
       eDataLocationId: locationId.split(","),
       ...otherParams,
@@ -30,10 +32,11 @@ const VariantSwitch = () => {
       const data = await res.json();
 
       setResults(data);
+      dispatch({ type: 'loading', payload: false})
     } catch (error) {
       console.error("Unable to retrieve parking locations.");
     }
-  }, [initialParams]);
+  }, [state]);
 
   useEffect(() => {
     if (results) return;
