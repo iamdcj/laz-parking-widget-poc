@@ -1,11 +1,17 @@
-export const initialState = {
+export interface InitialState {
+  isLoading: boolean;
+  locations: any[] | null;
+  events: any[] | null;
+}
+
+export const initialState: InitialState = {
   isLoading: true,
   locations: null,
   events: null,
 };
 
-export const appReducer = (state, { type, payload }) => {
-  console.log(type);
+export const appReducer = (state: InitialState, action: { type: string, payload: any}) => {
+  const { type, payload } = action
 
   switch (type) {
     case "loading":

@@ -24,38 +24,28 @@ export interface Settings {
   salesChannelKey: string;
 }
 
-export const returnInitialConfig = () => {
-  const _RootElement = document.getElementById("LAZ_Widget");
-
-  if (!_RootElement) {
-    return;
-  }
-
-  const settings: Settings = {
-    isHeaderEnabled: !!_RootElement.dataset.header, // show header or not
-    headerText: _RootElement.dataset.headerText || "", // title text
-    widgetKey: _RootElement.dataset.wk || "", // query param
-    clientId: _RootElement.dataset.clientid || "", // query param
-    locationIds: _RootElement.dataset.locationid || "", // query param
-    useMap: !!_RootElement.dataset.map, // show/hide map
-    mapZoom: Number(_RootElement.dataset.mapzoom || 10), // default map zoom
-    mapLat: Number(_RootElement.dataset.mapplacelat || 0), // default map lat
-    mapLng: Number(_RootElement.dataset.mapplacelng || 0), // default map lng
-    hideEventDateTime: !!_RootElement.dataset.hideEventDate, // hide event listing date-time
-    arriveOffset: Number(_RootElement.dataset.arrive), //! tbd
-    departOffset: Number(_RootElement.dataset.depart), //! tbd
-    agentId: _RootElement.dataset.agentid || "", //! tbd
-    template: _RootElement.dataset.template || "", //! tbd
-    useFullWidget: !!_RootElement.dataset.fullwidget, //! tbd
-    dataModeOverwrite: _RootElement.dataset.modeOverwrite || "", //! tbd
-    dataMode: _RootElement.dataset.mode || "", //! tbd
-    mapTxt: _RootElement.dataset.mapplacetxt || "", //! tbd
-    startTime: _RootElement.dataset.starttime || "", //! tbd
-    endTime: _RootElement.dataset.endtime || "", //! tbd
-    currentPage: _RootElement.dataset.currentpage || "", //! tbd
-    eventDriven: !!_RootElement.dataset.eventdriven, //! tbd
-    salesChannelKey: _RootElement.dataset.sc || "", //! tbd
-  };
-
-  return [_RootElement, settings];
-};
+export const returnInitialConfig = (element: HTMLElement): Settings => ({
+  isHeaderEnabled: !!element?.dataset?.header, // show header or not
+  headerText: element?.dataset?.headerText || "", // title text
+  widgetKey: element?.dataset?.wk || "", // query param
+  clientId: element?.dataset?.clientid || "", // query param
+  locationIds: element?.dataset?.locationid || "", // query param
+  useMap: !!element?.dataset?.map, // show/hide map
+  mapZoom: Number(element?.dataset?.mapzoom || 10), // default map zoom
+  mapLat: Number(element?.dataset?.mapplacelat || 0), // default map lat
+  mapLng: Number(element?.dataset?.mapplacelng || 0), // default map lng
+  hideEventDateTime: !!element?.dataset?.hideEventDate, // hide event listing date-time
+  arriveOffset: Number(element?.dataset?.arrive), //! tbd
+  departOffset: Number(element?.dataset?.depart), //! tbd
+  agentId: element?.dataset?.agentid || "", //! tbd
+  template: element?.dataset?.template || "", //! tbd
+  useFullWidget: !!element?.dataset?.fullwidget, //! tbd
+  dataModeOverwrite: element?.dataset?.modeOverwrite || "", //! tbd
+  dataMode: element?.dataset?.mode || "", //! tbd
+  mapTxt: element?.dataset?.mapplacetxt || "", //! tbd
+  startTime: element?.dataset?.starttime || "", //! tbd
+  endTime: element?.dataset?.endtime || "", //! tbd
+  currentPage: element?.dataset?.currentpage || "", //! tbd
+  eventDriven: !!element?.dataset?.eventdriven, //! tbd
+  salesChannelKey: element?.dataset?.sc || "", //! tbd
+});

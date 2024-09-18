@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: path.join(__dirname, "src", "index.js"),
+  entry: path.join(__dirname, "src", "index.tsx"),
   output: {
     path: path.resolve(__dirname, "dist"),
   },
@@ -13,7 +14,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   optimization: {
     minimize: true,
@@ -34,6 +35,11 @@ module.exports = {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
     ],
   },

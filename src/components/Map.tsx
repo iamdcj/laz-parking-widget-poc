@@ -30,7 +30,7 @@ const LazMap = () => {
   }, [selectedEvent]);
 
   return (
-    <APIProvider>
+    <APIProvider apiKey="">
       <Map
         mapId="basic-map"
         style={{ width: "100%", height: "60vh", marginBottom: 10 }}

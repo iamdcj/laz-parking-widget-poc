@@ -10,7 +10,7 @@ const Variants = {
 
 const VariantSwitch = () => {
   const { state: { variant = 'basic'} } = useAppContext();
-  const Component = Variants[variant];
+  const Component = Variants[variant as 'basic' | 'map'];
  
   return <Component />;
 };
