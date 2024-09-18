@@ -5,16 +5,16 @@ import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
 import { theme } from "./theme";
 import Loader from "./components/Loader";
+import { Settings } from "./utils";
 
-function App(props) {
-  const { width, isHeaderEnabled, headerText } = props;
+function App(props: Settings) {
+  const { isHeaderEnabled, headerText } = props;
 
   return (
     <ThemeProvider theme={theme}>
       <AppProvider value={props}>
         <div
           style={{
-            maxWidth: width ? `${width}px` : "auto",
             position: "relative",
           }}
         >
