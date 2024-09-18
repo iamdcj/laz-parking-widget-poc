@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AdvancedMarker, Map } from "@vis.gl/react-google-maps";
+import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
 import { useMapSetup } from "../variants/utils/maps";
 import { Box, Button } from "@mui/material";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
@@ -7,11 +7,18 @@ import { useAppContext } from "../context";
 
 const LazMap = () => {
   const {
-    state: { locations, focusedLocation, selectedEvent },
+    state: {
+      locations,
+      focusedLocation,
+      selectedEvent,
+      mapZoom,
+      mapLat,
+      mapLng,
+    },
     dispatch,
   } = useAppContext();
   const [center, recenter] = useMapSetup();
-  const [zoomLevel, setZoomLevel] = useState(10);
+  const [zoomLevel, setZoomLevel] = useState(mapZoom);
 
   useEffect(() => {
     if (!selectedEvent) {
@@ -23,12 +30,12 @@ const LazMap = () => {
   }, [selectedEvent]);
 
   return (
-    <>
+    <APIProvider>
       <Map
         mapId="basic-map"
         style={{ width: "100%", height: "60vh", marginBottom: 10 }}
         defaultCenter={
-          center ? center.getCenter() : { lat: 41.850033, lng: -87.6500523 }
+          center ? center.getCenter() : { lat: mapLat, lng: mapLng }
         }
         gestureHandling={"greedy"}
         clickableIcons={false}
@@ -136,7 +143,7 @@ const LazMap = () => {
             </AdvancedMarker>
           ))}
       </Map>
-    </>
+    </APIProvider>
   );
 };
 
