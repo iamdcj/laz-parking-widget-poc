@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../../../../context";
 import { Actions } from "../../../../state";
@@ -9,17 +9,17 @@ import DurationSelector from "../../../../components/DurationSelector";
 
 type Mode = "TMD" | "EVT" | "PST" | "MUP" | "MPS" | "FAP" | "FEX" | "FEP";
 
-type Component = Record<string, () => React.JSX.Element | null>
+type Component = Record<string, () => React.JSX.Element | null>;
 
 const Components: Component = {
   TMD: DateTimePicker,
   EVT: EventPicker,
   PST: DurationSelector,
-  MUP: null,
-  MPS: null,
-  FAP: null,
-  FEX: null,
-  FEP: null,
+  MUP: null, // EnableMultiUseMode
+  MPS: null, // EnableMonthlyPassMode
+  FAP: null, // EnableFixedAccessMode
+  FEX: null, // EnableFixedExpiryMode
+  FEP: null, // EnableFixedExpiryMode
 };
 
 const LocationsLayout = () => {
@@ -35,20 +35,21 @@ const LocationsLayout = () => {
       hideEventDateTime,
       clientId: ClientId = "",
       widgetKey: widgetkey = "",
+      selectedMode,
       ...otherParams
     },
     dispatch,
   } = useAppContext();
   const [modes, setModes] = useState(null);
 
-  const retrieveEvents = useCallback(async () => {
+  const retrieveEvents = async () => {
     dispatch({ type: Actions.LOADING, payload: true });
 
     if (!locationIds) return;
 
     try {
       const params = new URLSearchParams({
-        eDataLocationId: locationIds?.split(","),
+        eDataLocationId: selectedLocation,
         widgetkey,
         eventdriven: widgetkey ? "true" : "false",
       });
@@ -63,9 +64,9 @@ const LocationsLayout = () => {
       console.error("Unable to retrieve parking locations.");
       dispatch({ type: Actions.LOADING, payload: false });
     }
-  }, [otherParams, locationIds, events]);
+  };
 
-  const retrieveLocations = useCallback(async () => {
+  const retrieveLocations = async () => {
     const params = new URLSearchParams({
       ClientId,
       ArrayeDataLocationId: locationIds?.split(","),
@@ -84,7 +85,7 @@ const LocationsLayout = () => {
       console.error(error.message);
       dispatch({ type: Actions.LOADING, payload: false });
     }
-  }, [selectedEvent]);
+  };
 
   useEffect(() => {
     retrieveLocations();
