@@ -1,5 +1,5 @@
-export const updateParams = (key, value, clearPrevious = false) => {
-  const url = new URL(window.location);
+export const updateParams = (key: string, value: any, clearPrevious = false) => {
+  const url = new URL(window.location.href);
   const params = new URLSearchParams(url.search);
   const paramsArray = Array.from(url.searchParams.entries());
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { SyntheticEvent, useCallback, useEffect } from "react";
 import LazMap from "../components/Map";
 import {
   Autocomplete,
@@ -9,16 +9,19 @@ import {
   Select,
   TextField,
   Button,
+  SelectChangeEvent,
 } from "@mui/material";
 import { updateParams } from "./utils/location";
 import { useAppContext } from "../context";
+import { Actions } from "../state";
+import { APIProvider } from "@vis.gl/react-google-maps";
 
 const BasicWidget = () => {
   const {
     state: {
       locations,
       selectedEvent,
-      selectedLocation,
+      selectedLocation = "",
       locationIds,
       events,
       useMap,
@@ -31,7 +34,7 @@ const BasicWidget = () => {
   } = useAppContext();
 
   const fetchResults = useCallback(async () => {
-    dispatch({ type: "loading", payload: true });
+    dispatch({ type: Actions.LOADING, payload: true });
 
     if (!locationIds) return;
 
@@ -39,7 +42,7 @@ const BasicWidget = () => {
       const params = new URLSearchParams({
         eDataLocationId: locationIds?.split(","),
         widgetkey,
-        eventdriven: widgetkey ? true : false,
+        eventdriven: widgetkey ? "true" : "false",
       });
 
       const res = await fetch(
@@ -47,10 +50,10 @@ const BasicWidget = () => {
       );
       const data = await res.json();
 
-      dispatch({ type: "loading", payload: false });
-      dispatch({ type: "events", payload: data });
+      dispatch({ type: Actions.SET_EVENTS, payload: data });
     } catch (error) {
       console.error("Unable to retrieve parking locations.");
+      dispatch({ type: Actions.LOADING, payload: false });
     }
   }, [otherParams, locationIds, events]);
 
@@ -68,9 +71,10 @@ const BasicWidget = () => {
       );
       const data = await res.json();
 
-      dispatch({ type: "locations", payload: data });
+      dispatch({ type: Actions.SET_LOCATIONS, payload: data });
     } catch (error) {
       console.error(error.message);
+      dispatch({ type: Actions.LOADING, payload: false });
     }
   }, [selectedEvent]);
 
@@ -79,24 +83,29 @@ const BasicWidget = () => {
   }, []);
 
   useEffect(() => {
+    
     if (!selectedEvent) {
-      return dispatch({ type: "locations", payload: null });
+      dispatch({ type: Actions.SET_LOCATIONS, payload: null });
+    } else {
+      retrieveLocations();
     }
-    retrieveLocations();
   }, [selectedEvent]);
 
-  const handleOnLocationChange = (_, data) => {
-    dispatch({ type: "selected_location", payload: data?.props?.value });
-    dispatch({ type: "focused_location", payload: data?.props?.value });
-    updateParams("lot", data?.props?.value);
+  const handleOnLocationChange = (event: SelectChangeEvent<any>) => {
+    dispatch({ type: Actions.SELECTED_LOCATION, payload: event?.target?.value });
+    dispatch({ type: Actions.FOCUSED_LOCATION, payload: event?.target?.value });
+    updateParams("lot", event?.target?.value);
   };
 
-  const handleOnEventChange = (event, data) => {
+  const handleOnEventChange = (
+    event: SyntheticEvent<Element, Event>,
+    data: Record<string, any>
+  ) => {
     if (data?.id) {
-      dispatch({ type: "selected_event", payload: data?.id });
+      dispatch({ type: Actions.SELECTED_EVENT, payload: data?.id });
       updateParams("event", data?.id, true);
     } else {
-      dispatch({ type: "selected_event", payload: null });
+      dispatch({ type: Actions.SELECTED_EVENT, payload: null });
       updateParams(null, null, true);
     }
   };
@@ -115,30 +124,40 @@ const BasicWidget = () => {
             );
           }}
           sx={{ mb: 1 }}
-          options={events.map(({ EventId: id, EventName, EventDate }) => {
-            let label = EventName;
+          options={events.map(
+            ({
+              EventId: id,
+              EventName,
+              EventDate,
+            }: {
+              EventId: string;
+              EventName: string;
+              EventDate: string;
+            }) => {
+              let label = EventName;
 
-            if (!hideEventDateTime) {
-              const date = new Date(EventDate);
-              const formatter = new Intl.DateTimeFormat("en-US", {
-                dateStyle: "short",
-                timeStyle: "short",
-              });
+              if (!hideEventDateTime) {
+                const date = new Date(EventDate);
+                const formatter = new Intl.DateTimeFormat("en-US", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                });
 
-              label = `${EventName} - ${formatter.format(date)}`;
+                label = `${EventName} - ${formatter.format(date)}`;
+              }
+
+              return {
+                id,
+                label,
+              };
             }
-
-            return {
-              id,
-              label,
-            };
-          })}
+          )}
           renderInput={(params) => (
             <TextField {...params} label="Select Event" />
           )}
         />
       )}
-      {useMap && <LazMap />}
+      {useMap && <APIProvider apiKey=""><LazMap /></APIProvider>}
       {locations?.length > 0 && (
         <FormControl fullWidth sx={{ mb: 1 }}>
           <InputLabel id="location">Location</InputLabel>
@@ -150,12 +169,12 @@ const BasicWidget = () => {
             fullWidth
             label="Age"
           >
-            {locations.map(({ ID, Name }) => (
+            {locations.map(({ ID, Name }: { ID: string; Name: string }) => (
               <MenuItem
                 key={ID}
                 value={ID}
                 onMouseOver={() =>
-                  dispatch({ type: "focused_location", payload: ID })
+                  dispatch({ type: Actions.FOCUSED_LOCATION, payload: ID })
                 }
               >
                 {Name}

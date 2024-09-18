@@ -10,40 +10,59 @@ export const initialState: InitialState = {
   events: null,
 };
 
-export const appReducer = (state: InitialState, action: { type: string, payload: any}) => {
-  const { type, payload } = action
+export enum Actions {
+  LOADING = "LOADING",
+  SET_EVENTS = "SET_EVENTS",
+  SELECTED_EVENT = "SELECTED_EVENT",
+  SET_LOCATIONS = "SET_LOCATIONS",
+  SELECTED_LOCATION = "SELECTED_LOCATION",
+  FOCUSED_LOCATION = "FOCUSED_LOCATION",
+}
+
+export const appReducer = (
+  state: InitialState,
+  action: { type: string; payload: any }
+) => {
+  const { type, payload } = action;
+
+  console.log("--------- ACTION! ---------");
+  console.log(action.type);
+  console.log(action.payload);
+  console.log("---------------------------");
+  
 
   switch (type) {
-    case "loading":
+    case Actions.LOADING:
       return {
         ...state,
         isLoading: payload,
       };
-    case "events":
+    case Actions.SET_EVENTS:
       return {
         ...state,
         events: payload,
+        isLoading: false
       };
-    case "locations":
+    case Actions.SELECTED_EVENT:
+      return {
+        ...state,
+        selectedEvent: payload,
+      };
+    case Actions.SET_LOCATIONS:
       return {
         ...state,
         locations: payload,
+        isLoading: false
       };
-    case "focused_location":
-      return {
-        ...state,
-        focusedLocation: payload,
-      };
-    case "selected_location":
+    case Actions.SELECTED_LOCATION:
       return {
         ...state,
         selectedLocation: payload,
       };
-
-    case "selected_event":
+    case Actions.FOCUSED_LOCATION:
       return {
         ...state,
-        selectedEvent: payload,
+        focusedLocation: payload,
       };
     default:
       return initialState;

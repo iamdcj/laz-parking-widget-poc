@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect } from "react";
 import { useAppContext } from "../context";
 import LazMap from "../components/Map";
+import { Actions } from "../state";
 
 const MapWidget = () => {
   const { state, dispatch } = useAppContext();
   const { locationIds, events, ...otherParams } = state;
 
   const fetchResults = useCallback(async () => {
-    dispatch({ type: "loading", payload: true });
+    dispatch({ type: Actions.LOADING, payload: true });
 
     const params = new URLSearchParams({
       eDataLocationId: locationIds.split(","),
@@ -20,8 +21,8 @@ const MapWidget = () => {
       );
       const data = await res.json();
 
-      dispatch({ type: "loading", payload: false });
-      dispatch({ type: "events", payload: data });
+      dispatch({ type: Actions.LOADING, payload: false });
+      dispatch({ type: Actions.SET_EVENTS, payload: data });
     } catch (error) {
       console.error("Unable to retrieve parking locations.");
     }

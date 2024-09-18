@@ -9,7 +9,7 @@ import { Settings } from "./utils";
 
 function App(props: Settings) {
   const { isHeaderEnabled, headerText } = props;
-
+  
   return (
     <ThemeProvider theme={theme}>
       <AppProvider value={props}>
