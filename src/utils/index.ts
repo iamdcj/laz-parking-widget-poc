@@ -35,6 +35,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   mapLat: Number(element?.dataset?.mapplacelat || 0), // default map lat
   mapLng: Number(element?.dataset?.mapplacelng || 0), // default map lng
   hideEventDateTime: !!element?.dataset?.hideEventDate, // hide event listing date-time
+  // ---- TODO: determine the use cases for the following: //
   arriveOffset: Number(element?.dataset?.arrive), //! tbd
   departOffset: Number(element?.dataset?.depart), //! tbd
   agentId: element?.dataset?.agentid || "", //! tbd
