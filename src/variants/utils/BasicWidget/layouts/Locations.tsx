@@ -1,12 +1,17 @@
-import React, { useCallback, useEffect } from "react";
-import LazMap from "../../../../components/Map";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../../../../context";
 import { Actions } from "../../../../state";
-import { APIProvider } from "@vis.gl/react-google-maps";
 import DateTimePicker from "../../../../components/DateTimePicker";
 import EventPicker from "../../../../components/EventPicker";
 import LocationPicker from "../../../../components/LocationPicker";
+import DurationSelector from "../../../../components/DurationSelector";
+
+const Components = {
+  TMD: DateTimePicker,
+  EVT: EventPicker,
+  PST: DurationSelector,
+};
 
 const LocationsLayout = () => {
   const {
@@ -25,6 +30,7 @@ const LocationsLayout = () => {
     },
     dispatch,
   } = useAppContext();
+  const [modes, setModes] = useState(null);
 
   const retrieveEvents = useCallback(async () => {
     dispatch({ type: Actions.LOADING, payload: true });
@@ -80,23 +86,22 @@ const LocationsLayout = () => {
       dispatch({ type: Actions.SET_EVENTS, payload: null });
     } else {
       retrieveEvents();
+      setModes(
+        locations
+          .find(({ ID }: { ID: any }) => ID === selectedLocation)
+          .DefaultWidgetType.split("|")
+      );
     }
   }, [selectedLocation]);
 
   return (
     <Box>
       {locations?.length > 0 && <LocationPicker />}
-      {selectedLocation && (
-        <>
-          {events?.length > 0 && (
-            <>
-              <EventPicker />
-              <p>or</p>
-            </>
-          )}
-          <DateTimePicker />
-        </>
-      )}
+      {modes?.map((mode: "TMD" | "EVT" | "PST") => {
+        const Thing = Components[mode];
+
+        return <Thing />;
+      })}
       <div>
         {selectedEvent ||
           (selectedTime && (

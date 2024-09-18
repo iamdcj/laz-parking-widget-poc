@@ -29,10 +29,7 @@ const LazMap = () => {
       });
     }
   }, [selectedEvent]);
-
-  console.log({ lat: mapLat, lng: mapLng });
   
-
   return (
     <Map
       mapId="basic-map"

@@ -23,6 +23,10 @@ const EventPicker = () => {
     }
   };
 
+  if(!events) {
+    return null
+  }
+
   return (
     <Autocomplete
       disablePortal

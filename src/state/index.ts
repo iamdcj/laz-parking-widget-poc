@@ -25,10 +25,10 @@ export const appReducer = (
 ) => {
   const { type, payload } = action;
 
-  console.log("--------- ACTION! ---------");
-  console.log(action.type);
-  console.log(action.payload);
-  console.log("---------------------------");
+  // console.log("--------- ACTION! ---------");
+  // console.log(action.type);
+  // console.log(action.payload);
+  // console.log("---------------------------");
   
 
   switch (type) {
