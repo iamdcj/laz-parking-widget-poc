@@ -7,10 +7,19 @@ import EventPicker from "../../../../components/EventPicker";
 import LocationPicker from "../../../../components/LocationPicker";
 import DurationSelector from "../../../../components/DurationSelector";
 
-const Components = {
+type Mode = "TMD" | "EVT" | "PST" | "MUP" | "MPS" | "FAP" | "FEX" | "FEP";
+
+type Component = Record<string, () => React.JSX.Element | null>
+
+const Components: Component = {
   TMD: DateTimePicker,
   EVT: EventPicker,
   PST: DurationSelector,
+  MUP: null,
+  MPS: null,
+  FAP: null,
+  FEX: null,
+  FEP: null,
 };
 
 const LocationsLayout = () => {
@@ -97,7 +106,7 @@ const LocationsLayout = () => {
   return (
     <Box>
       {locations?.length > 0 && <LocationPicker />}
-      {modes?.map((mode: "TMD" | "EVT" | "PST") => {
+      {modes?.map((mode: Mode) => {
         const Thing = Components[mode];
 
         return <Thing />;
