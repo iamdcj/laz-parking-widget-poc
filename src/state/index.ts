@@ -4,12 +4,20 @@ export interface InitialState {
   isLoading: boolean;
   locations: any[] | null;
   events: any[] | null;
+  times: {
+    start: string | null;
+    end: string | null;
+  };
 }
 
 export const initialState: InitialState = {
   isLoading: true,
   locations: null,
   events: null,
+  times: {
+    start: null,
+    end: null,
+  },
 };
 
 export enum Actions {
@@ -24,6 +32,8 @@ export enum Actions {
   SELECTED_MODE = "SELECTED_MODE",
   SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
   SET_DURATION = "SET_DURATION",
+  SET_START_TIME = "SET_START_TIME",
+  SET_END_TIME = "SET_END_TIME",
 }
 
 export const appReducer = (
@@ -91,6 +101,22 @@ export const appReducer = (
       return {
         ...state,
         focusedLocation: payload,
+      };
+    case Actions.SET_START_TIME:
+      return {
+        ...state,
+        times: {
+          ...state.times,
+          start: payload,
+        },
+      };
+    case Actions.SET_END_TIME:
+      return {
+        ...state,
+        times: {
+          ...state.times,
+          end: payload,
+        },
       };
     default:
       return initialState;

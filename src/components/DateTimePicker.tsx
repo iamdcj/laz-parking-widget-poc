@@ -6,36 +6,52 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Box } from "@mui/material";
 import dayjs from "dayjs";
 import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
+import { useAppContext } from "../context";
+import { Actions } from "../state";
 
 const StartEndSelector = () => {
+  const {
+    state: {
+      times: { start, end },
+    },
+    dispatch,
+  } = useAppContext();
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box>
         <DateTimePicker
           disablePast
-          defaultValue={dayjs()}
           label="Start"
           views={["year", "day", "hours", "minutes"]}
           skipDisabled
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
+          value={start}
           viewRenderers={{
             hours: renderDigitalClockTimeView,
             minutes: null,
             seconds: null,
           }}
+          onChange={(date) =>
+            dispatch({ type: Actions.SET_START_TIME, payload: date })
+          }
         />
         <DateTimePicker
           disablePast
-          defaultValue={dayjs().add(2, 'hours')}
           label="End"
           views={["year", "day", "hours", "minutes"]}
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
+          minDateTime={start || null}
           skipDisabled
+          value={end}
           viewRenderers={{
             hours: renderDigitalClockTimeView,
             minutes: null,
             seconds: null,
           }}
+          onChange={(date) =>
+            dispatch({ type: Actions.SET_END_TIME, payload: date })
+          }
         />
       </Box>
     </LocalizationProvider>

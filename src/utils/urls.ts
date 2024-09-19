@@ -1,3 +1,4 @@
+import dayjs, { Dayjs } from "dayjs";
 import { returnTimes } from "./time";
 
 enum modeToWt {
@@ -16,18 +17,20 @@ export const constructBuyLink = ({
   widgetKey,
   mode,
   duration,
-  startTime,
-  endTime,
+  times
 }: {
-  startTime?: string;
-  endTime?: string;
+  times?: {
+    start: string | Dayjs | null
+    end: string | Dayjs | null
+  }
   selectedLocation: string;
   duration?: string;
   selectedEvent?: string;
   widgetKey?: string;
   mode?: string;
 }) => {
-  const { start = "", end = "" } = returnTimes(startTime, endTime, duration);
+  debugger
+  const { start = "", end = "" } = returnTimes(times, duration);
 
   const params = new URLSearchParams({
     l: selectedLocation,
@@ -39,8 +42,8 @@ export const constructBuyLink = ({
     isocode: "EN",
     wk: widgetKey,
     duration,
-    start,
-    end,
+    start: start.toString(),
+    end: end.toString(),
   });
 
   return `https://go.lazparking.com/buynow?${params}`;

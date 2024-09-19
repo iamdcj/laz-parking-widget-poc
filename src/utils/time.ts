@@ -1,11 +1,16 @@
+import { Dayjs } from "dayjs";
+
 export const returnTimes = (
-  startTime: string = "",
-  endTime: string = "",
+  times: {
+    start: string | Dayjs | null
+    end: string | Dayjs | null
+  },
   durationInMinutes: string
 ) => {
   if (durationInMinutes) {
     const now = new Date();
     const end = new Date();
+
     return {
       start: now.toString(),
       end: new Date(
@@ -14,5 +19,5 @@ export const returnTimes = (
     };
   }
 
-  return { start: startTime, end: endTime };
+  return times;
 };
