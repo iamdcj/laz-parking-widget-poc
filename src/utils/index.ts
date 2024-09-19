@@ -50,3 +50,41 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   eventDriven: !!element?.dataset?.eventdriven, //! tbd
   salesChannelKey: element?.dataset?.sc || "", //! tbd
 });
+
+enum Endpoints {
+  locations = "https://grs-external.lazparking.com/api/locations",
+  events = "https://grs-external.lazparking.com/api/events",
+}
+
+export const fetchData = async (
+  type: "locations" | "events",
+  params: Record<string, any>
+) => {
+  const searchParams = new URLSearchParams(params);
+
+  const res = await fetch(`${Endpoints[type]}?${searchParams}`);
+
+  if (!res.ok) {
+    throw new Error("Unable to retrieve data");
+  }
+
+  return await res.json();
+};
+
+export const constructBuyLink = ({
+  selectedLocation,
+  selectedEvent,
+  widgetKey,
+}: {
+  selectedLocation: string;
+  selectedEvent: string;
+  widgetKey: string;
+}) => {
+  return `https://go.lazparking.com/buynow?l=${selectedLocation}&evid=${selectedEvent}&t=e&wt=evt&isocode=EN&wk=${widgetKey}`;
+};
+
+
+export const returnModes = (locations: any[], selectedLocation: string) =>
+  locations
+    .find(({ ID }: { ID: any }) => ID === selectedLocation)
+    .DefaultWidgetType.split("|");

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {  useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../../../../context";
-import { Actions } from "../../../../state";
 import DateTimePicker from "../../../../components/DateTimePicker";
 import EventPicker from "../../../../components/EventPicker";
 import LocationPicker from "../../../../components/LocationPicker";
 import DurationSelector from "../../../../components/DurationSelector";
-
-type Mode = "TMD" | "EVT" | "PST" | "MUP" | "MPS" | "FAP" | "FEX" | "FEP";
-
-type Component = Record<string, () => React.JSX.Element | null>;
+import { constructBuyLink, returnModes } from "../../../../utils";
+import useApi from "../../../../hooks/useApi";
+import { Actions } from "../../../../state";
+import { Component, Mode } from "../../../../../types";
 
 const Components: Component = {
   TMD: DateTimePicker,
@@ -28,103 +27,57 @@ const LocationsLayout = () => {
       locations,
       selectedEvent = "",
       selectedLocation = "",
-      locationIds,
-      events,
-      useMap,
       selectedTime,
-      hideEventDateTime,
-      clientId: ClientId = "",
-      widgetKey: widgetkey = "",
-      selectedMode,
-      ...otherParams
+      widgetKey,
+      modes,
     },
     dispatch,
   } = useAppContext();
-  const [modes, setModes] = useState(null);
 
-  const retrieveEvents = async () => {
-    dispatch({ type: Actions.LOADING, payload: true });
-
-    if (!locationIds) return;
-
-    try {
-      const params = new URLSearchParams({
-        eDataLocationId: selectedLocation,
-        widgetkey,
-        eventdriven: widgetkey ? "true" : "false",
-      });
-
-      const res = await fetch(
-        `https://grs-external.lazparking.com/api/events?${params}`
-      );
-      const data = await res.json();
-
-      dispatch({ type: Actions.SET_EVENTS, payload: data });
-    } catch (error) {
-      console.error("Unable to retrieve parking locations.");
-      dispatch({ type: Actions.LOADING, payload: false });
-    }
-  };
-
-  const retrieveLocations = async () => {
-    const params = new URLSearchParams({
-      ClientId,
-      ArrayeDataLocationId: locationIds?.split(","),
-      evid: selectedEvent,
-      WidgetKey: widgetkey,
-    });
-
-    try {
-      const res = await fetch(
-        `https://grs-external.lazparking.com/api/locations?${params}`
-      );
-      const data = await res.json();
-
-      dispatch({ type: Actions.SET_LOCATIONS, payload: data });
-    } catch (error) {
-      console.error(error.message);
-      dispatch({ type: Actions.LOADING, payload: false });
-    }
-  };
+  const [retrieveEvents, retrieveLocations] = useApi();
 
   useEffect(() => {
-    retrieveLocations();
+    retrieveLocations('oi');
   }, []);
 
   useEffect(() => {
     if (!selectedLocation) {
-      dispatch({ type: Actions.SET_EVENTS, payload: null });
+      dispatch({ type: Actions.RESET_EVENTS });
     } else {
-      retrieveEvents();
-      setModes(
-        locations
-          .find(({ ID }: { ID: any }) => ID === selectedLocation)
-          .DefaultWidgetType.split("|")
-      );
+      dispatch({
+        type: Actions.SET_MODES,
+        payload: returnModes(locations, selectedLocation),
+      });
+      retrieveEvents(selectedLocation);
     }
-  }, [selectedLocation]);
+  }, [selectedLocation, retrieveLocations]);
 
   return (
     <Box>
       {locations?.length > 0 && <LocationPicker />}
-      {modes?.map((mode: Mode) => {
-        const Thing = Components[mode];
+      {modes &&
+        modes.length > 0 &&
+        modes.map((mode: Mode) => {
+          const Thing = Components[mode];
 
-        return <Thing />;
-      })}
+          return <Thing />;
+        })}
       <div>
-        {selectedEvent ||
-          (selectedTime && (
-            <Button
-              href={`https://go.lazparking.com/buynow?l=${selectedLocation}&evid=${selectedEvent}&t=e&wt=evt&isocode=EN&wk=${widgetkey}`}
-              variant="outlined"
-              fullWidth
-              target="_blank"
-              rel="noreferer"
-            >
-              Reserve
-            </Button>
-          ))}
+        {(selectedEvent || selectedTime) && (
+          <Button
+            href={constructBuyLink({
+              selectedLocation,
+              selectedEvent,
+              widgetKey,
+            })}
+            variant="outlined"
+            fullWidth
+            target="_blank"
+            rel="noreferer"
+          >
+            Reserve
+          </Button>
+        )}
       </div>
     </Box>
   );

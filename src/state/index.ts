@@ -1,3 +1,5 @@
+import { log } from "console";
+
 export interface InitialState {
   isLoading: boolean;
   locations: any[] | null;
@@ -13,10 +15,12 @@ export const initialState: InitialState = {
 export enum Actions {
   LOADING = "LOADING",
   SET_EVENTS = "SET_EVENTS",
+  RESET_EVENTS = "RESET_EVENTS",
   SELECTED_EVENT = "SELECTED_EVENT",
   SET_LOCATIONS = "SET_LOCATIONS",
   SELECTED_LOCATION = "SELECTED_LOCATION",
   FOCUSED_LOCATION = "FOCUSED_LOCATION",
+  SET_MODES = "SET_MODES",
 }
 
 export const appReducer = (
@@ -24,12 +28,6 @@ export const appReducer = (
   action: { type: string; payload: any }
 ) => {
   const { type, payload } = action;
-
-  // console.log("--------- ACTION! ---------");
-  // console.log(action.type);
-  // console.log(action.payload);
-  // console.log("---------------------------");
-  
 
   switch (type) {
     case Actions.LOADING:
@@ -41,7 +39,13 @@ export const appReducer = (
       return {
         ...state,
         events: payload,
-        isLoading: false
+        isLoading: false,
+      };
+    case Actions.RESET_EVENTS:
+      return {
+        ...state,
+        isLoading: false,
+        events: null,
       };
     case Actions.SELECTED_EVENT:
       return {
@@ -52,7 +56,12 @@ export const appReducer = (
       return {
         ...state,
         locations: payload,
-        isLoading: false
+        isLoading: false,
+      };
+    case Actions.SET_MODES:
+      return {
+        ...state,
+        modes: payload,
       };
     case Actions.SELECTED_LOCATION:
       return {
