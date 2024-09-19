@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppContext } from "../context";
 import MapWidget from "../variants/MapWidget";
-import BasicWidget from "../variants/utils/BasicWidget";
+import BasicWidget from "../variants/BasicWidget";
 
 const Variants = {
   basic: BasicWidget,

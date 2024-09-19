@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
+import { AdvancedMarker, Map } from "@vis.gl/react-google-maps";
 import { useMapSetup } from "../variants/utils/maps";
 import { Box, Button } from "@mui/material";
 import MyLocationIcon from "@mui/icons-material/MyLocation";

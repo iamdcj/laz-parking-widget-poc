@@ -9,16 +9,12 @@ import { Settings } from "./utils";
 
 function App(props: Settings) {
   const { isHeaderEnabled, headerText } = props;
-  
+
   return (
     <ThemeProvider theme={theme}>
       <AppProvider value={props}>
         <div
-          style={{
-            position: "relative",
-          }}
         >
-          <Loader />
           {isHeaderEnabled && (
             <Box
               sx={{
@@ -46,7 +42,10 @@ function App(props: Settings) {
               )}
             </Box>
           )}
-          <VariantSwitch />
+          <Box position="relative">
+            <Loader />
+            <VariantSwitch />
+          </Box>
         </div>
       </AppProvider>
     </ThemeProvider>

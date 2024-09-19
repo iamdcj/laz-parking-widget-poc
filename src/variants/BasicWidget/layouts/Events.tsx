@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect } from "react";
-import LazMap from "../../../../components/Map";
+import React, { useEffect } from "react";
+import LazMap from "../../../components/Map";
 import { Box, Button } from "@mui/material";
-import { useAppContext } from "../../../../context";
-import { Actions } from "../../../../state";
+import { useAppContext } from "../../../context";
+import { Actions } from "../../../state";
 import { APIProvider } from "@vis.gl/react-google-maps";
-import DateTimePicker from "../../../../components/DateTimePicker";
-import EventPicker from "../../../../components/EventPicker";
-import LocationPicker from "../../../../components/LocationPicker";
-import useApi from "../../../../hooks/useApi";
-import { constructBuyLink } from "../../../../utils";
+import EventPicker from "../../../components/EventPicker";
+import LocationPicker from "../../../components/LocationPicker";
+import useApi from "../../../hooks/useApi";
+import { constructBuyLink } from "../../../utils";
 
 const EventsLayout = () => {
   const {
@@ -24,7 +23,7 @@ const EventsLayout = () => {
     dispatch,
   } = useAppContext();
 
-  const [retrieveEvents, retrieveLocations] = useApi();
+  const { retrieveEvents, retrieveLocations } = useApi();
 
   useEffect(() => {
     retrieveEvents(locationIds);
@@ -34,7 +33,7 @@ const EventsLayout = () => {
     if (!selectedEvent) {
       dispatch({ type: Actions.SET_LOCATIONS, payload: null });
     } else {
-      retrieveLocations(locationIds);
+      retrieveLocations();
     }
   }, [selectedEvent]);
 

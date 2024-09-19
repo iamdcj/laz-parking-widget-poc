@@ -21,6 +21,9 @@ export enum Actions {
   SELECTED_LOCATION = "SELECTED_LOCATION",
   FOCUSED_LOCATION = "FOCUSED_LOCATION",
   SET_MODES = "SET_MODES",
+  SELECTED_MODE = "SELECTED_MODE",
+  SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
+  SET_DURATION = "SET_DURATION",
 }
 
 export const appReducer = (
@@ -52,6 +55,17 @@ export const appReducer = (
         ...state,
         selectedEvent: payload,
       };
+    case Actions.SET_TIME_INCREMENTS:
+      return {
+        ...state,
+        timeIncrements: payload,
+        isLoading: false,
+      };
+    case Actions.SET_DURATION:
+      return {
+        ...state,
+        selectedDuration: payload,
+      };
     case Actions.SET_LOCATIONS:
       return {
         ...state,
@@ -62,6 +76,11 @@ export const appReducer = (
       return {
         ...state,
         modes: payload,
+      };
+    case Actions.SELECTED_MODE:
+      return {
+        ...state,
+        selectedMode: payload,
       };
     case Actions.SELECTED_LOCATION:
       return {
