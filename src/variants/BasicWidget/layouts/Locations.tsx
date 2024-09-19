@@ -9,7 +9,7 @@ import useApi from "../../../hooks/useApi";
 import { Actions } from "../../../state";
 import { Mode } from "../../../../types";
 import ModePicker from "../../../components/ModePicker";
-import { returnModes } from "../../../utils";
+import { returnModes } from "../../../utils/misc";
 import { constructBuyLink } from "../../../utils/urls";
 
 const Components = {

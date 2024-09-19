@@ -38,9 +38,6 @@ const ModePicker = () => {
           modes.map((mode: Mode) => (
             <FormControlLabel value={mode} control={<Radio />} label={mode} />
           ))}
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
       </RadioGroup>
     </FormControl>
   );

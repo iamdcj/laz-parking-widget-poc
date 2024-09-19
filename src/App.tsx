@@ -5,7 +5,7 @@ import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
 import { theme } from "./theme";
 import Loader from "./components/Loader";
-import { Settings } from "./utils";
+import { Settings } from "./utils/misc";
 
 function App(props: Settings) {
   const { isHeaderEnabled, headerText } = props;

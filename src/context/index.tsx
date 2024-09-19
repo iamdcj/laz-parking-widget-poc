@@ -1,6 +1,6 @@
 import React, { createContext, Dispatch, ReactNode, useContext, useReducer } from "react";
 import { appReducer, InitialState, initialState } from "../state";
-import { Settings } from "../utils";
+import { Settings } from "../utils/misc";
 
 const AppContext = createContext<{
   state: InitialState,

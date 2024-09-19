@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { returnInitialConfig } from "./utils";
+import { returnInitialConfig } from "./utils/misc";
 import App from "./App";
 
 const _RootElement = document.getElementById("LAZ_Widget");
