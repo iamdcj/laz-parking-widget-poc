@@ -12,10 +12,7 @@ import { Actions } from "../state";
 
 const ModePicker = () => {
   const {
-    state: {
-      modes,
-      selectedMode = "",
-    },
+    state: { modes, selectedMode = "" },
     dispatch,
   } = useAppContext();
 
