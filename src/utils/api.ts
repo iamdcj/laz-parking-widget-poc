@@ -1,7 +1,7 @@
 enum Endpoints {
-  locations = "https://grs-external.lazparking.com/api/locations",
-  events = "https://grs-external.lazparking.com/api/events",
-  time_increments = "https://grs-external.lazparking.com/api/locations/timeincrements",
+  locations = "locations",
+  events = "events",
+  time_increments = "locations/timeincrements",
 }
 
 export const fetchData = async (
@@ -9,8 +9,7 @@ export const fetchData = async (
   params: Record<string, any>
 ) => {
   const searchParams = new URLSearchParams(params);
-
-  const res = await fetch(`${Endpoints[type]}?${searchParams}`);
+  const res = await fetch(`https://grs-external.lazparking.com/api/${Endpoints[type]}?${searchParams}`);
 
   if (!res.ok) {
     throw new Error("Unable to retrieve data");

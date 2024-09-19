@@ -31,7 +31,7 @@ const LocationPicker = () => {
       <Select
         labelId="location"
         id="location"
-        value={selectedLocation}
+        value={selectedLocation || ""}
         onChange={handleOnLocationChange}
         fullWidth
         label="Age"

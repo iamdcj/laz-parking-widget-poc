@@ -7,7 +7,7 @@ import { APIProvider } from "@vis.gl/react-google-maps";
 import EventPicker from "../../../components/EventPicker";
 import LocationPicker from "../../../components/LocationPicker";
 import useApi from "../../../hooks/useApi";
-import { constructBuyLink } from "../../../utils";
+import { constructBuyLink } from "../../../utils/urls";
 
 const EventsLayout = () => {
   const {
