@@ -19,9 +19,12 @@ const ModePicker = () => {
   return (
     <FormControl>
       <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="female"
-        name="radio-buttons-group"
+        sx={{
+           display: "flex",
+           flexDirection: "row",
+           mb: 1.5
+        }}
+        name="modes"
         value={selectedMode}
         onChange={(event, value) => {
           dispatch({

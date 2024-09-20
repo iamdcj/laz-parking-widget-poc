@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
@@ -13,17 +13,16 @@ function App(props: Settings) {
   return (
     <ThemeProvider theme={theme}>
       <AppProvider value={props}>
-        <div
-        >
+        <Box>
           {isHeaderEnabled && (
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                background: "#007dba",
+                background: theme.palette.primary.main,
                 padding: 3,
-                marginBottom: 1,
+                marginBottom: 2,
                 borderRadius: "0 0 5px 5px",
               }}
             >
@@ -46,7 +45,7 @@ function App(props: Settings) {
             <Loader />
             <VariantSwitch />
           </Box>
-        </div>
+        </Box>
       </AppProvider>
     </ThemeProvider>
   );

@@ -1,23 +1,37 @@
-import { log } from "console";
-
 export interface InitialState {
   isLoading: boolean;
-  locations: any[] | null;
-  events: any[] | null;
+  locations: any[];
+  events: any[];
   times: {
-    start: string | null;
-    end: string | null;
+    start: null;
+    end: null;
   };
+  selectedEvent: string;
+  duration: string;
+  selectedDuration: string;
+  timeIncrements: string;
+  modes: string;
+  selectedMode: string;
+  selectedLocation: string;
+  focusedLocation: string;
 }
 
 export const initialState: InitialState = {
-  isLoading: true,
-  locations: null,
-  events: null,
+  isLoading: false,
+  locations: [],
+  events: [],
   times: {
     start: null,
     end: null,
   },
+  selectedEvent: "",
+  selectedDuration: "",
+  duration: "",
+  timeIncrements: "",
+  modes: "",
+  selectedMode: "",
+  selectedLocation: "",
+  focusedLocation: "",
 };
 
 export enum Actions {
@@ -39,7 +53,7 @@ export enum Actions {
 export const appReducer = (
   state: InitialState,
   action: { type: string; payload: any }
-) => {
+): InitialState => {
   const { type, payload } = action;
 
   switch (type) {
@@ -58,7 +72,7 @@ export const appReducer = (
       return {
         ...state,
         isLoading: false,
-        events: null,
+        events: [],
       };
     case Actions.SELECTED_EVENT:
       return {
@@ -74,6 +88,11 @@ export const appReducer = (
     case Actions.SET_DURATION:
       return {
         ...state,
+        selectedEvent: '',
+        times: {
+          end: null,
+          start: null,
+        },
         selectedDuration: payload,
       };
     case Actions.SET_LOCATIONS:
@@ -105,6 +124,7 @@ export const appReducer = (
     case Actions.SET_START_TIME:
       return {
         ...state,
+        selectedEvent: '',
         times: {
           ...state.times,
           start: payload,
@@ -113,6 +133,7 @@ export const appReducer = (
     case Actions.SET_END_TIME:
       return {
         ...state,
+        selectedEvent: '',
         times: {
           ...state.times,
           end: payload,

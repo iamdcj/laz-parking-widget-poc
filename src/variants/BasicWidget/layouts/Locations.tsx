@@ -24,7 +24,7 @@ const LocationsLayout = () => {
       locations,
       selectedEvent = "",
       selectedLocation = "",
-      selectedDuration = 0,
+      selectedDuration,
       selectedTime,
       widgetKey,
       modes,
@@ -62,7 +62,7 @@ const LocationsLayout = () => {
         </Box>
       )}
       <div>
-        {(selectedEvent || selectedTime || selectedDuration > 0 || times.start && times.end) && (
+        {(selectedEvent || selectedTime || selectedDuration || times?.start && times?.end) && (
           <Button
             href={constructBuyLink({
               duration: selectedDuration,

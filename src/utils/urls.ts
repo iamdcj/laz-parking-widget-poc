@@ -29,9 +29,8 @@ export const constructBuyLink = ({
   widgetKey?: string;
   mode?: string;
 }) => {
-  debugger
-  const { start = "", end = "" } = returnTimes(times, duration);
-
+  const cleanDuration = duration?.replace('M', '')
+  const { start = "", end = "" } = returnTimes(times, cleanDuration);
   const params = new URLSearchParams({
     l: selectedLocation,
     t: selectedEvent ? "e" : "r",
@@ -41,9 +40,9 @@ export const constructBuyLink = ({
     evid: selectedEvent,
     isocode: "EN",
     wk: widgetKey,
-    duration,
-    start: start.toString(),
-    end: end.toString(),
+    duration: cleanDuration || '',
+    start: start?.toString() || '',
+    end: end?.toString() || '',
   });
 
   return `https://go.lazparking.com/buynow?${params}`;

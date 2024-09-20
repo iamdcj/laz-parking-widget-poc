@@ -18,11 +18,10 @@ const DurationSelector = () => {
   if (!timeIncrements) {
     return null;
   }
-  
-  return (
-    <FormControl fullWidth sx={{ mb: 1 }}>
-      <InputLabel id="location">Select Duration</InputLabel>
 
+  return (
+    <FormControl fullWidth sx={{ mb: 3 }}>
+      <InputLabel id="location">Select Duration</InputLabel>
       <Select
         labelId="location"
         id="location"
@@ -30,7 +29,7 @@ const DurationSelector = () => {
         label="Age"
         value={selectedDuration}
         onChange={(event) =>
-          dispatch({ type: Actions.SET_DURATION, payload: event.target.value.replace('M', '') })
+          dispatch({ type: Actions.SET_DURATION, payload: event.target.value })
         }
       >
         {timeIncrements.map(

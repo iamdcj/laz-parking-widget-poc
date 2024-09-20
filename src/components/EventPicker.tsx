@@ -38,7 +38,7 @@ const EventPicker = () => {
           </li>
         );
       }}
-      sx={{ mb: 1 }}
+      sx={{ mb: 2 }}
       options={events.map(
         ({
           EventId: id,

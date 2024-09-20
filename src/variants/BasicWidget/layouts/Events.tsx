@@ -39,11 +39,15 @@ const EventsLayout = () => {
 
   return (
     <Box>
-      {events?.length > 0 && <EventPicker />}
-      {useMap && (
-        <APIProvider apiKey="">
-          <LazMap />
-        </APIProvider>
+      {events?.length > 0 && (
+        <>
+          <EventPicker />{" "}
+          {useMap && (
+            <APIProvider apiKey="">
+              <LazMap />
+            </APIProvider>
+          )}
+        </>
       )}
       {locations?.length > 0 && <LocationPicker />}
       <div>

@@ -2,9 +2,7 @@ import React from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-
 import { Box } from "@mui/material";
-import dayjs from "dayjs";
 import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
@@ -19,7 +17,7 @@ const StartEndSelector = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box>
+      <Box display="grid" gridTemplateColumns="1fr" gap={2} mb={3}>
         <DateTimePicker
           disablePast
           label="Start"
@@ -41,7 +39,7 @@ const StartEndSelector = () => {
           label="End"
           views={["year", "day", "hours", "minutes"]}
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
-          minDateTime={start || null}
+          minDateTime={start?.add(30, 'minutes') || null}
           skipDisabled
           value={end}
           viewRenderers={{
