@@ -57,20 +57,25 @@ export const theme = createTheme({
       light: "#CAFFEE",
       dark: "#00D4AF",
     },
+    accent: {
+      main: "#AAB2F7",
+      light: "#E2E6FD",
+      dark: "#706BE9",
+    },
     error: {
-      main: "#5BFAD7",
-      light: "#CAFFEE",
-      dark: "#00D4AF",
+      main: "#AAB2F7",
+      light: "#E2E6FD",
+      dark: "#706BE9",
     },
     success: {
       main: "#179C54",
       light: "#CAFFEE",
       dark: "#155232",
     },
-    accent: {
-      main: "#AAB2F7",
-      light: "#E2E6FD",
-      dark: "#706BE9",
+    warning: {
+      main: "#FDB122",
+      light: "#FFEFC6",
+      dark: "#792E0E",
     },
     info: {
       main: "#596170",

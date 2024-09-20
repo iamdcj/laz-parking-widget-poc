@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { returnTimes } from "./time";
 
 enum modeToWt {
@@ -11,6 +11,8 @@ enum modeToWt {
   "FEX" = "fex",
 }
 
+type DateTime = string | Dayjs | null
+
 export const constructBuyLink = ({
   selectedLocation,
   selectedEvent,
@@ -20,8 +22,8 @@ export const constructBuyLink = ({
   times
 }: {
   times?: {
-    start: string | Dayjs | null
-    end: string | Dayjs | null
+    start: DateTime
+    end: DateTime
   }
   selectedLocation: string;
   duration?: string;
