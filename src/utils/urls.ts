@@ -37,8 +37,8 @@ export const constructBuyLink = ({
   salesChannelKey?: string;
   agentId?: string;
 }) => {
-  const cleanDuration = duration?.replace("M", "");
-  const { start = "", end = "" } = returnTimes(times, cleanDuration);
+  const cleanDuration = duration?.replace(/[MH]/g, "");
+  const { start = "", end = "" } = returnTimes(times, duration);
   const params = new URLSearchParams({
     l: selectedLocation,
     t: selectedEvent ? "e" : "r",

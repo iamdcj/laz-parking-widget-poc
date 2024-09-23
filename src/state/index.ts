@@ -56,6 +56,9 @@ export const appReducer = (
 ): InitialState => {
   const { type, payload } = action;
 
+  console.log(type, payload);
+  
+
   switch (type) {
     case Actions.LOADING:
       return {
@@ -77,6 +80,7 @@ export const appReducer = (
     case Actions.SELECTED_EVENT:
       return {
         ...state,
+        selectedLocation: '',
         selectedEvent: payload,
       };
     case Actions.SET_TIME_INCREMENTS:

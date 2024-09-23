@@ -48,7 +48,7 @@ export const theme = createTheme({
   spacing: 8,
   palette: {
     primary: {
-      main: "#006cba",
+      main: "#007dba",
       light: "#36aefa",
       dark: "#072a4a",
     },
