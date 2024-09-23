@@ -80,7 +80,6 @@ export const appReducer = (
     case Actions.SELECTED_EVENT:
       return {
         ...state,
-        selectedLocation: '',
         selectedEvent: payload,
       };
     case Actions.SET_TIME_INCREMENTS:
@@ -129,6 +128,7 @@ export const appReducer = (
     case Actions.SET_START_TIME:
       return {
         ...state,
+        selectedDuration: '',
         selectedEvent: '',
         times: {
           ...state.times,
@@ -139,6 +139,7 @@ export const appReducer = (
       return {
         ...state,
         selectedEvent: '',
+        selectedDuration: '',
         times: {
           ...state.times,
           end: payload,
