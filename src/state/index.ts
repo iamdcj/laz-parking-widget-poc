@@ -114,6 +114,7 @@ export const appReducer = (
     case Actions.SELECTED_LOCATION:
       return {
         ...state,
+        selectedDuration: '',
         selectedLocation: payload,
       };
     case Actions.FOCUSED_LOCATION:

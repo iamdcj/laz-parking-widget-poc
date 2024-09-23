@@ -19,6 +19,8 @@ const EventsLayout = () => {
       events,
       useMap,
       widgetKey,
+      agentId,
+      salesChannelKey
     },
     dispatch,
   } = useAppContext();
@@ -39,17 +41,18 @@ const EventsLayout = () => {
 
   return (
     <Box>
-      {events?.length > 0 && (
+      {events?.length > 0 && <EventPicker />}
+
+      {locations?.length > 0 && (
         <>
-          <EventPicker />{" "}
           {useMap && (
             <APIProvider apiKey="">
               <LazMap />
             </APIProvider>
           )}
+          <LocationPicker />
         </>
       )}
-      {locations?.length > 0 && <LocationPicker />}
       <div>
         {selectedLocation && (
           <Button
@@ -57,6 +60,8 @@ const EventsLayout = () => {
               selectedLocation,
               selectedEvent,
               widgetKey,
+              agentId,
+              salesChannelKey
             })}
             variant="outlined"
             fullWidth

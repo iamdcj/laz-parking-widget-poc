@@ -37,18 +37,18 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   hideEventDateTime: !!element?.dataset?.hideEventDate, // hide event listing date-time
   dataModeOverwrite: !!element?.dataset?.modeOverwrite, // use dataMode 
   dataMode: element?.dataset?.mode || "", // specify the mode
+  salesChannelKey: element?.dataset?.sc || "", // pass as sc param to checkout
+  agentId: element?.dataset?.agentid || "", // pass as aid param to checkout 
   // ---- TODO: determine the use cases for the following: //
   startTime: element?.dataset?.starttime || "", // set the default start time of the widget (what is the format)
   endTime: element?.dataset?.endtime || "", // set the default end time of the widget (what is the format)
-  arriveOffset: Number(element?.dataset?.arrive), // offset in minutes 
-  departOffset: Number(element?.dataset?.depart), // offset in minutes
-  agentId: element?.dataset?.agentid || "", //! tbd
-  template: element?.dataset?.template || "", //! tbd
-  useFullWidget: !!element?.dataset?.fullwidget, //! tbd
+  arriveOffset: Number(element?.dataset?.arrive), // offset in minutes (need use case)
+  departOffset: Number(element?.dataset?.depart), // offset in minutes (need use case)
+  template: element?.dataset?.template || "", // load template and stub style sheet based on iso language code (need examples)
+  useFullWidget: !!element?.dataset?.fullwidget, // set whether or not to open the full widget url in a new window or to change the current url (example) 
   mapTxt: element?.dataset?.mapplacetxt || "", //! tbd
-  currentPage: element?.dataset?.currentpage || "", //! tbd
-  eventDriven: !!element?.dataset?.eventdriven, //! tbd
-  salesChannelKey: element?.dataset?.sc || "", //! tbd
+  currentPage: element?.dataset?.currentpage || "", // Get the widget key (not sure about this one)
+  eventDriven: !!element?.dataset?.eventdriven, // need use case
 });
 
 export const returnModes = (locations: any[], selectedLocation: string) =>

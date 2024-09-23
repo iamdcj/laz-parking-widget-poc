@@ -32,6 +32,8 @@ const LocationsLayout = () => {
       selectedMode,
       dataMode,
       dataModeOverwrite,
+      agentId,
+      salesChannelKey
     },
     dispatch,
   } = useAppContext();
@@ -92,6 +94,8 @@ const LocationsLayout = () => {
               widgetKey,
               mode: selectedMode,
               times,
+              agentId,
+              salesChannelKey
             })}
             variant="outlined"
             fullWidth
