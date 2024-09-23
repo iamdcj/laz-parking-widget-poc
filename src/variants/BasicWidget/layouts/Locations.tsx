@@ -30,6 +30,8 @@ const LocationsLayout = () => {
       modes,
       times,
       selectedMode,
+      dataMode,
+      dataModeOverwrite,
     },
     dispatch,
   } = useAppContext();
@@ -44,10 +46,22 @@ const LocationsLayout = () => {
     if (!selectedLocation) {
       dispatch({ type: Actions.RESET_EVENTS });
     } else {
-      dispatch({
-        type: Actions.SET_MODES,
-        payload: returnModes(locations, selectedLocation),
-      });
+      if (dataModeOverwrite && dataMode) {
+        dispatch({
+          type: Actions.SET_MODES,
+          payload: [dataMode],
+        });
+        dispatch({
+          type: Actions.SELECTED_MODE,
+          payload: dataMode,
+        });
+      } else {
+        dispatch({
+          type: Actions.SET_MODES,
+          payload: returnModes(locations, selectedLocation),
+        });
+      }
+
       retrieveEvents(selectedLocation);
     }
   }, [selectedLocation, retrieveLocations]);
@@ -55,14 +69,21 @@ const LocationsLayout = () => {
   return (
     <Box>
       {locations?.length > 0 && <LocationPicker />}
-      {modes && modes.length > 0 && (
-        <Box>
-          <ModePicker />
-          {Components[selectedMode as Mode]}
-        </Box>
-      )}
+      <Box>
+        {modes && modes.length === 1 ? (
+          Components[selectedMode as Mode]
+        ) : (
+          <>
+            <ModePicker />
+            {Components[selectedMode as Mode]}
+          </>
+        )}
+      </Box>
       <div>
-        {(selectedEvent || selectedTime || selectedDuration || times?.start && times?.end) && (
+        {(selectedEvent ||
+          selectedTime ||
+          selectedDuration ||
+          (times?.start && times?.end)) && (
           <Button
             href={constructBuyLink({
               duration: selectedDuration,
@@ -70,7 +91,7 @@ const LocationsLayout = () => {
               selectedEvent,
               widgetKey,
               mode: selectedMode,
-              times
+              times,
             })}
             variant="outlined"
             fullWidth

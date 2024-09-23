@@ -15,7 +15,7 @@ export interface Settings {
   agentId: string;
   template: string;
   useFullWidget: boolean;
-  dataModeOverwrite: string;
+  dataModeOverwrite: boolean;
   dataMode: string;
   startTime: string;
   endTime: string;
@@ -35,17 +35,17 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   mapLat: Number(element?.dataset?.mapplacelat || 0), // default map lat
   mapLng: Number(element?.dataset?.mapplacelng || 0), // default map lng
   hideEventDateTime: !!element?.dataset?.hideEventDate, // hide event listing date-time
+  dataModeOverwrite: !!element?.dataset?.modeOverwrite, // use dataMode 
+  dataMode: element?.dataset?.mode || "", // specify the mode
+  startTime: element?.dataset?.starttime || "", // set the default start time of the widget
+  endTime: element?.dataset?.endtime || "", // set the default end time of the widget
   // ---- TODO: determine the use cases for the following: //
-  arriveOffset: Number(element?.dataset?.arrive), //! tbd
-  departOffset: Number(element?.dataset?.depart), //! tbd
+  arriveOffset: Number(element?.dataset?.arrive), // offset in minutes
+  departOffset: Number(element?.dataset?.depart), // offset in minutes
   agentId: element?.dataset?.agentid || "", //! tbd
   template: element?.dataset?.template || "", //! tbd
   useFullWidget: !!element?.dataset?.fullwidget, //! tbd
-  dataModeOverwrite: element?.dataset?.modeOverwrite || "", //! tbd
-  dataMode: element?.dataset?.mode || "", //! tbd
   mapTxt: element?.dataset?.mapplacetxt || "", //! tbd
-  startTime: element?.dataset?.starttime || "", //! tbd
-  endTime: element?.dataset?.endtime || "", //! tbd
   currentPage: element?.dataset?.currentpage || "", //! tbd
   eventDriven: !!element?.dataset?.eventdriven, //! tbd
   salesChannelKey: element?.dataset?.sc || "", //! tbd
