@@ -6,6 +6,7 @@ import { AppProvider } from "./context";
 import { theme } from "./theme";
 import Loader from "./components/Loader";
 import { Settings } from "./utils/misc";
+import Icons from "./components/Icons";
 
 function App(props: Settings) {
   const { isHeaderEnabled, headerText } = props;
@@ -20,7 +21,7 @@ function App(props: Settings) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: 'primary.main',
+                backgroundColor: "primary.main",
                 padding: 3,
                 marginBottom: 2,
                 borderRadius: "0 0 5px 5px",
@@ -31,13 +32,7 @@ function App(props: Settings) {
                   {headerText}
                 </Typography>
               ) : (
-                <img
-                  src="https://go.lazparking.com/static/media/laz-logo.a4d328f3134864d713456684b16773d9.svg"
-                  id="laz-logo"
-                  className="laz-header-logo"
-                  alt=""
-                  width={50}
-                />
+                <Icons type="logo" width={50} />
               )}
             </Box>
           )}

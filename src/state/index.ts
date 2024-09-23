@@ -56,8 +56,6 @@ export const appReducer = (
 ): InitialState => {
   const { type, payload } = action;
 
-  console.log(type, payload);
-
   switch (type) {
     case Actions.LOADING:
       return {
@@ -123,6 +121,7 @@ export const appReducer = (
       return {
         ...state,
         selectedDuration: "",
+        selectedMode: null,
         selectedLocation: payload,
       };
     case Actions.FOCUSED_LOCATION:

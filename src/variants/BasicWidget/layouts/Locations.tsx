@@ -68,6 +68,11 @@ const LocationsLayout = () => {
     }
   }, [selectedLocation, retrieveLocations]);
 
+
+  console.log(modes);
+  console.log(selectedMode);
+  
+
   return (
     <Box>
       {locations?.length > 0 && <LocationPicker />}
