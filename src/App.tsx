@@ -6,6 +6,7 @@ import { AppProvider } from "./context";
 import { theme } from "./theme";
 import Loader from "./components/Loader";
 import { Settings } from "./utils/misc";
+import ErrorNotice from "./components/ErrorNotice";
 
 function App(props: Settings) {
   const { isHeaderEnabled, headerText } = props;

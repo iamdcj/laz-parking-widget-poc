@@ -3,20 +3,21 @@ import useApi from "../hooks/useApi";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
+import ErrorNotice from "./ErrorNotice";
 
 const DurationSelector = () => {
   const {
-    state: { timeIncrements, selectedDuration },
+    state: { timeIncrements, selectedDuration, selectedLocation },
     dispatch,
   } = useAppContext();
   const { retrieveTimeIncrements } = useApi();
 
   useEffect(() => {
     retrieveTimeIncrements();
-  }, []);
+  }, [selectedLocation]);
 
-  if (!timeIncrements) {
-    return null;
+  if (!timeIncrements || timeIncrements.length < 1) {
+    return <ErrorNotice error="Unable to retrieve time increments" />;
   }
 
   return (

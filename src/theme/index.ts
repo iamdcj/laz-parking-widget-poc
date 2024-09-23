@@ -63,7 +63,7 @@ export const theme = createTheme({
       dark: "#706BE9",
     },
     error: {
-      main: "#AAB2F7",
+      main: "#FC2B2B",
       light: "#E2E6FD",
       dark: "#706BE9",
     },

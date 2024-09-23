@@ -37,10 +37,10 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   hideEventDateTime: !!element?.dataset?.hideEventDate, // hide event listing date-time
   dataModeOverwrite: !!element?.dataset?.modeOverwrite, // use dataMode 
   dataMode: element?.dataset?.mode || "", // specify the mode
-  startTime: element?.dataset?.starttime || "", // set the default start time of the widget
-  endTime: element?.dataset?.endtime || "", // set the default end time of the widget
   // ---- TODO: determine the use cases for the following: //
-  arriveOffset: Number(element?.dataset?.arrive), // offset in minutes
+  startTime: element?.dataset?.starttime || "", // set the default start time of the widget (what is the format)
+  endTime: element?.dataset?.endtime || "", // set the default end time of the widget (what is the format)
+  arriveOffset: Number(element?.dataset?.arrive), // offset in minutes 
   departOffset: Number(element?.dataset?.depart), // offset in minutes
   agentId: element?.dataset?.agentid || "", //! tbd
   template: element?.dataset?.template || "", //! tbd
