@@ -7,7 +7,7 @@ import ErrorNotice from "./ErrorNotice";
 
 const DurationSelector = () => {
   const {
-    state: { timeIncrements, selectedDuration, selectedLocation },
+    state: { timeIncrements, selectedDuration, selectedLocation, isLoading },
     dispatch,
   } = useAppContext();
   const { retrieveTimeIncrements } = useApi();
@@ -16,7 +16,11 @@ const DurationSelector = () => {
     retrieveTimeIncrements();
   }, [selectedLocation]);
 
-  if (!timeIncrements || timeIncrements.length < 1) {
+  if (isLoading || !timeIncrements) {
+    return null;
+  }
+
+  if (!isLoading && (timeIncrements && timeIncrements.length < 1)) {
     return <ErrorNotice error="Unable to retrieve time increments" />;
   }
 

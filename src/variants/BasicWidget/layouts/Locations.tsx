@@ -33,7 +33,7 @@ const LocationsLayout = () => {
       dataMode,
       dataModeOverwrite,
       agentId,
-      salesChannelKey
+      salesChannelKey,
     },
     dispatch,
   } = useAppContext();
@@ -68,11 +68,6 @@ const LocationsLayout = () => {
     }
   }, [selectedLocation, retrieveLocations]);
 
-
-  console.log(modes);
-  console.log(selectedMode);
-  
-
   return (
     <Box>
       {locations?.length > 0 && <LocationPicker />}
@@ -100,7 +95,7 @@ const LocationsLayout = () => {
               mode: selectedMode,
               times,
               agentId,
-              salesChannelKey
+              salesChannelKey,
             })}
             variant="outlined"
             fullWidth

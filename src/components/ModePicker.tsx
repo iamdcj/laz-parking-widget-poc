@@ -19,9 +19,9 @@ const ModePicker = () => {
     <FormControl>
       <RadioGroup
         sx={{
-           display: "flex",
-           flexDirection: "row",
-           mb: 1.5
+          display: "flex",
+          flexDirection: "row",
+          mb: 1.5,
         }}
         name="modes"
         value={selectedMode}
@@ -35,7 +35,13 @@ const ModePicker = () => {
         {modes &&
           modes.length > 0 &&
           modes.map((mode: Mode) => (
-            <FormControlLabel value={mode} control={<Radio />} label={mode} />
+            <FormControlLabel
+              key={mode}
+              id={mode}
+              value={mode}
+              control={<Radio />}
+              label={mode}
+            />
           ))}
       </RadioGroup>
     </FormControl>

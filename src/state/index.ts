@@ -9,7 +9,7 @@ export interface InitialState {
   selectedEvent: string;
   duration: string;
   selectedDuration: string;
-  timeIncrements: string;
+  timeIncrements: null | any[];
   modes: string;
   selectedMode: string;
   selectedLocation: string;
@@ -27,7 +27,7 @@ export const initialState: InitialState = {
   selectedEvent: "",
   selectedDuration: "",
   duration: "",
-  timeIncrements: "",
+  timeIncrements: null,
   modes: "",
   selectedMode: "",
   selectedLocation: "",
