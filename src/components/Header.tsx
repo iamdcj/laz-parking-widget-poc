@@ -10,8 +10,8 @@ const Header = ({ headerText }: { headerText: string }) => {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "primary.main",
-        padding: 3,
-        marginBottom: 2,
+        padding: 1,
+        marginBottom: 1,
         borderRadius: "0 0 5px 5px",
       }}
     >
@@ -20,7 +20,7 @@ const Header = ({ headerText }: { headerText: string }) => {
           {headerText}
         </Typography>
       ) : (
-        <Icons type="logo" width={50} />
+        <Icons type="logo" width={40} />
       )}
     </Box>
   );
