@@ -1,6 +1,10 @@
 import { Dayjs } from "dayjs";
 import { returnTimes } from "./time";
 
+
+
+type Modes = "PST" | "TMD" | "EVT" | "MUP" | "MPS" | "FAP" | "FEX"
+
 enum modeToWt {
   "PST" = "tmd",
   "TMD" = "tmd",
@@ -38,7 +42,7 @@ export const constructBuyLink = ({
     t: selectedEvent ? "e" : "r",
     wt: selectedEvent
       ? "evt"
-      : modeToWt[mode as "PST" | "TMD" | "EVT" | "MUP" | "MPS" | "FAP" | "FEX"],
+      : modeToWt[mode as Modes],
     evid: selectedEvent,
     isocode: "EN",
     wk: widgetKey,
