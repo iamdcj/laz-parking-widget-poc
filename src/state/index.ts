@@ -57,7 +57,6 @@ export const appReducer = (
   const { type, payload } = action;
 
   console.log(type, payload);
-  
 
   switch (type) {
     case Actions.LOADING:
@@ -91,7 +90,7 @@ export const appReducer = (
     case Actions.SET_DURATION:
       return {
         ...state,
-        selectedEvent: '',
+        selectedEvent: "",
         times: {
           end: null,
           start: null,
@@ -112,12 +111,18 @@ export const appReducer = (
     case Actions.SELECTED_MODE:
       return {
         ...state,
+        selectedDuration: "",
+        times: {
+          end: null,
+          start: null,
+        },
+        selectedEvent: "",
         selectedMode: payload,
       };
     case Actions.SELECTED_LOCATION:
       return {
         ...state,
-        selectedDuration: '',
+        selectedDuration: "",
         selectedLocation: payload,
       };
     case Actions.FOCUSED_LOCATION:
@@ -128,8 +133,8 @@ export const appReducer = (
     case Actions.SET_START_TIME:
       return {
         ...state,
-        selectedDuration: '',
-        selectedEvent: '',
+        selectedDuration: "",
+        selectedEvent: "",
         times: {
           ...state.times,
           start: payload,
@@ -138,8 +143,8 @@ export const appReducer = (
     case Actions.SET_END_TIME:
       return {
         ...state,
-        selectedEvent: '',
-        selectedDuration: '',
+        selectedEvent: "",
+        selectedDuration: "",
         times: {
           ...state.times,
           end: payload,
