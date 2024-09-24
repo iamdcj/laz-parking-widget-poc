@@ -35,6 +35,7 @@ const LocationPicker = () => {
         onChange={handleOnLocationChange}
         fullWidth
         label="Age"
+        disabled={locations.length === 1}
       >
         {locations.map(({ ID, Name }: { ID: string; Name: string }) => (
           <MenuItem

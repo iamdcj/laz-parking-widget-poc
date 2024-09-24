@@ -1,14 +1,21 @@
 import { Autocomplete, TextField } from "@mui/material";
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { updateParams } from "../variants/utils/location";
+import useApi from "../hooks/useApi";
 
 const EventPicker = () => {
+  const { retrieveEvents } = useApi()
   const {
-    state: { events, hideEventDateTime },
+    state: { events, hideEventDateTime, selectedLocation  },
     dispatch,
   } = useAppContext();
+
+
+  useEffect(() => {
+    retrieveEvents(selectedLocation)
+  }, [selectedLocation]);
 
   const handleOnEventChange = (
     event: SyntheticEvent<Element, Event>,

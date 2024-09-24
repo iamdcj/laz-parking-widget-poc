@@ -24,7 +24,7 @@ export const returnTimes = (
       start: now,
       end,
     };
-  } else if (times.start && !times.end) {
+  } else if (times?.start && !times?.end) {
     let end = new Date(times.start as string);
     end = new Date(end.setMinutes(end.getMinutes() + 120));
 
@@ -32,7 +32,7 @@ export const returnTimes = (
       start: times.start,
       end,
     };
-  } else if (times.start && times.end) {
+  } else if (times?.start && times?.end) {
     return times;
   }
 

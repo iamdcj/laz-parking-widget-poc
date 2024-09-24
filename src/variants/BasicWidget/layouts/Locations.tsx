@@ -46,7 +46,7 @@ const LocationsLayout = () => {
     dispatch,
   } = useAppContext();
 
-  const { retrieveEvents, retrieveLocations } = useApi();
+  const { retrieveLocations } = useApi();
 
   useEffect(() => {
     retrieveLocations();
@@ -56,7 +56,6 @@ const LocationsLayout = () => {
     if (!selectedLocation) {
       dispatch({ type: Actions.RESET_EVENTS });
     } else {
-      debugger;
       if (dataModeOverwrite && dataMode) {
         dispatch({
           type: Actions.SET_MODES,
