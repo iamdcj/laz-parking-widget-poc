@@ -22,7 +22,8 @@ const Components = {
   FEP: <SeasonTickets IsFEP />,
   FEX: <SeasonTickets IsFEP />,
   FAP: <SeasonTickets IsFAP />,
-  MUP: <SeasonTickets IsMPS />,
+  MUP: <SeasonTickets IsMUP />,
+  MPS: <SeasonTickets IsMPS />,
 };
 
 const LocationsLayout = () => {
@@ -71,6 +72,7 @@ const LocationsLayout = () => {
     }
   }, [selectedLocation, retrieveLocations]);
 
+  
   return (
     <Box>
       {locations?.length > 0 && (

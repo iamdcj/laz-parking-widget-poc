@@ -4,27 +4,28 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import ErrorNotice from "./ErrorNotice";
-import { DatePicker } from "@mui/x-date-pickers";
 import StartEndSelector from "./DateTimePicker";
 
 const SeasonTickets = ({
   IsFEP = false,
   IsFAP = false,
   IsMPS = false,
+  IsMUP = false,
 }: {
   IsFEP?: boolean;
   IsFAP?: boolean;
   IsMPS?: boolean;
+  IsMUP?: boolean;
 }) => {
   const {
-    state: { rate, selectedLocation, isLoading, seasonTickets },
+    state: { rate, selectedMode, isLoading, seasonTickets },
     dispatch,
   } = useAppContext();
   const { retrieveSeasonTickets } = useApi();
 
   useEffect(() => {
-    retrieveSeasonTickets({ IsFEP, IsFAP, IsMPS });
-  }, [selectedLocation]);
+    retrieveSeasonTickets({ IsFEP, IsFAP, IsMPS, IsMUP });
+  }, [selectedMode]);
 
   if (isLoading || !seasonTickets) {
     return null;

@@ -72,23 +72,32 @@ const useApi = () => {
       IsMPS = false,
       IsFEP = false,
       IsFAP = false,
+      IsMUP = false,
     }: {
+      IsMUP?: boolean;
       IsMPS?: boolean;
       IsFEP?: boolean;
       IsFAP?: boolean;
     }) => {
       dispatch({ type: Actions.LOADING, payload: true });
 
-      try {
-        const data = await fetchData(IsMPS ? 'passes' : "seasontickets", {
-          agentId,
-          eDataLocationId: locationIds?.split(","),
-          evid: selectedEvent,
-          WidgetKey: widgetkey,
+      let params: Record<string, string | boolean> = {
+        eDataLocationId: locationIds?.split(","),
+        WidgetKey: widgetkey,
+      };
+
+      if(!IsMUP) {
+        params = {
+          ...params,
           IsMPS,
           IsFEP,
           IsFAP,
-        });
+          agentId
+        }
+      }
+
+      try {
+        const data = await fetchData(IsMUP ? "passes" : "seasontickets", params);
 
         dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });
 
