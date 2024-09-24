@@ -32,7 +32,7 @@ const SeasonTickets = ({
   }
 
   if (!isLoading && seasonTickets && seasonTickets.length < 1) {
-    return <ErrorNotice error="Unable to retrieve time increments" />;
+    return <ErrorNotice error="Unable to retrieve pass data" />;
   }
 
   return (

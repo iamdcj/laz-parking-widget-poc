@@ -4,17 +4,17 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { updateParams } from "../variants/utils/location";
 import useApi from "../hooks/useApi";
+import ErrorNotice from "./ErrorNotice";
 
 const EventPicker = () => {
-  const { retrieveEvents } = useApi()
+  const { retrieveEvents } = useApi();
   const {
-    state: { events, hideEventDateTime, selectedLocation  },
+    state: { events, hideEventDateTime, selectedLocation, isLoading },
     dispatch,
   } = useAppContext();
 
-
   useEffect(() => {
-    retrieveEvents(selectedLocation)
+    retrieveEvents(selectedLocation);
   }, [selectedLocation]);
 
   const handleOnEventChange = (
@@ -30,8 +30,12 @@ const EventPicker = () => {
     }
   };
 
-  if (!events) {
+  if (isLoading || !events) {
     return null;
+  }
+
+  if (!isLoading && events && events.length < 1) {
+    return <ErrorNotice error="Unable to retrieve events data" />;
   }
 
   return (
