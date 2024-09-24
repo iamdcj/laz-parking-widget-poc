@@ -65,7 +65,7 @@ const useApi = () => {
     } catch (error) {
       dispatch({ type: Actions.LOADING, payload: false });
     }
-  }, [locationIds]);
+  }, [selectedEvent, locationIds]);
 
   const retrieveSeasonTickets = useCallback(
     async ({
