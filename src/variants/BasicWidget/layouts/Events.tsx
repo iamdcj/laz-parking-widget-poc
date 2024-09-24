@@ -42,7 +42,6 @@ const EventsLayout = () => {
   return (
     <Box>
       {events?.length > 0 && <EventPicker />}
-
       {locations?.length > 0 && (
         <>
           {useMap && (

@@ -11,6 +11,8 @@ import { Mode } from "../../../../types";
 import ModePicker from "../../../components/ModePicker";
 import { returnModes } from "../../../utils/misc";
 import { constructBuyLink } from "../../../utils/urls";
+import { APIProvider } from "@vis.gl/react-google-maps";
+import LazMap from "../../../components/Map";
 
 const Components = {
   TMD: <DateTimePicker />,
@@ -34,6 +36,7 @@ const LocationsLayout = () => {
       dataModeOverwrite,
       agentId,
       salesChannelKey,
+      useMap,
     },
     dispatch,
   } = useAppContext();
@@ -70,7 +73,16 @@ const LocationsLayout = () => {
 
   return (
     <Box>
-      {locations?.length > 0 && <LocationPicker />}
+      {locations?.length > 0 && (
+        <>
+          <LocationPicker />
+          {useMap && (
+            <APIProvider apiKey="">
+              <LazMap />
+            </APIProvider>
+          )}
+        </>
+      )}
       <Box>
         {modes && modes.length === 1 ? (
           Components[selectedMode as Mode]
