@@ -20,6 +20,7 @@ const Components = {
   EVT: <EventPicker />,
   PST: <DurationSelector />,
   FEP: <SeasonTickets IsFEP />,
+  FEX: <SeasonTickets IsFEP />,
   FAP: <SeasonTickets IsFAP />,
   MUP: <SeasonTickets IsMPS />,
 };
@@ -59,10 +60,6 @@ const LocationsLayout = () => {
       if (dataModeOverwrite && dataMode) {
         dispatch({
           type: Actions.SET_MODES,
-          payload: [dataMode],
-        });
-        dispatch({
-          type: Actions.SELECTED_MODE,
           payload: dataMode,
         });
       } else {

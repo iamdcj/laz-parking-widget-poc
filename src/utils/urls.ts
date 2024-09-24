@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 import { returnTimes } from "./time";
 
-type Modes = "PST" | "TMD" | "EVT" | "MUP" | "MPS" | "FAP" | "FEP";
+type Modes = "PST" | "TMD" | "EVT" | "MUP" | "MPS" | "FAP" | "FEP" | "FEX";
 
 enum modeToWt {
   "PST" = "tmd",
@@ -11,6 +11,7 @@ enum modeToWt {
   "MPS" = "mps",
   "FAP" = "fap",
   "FEP" = "fex",
+  "FEX" = "fex",
 }
 
 type DateTime = string | Dayjs | null;

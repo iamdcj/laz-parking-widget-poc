@@ -16,7 +16,7 @@ export interface Settings {
   template: string;
   useFullWidget: boolean;
   dataModeOverwrite: boolean;
-  dataMode: string;
+  dataMode: string[] | string;
   startTime: string;
   endTime: string;
   currentPage: string;
@@ -37,7 +37,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   mapLng: Number(element?.dataset?.mapplacelng || 0), // default map lng
   hideEventDateTime: !!element?.dataset?.hideEventDate, // hide event listing date-time
   dataModeOverwrite: !!element?.dataset?.modeOverwrite, // use dataMode 
-  dataMode: element?.dataset?.mode || "", // specify the mode
+  dataMode: element?.dataset?.mode?.split('/') || "", // specify the mode
   salesChannelKey: element?.dataset?.sc || "", // pass as sc param to checkout
   agentId: element?.dataset?.agentid || "", // pass as aid param to checkout 
   // ---- TODO: determine the use cases for the following: //
