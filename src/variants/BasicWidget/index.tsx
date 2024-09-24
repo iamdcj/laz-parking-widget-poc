@@ -5,10 +5,10 @@ import LocationsLayout from "./layouts/Locations";
 
 const BasicWidget = () => {
   const {
-    state: { widgetKey },
+    state: { eventDriven },
   } = useAppContext();
 
-  return widgetKey ? <EventsLayout /> : <LocationsLayout />;
+  return eventDriven ? <EventsLayout /> : <LocationsLayout />;
 };
 
 export default BasicWidget;

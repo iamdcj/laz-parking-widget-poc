@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 import { returnTimes } from "./time";
 
-type Modes = "PST" | "TMD" | "EVT" | "MUP" | "MPS" | "FAP" | "FEX";
+type Modes = "PST" | "TMD" | "EVT" | "MUP" | "MPS" | "FAP" | "FEP";
 
 enum modeToWt {
   "PST" = "tmd",
@@ -10,7 +10,7 @@ enum modeToWt {
   "MUP" = "mup",
   "MPS" = "mps",
   "FAP" = "fap",
-  "FEX" = "fex",
+  "FEP" = "fex",
 }
 
 type DateTime = string | Dayjs | null;
@@ -22,8 +22,9 @@ export const constructBuyLink = ({
   mode,
   duration,
   times,
-  agentId,
-  salesChannelKey
+  agentId = "",
+  salesChannelKey = "",
+  rate = "",
 }: {
   times?: {
     start: DateTime;
@@ -36,7 +37,10 @@ export const constructBuyLink = ({
   mode?: string;
   salesChannelKey?: string;
   agentId?: string;
+  rate?: string;
 }) => {
+  console.log(rate);
+
   const cleanDuration = duration?.replace(/[MH]/g, "");
   const { start = "", end = "" } = returnTimes(times, duration);
   const params = new URLSearchParams({
@@ -49,8 +53,9 @@ export const constructBuyLink = ({
     duration: cleanDuration || "",
     start: start?.toString() || "",
     end: end?.toString() || "",
-    sc: salesChannelKey || "",
-    aid: agentId || "",
+    sc: salesChannelKey,
+    aid: agentId,
+    rid: rate,
   });
 
   return `https://go.lazparking.com/buynow?${params}`;

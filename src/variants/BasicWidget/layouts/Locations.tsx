@@ -13,11 +13,13 @@ import { returnModes } from "../../../utils/misc";
 import { constructBuyLink } from "../../../utils/urls";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import LazMap from "../../../components/Map";
+import FixedExpiryPermits from "../../../components/FixedExpiryPermits";
 
 const Components = {
   TMD: <DateTimePicker />,
   EVT: <EventPicker />,
   PST: <DurationSelector />,
+  FEP: <FixedExpiryPermits />,
 };
 
 const LocationsLayout = () => {
@@ -37,6 +39,7 @@ const LocationsLayout = () => {
       agentId,
       salesChannelKey,
       useMap,
+      rate,
     },
     dispatch,
   } = useAppContext();
@@ -51,6 +54,7 @@ const LocationsLayout = () => {
     if (!selectedLocation) {
       dispatch({ type: Actions.RESET_EVENTS });
     } else {
+      debugger;
       if (dataModeOverwrite && dataMode) {
         dispatch({
           type: Actions.SET_MODES,
@@ -66,10 +70,10 @@ const LocationsLayout = () => {
           payload: returnModes(locations, selectedLocation),
         });
       }
-
-      retrieveEvents(selectedLocation);
     }
   }, [selectedLocation, retrieveLocations]);
+
+  console.log(modes);
 
   return (
     <Box>
@@ -85,7 +89,7 @@ const LocationsLayout = () => {
       )}
       <Box>
         {modes && modes.length === 1 ? (
-          Components[selectedMode as Mode]
+          Components[modes[0] as Mode]
         ) : (
           <>
             <ModePicker />
@@ -96,6 +100,7 @@ const LocationsLayout = () => {
       <div>
         {(selectedEvent ||
           selectedTime ||
+          rate ||
           selectedDuration ||
           (times?.start && times?.end)) && (
           <Button
@@ -105,10 +110,11 @@ const LocationsLayout = () => {
               selectedLocation,
               selectedEvent,
               widgetKey,
-              mode: selectedMode,
+              mode: modes && modes.length === 1 ? modes[0] : selectedMode,
               times,
               agentId,
               salesChannelKey,
+              rate
             })}
             variant="outlined"
             fullWidth

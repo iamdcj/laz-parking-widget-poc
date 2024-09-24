@@ -14,12 +14,15 @@ export interface InitialState {
   selectedMode: string;
   selectedLocation: string;
   focusedLocation: string;
+  seasonTickets: null | any[];
+  rate: string;
 }
 
 export const initialState: InitialState = {
   isLoading: false,
   locations: [],
   events: [],
+  seasonTickets: [],
   times: {
     start: null,
     end: null,
@@ -32,6 +35,7 @@ export const initialState: InitialState = {
   selectedMode: "",
   selectedLocation: "",
   focusedLocation: "",
+  rate: "",
 };
 
 export enum Actions {
@@ -48,6 +52,8 @@ export enum Actions {
   SET_DURATION = "SET_DURATION",
   SET_START_TIME = "SET_START_TIME",
   SET_END_TIME = "SET_END_TIME",
+  SET_SEASON_TICKETS = "SET_SEASON_TICKETS",
+  SET_RATE = "SET_RATE",
 }
 
 export const appReducer = (
@@ -148,6 +154,18 @@ export const appReducer = (
           ...state.times,
           end: payload,
         },
+      };
+    case Actions.SET_SEASON_TICKETS:
+      return {
+        ...state,
+        isLoading: false,
+        seasonTickets: payload,
+      };
+
+    case Actions.SET_RATE:
+      return {
+        ...state,
+        rate: payload,
       };
     default:
       return initialState;
