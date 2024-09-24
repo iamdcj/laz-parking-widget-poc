@@ -80,7 +80,7 @@ const useApi = () => {
       dispatch({ type: Actions.LOADING, payload: true });
 
       try {
-        const data = await fetchData("seasontickets", {
+        const data = await fetchData(IsMPS ? 'passes' : "seasontickets", {
           agentId,
           eDataLocationId: locationIds?.split(","),
           evid: selectedEvent,

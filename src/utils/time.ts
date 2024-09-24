@@ -9,7 +9,7 @@ export const returnTimes = (
 ) => {
   if (duration) {
     const now = new Date();
-    const end = new Date();
+    let end = new Date();
     let durationCalculatuon = 0;
 
     if (duration.includes("M")) {
@@ -18,11 +18,21 @@ export const returnTimes = (
       durationCalculatuon = Number(duration.replace("H", "")) * 60;
     }
 
+    end = new Date(end.setMinutes(end.getMinutes() + durationCalculatuon));
+
     return {
       start: now,
-      end: new Date(end.setMinutes(end.getMinutes() + durationCalculatuon)),
+      end,
     };
-  } else if (times) {
+  } else if (times.start && !times.end) {
+    let end = new Date(times.start as string);
+    end = new Date(end.setMinutes(end.getMinutes() + 120));
+
+    return {
+      start: times.start,
+      end,
+    };
+  } else if (times.start && times.end) {
     return times;
   }
 

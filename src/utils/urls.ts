@@ -39,8 +39,6 @@ export const constructBuyLink = ({
   agentId?: string;
   rate?: string;
 }) => {
-  console.log(rate);
-
   const cleanDuration = duration?.replace(/[MH]/g, "");
   const { start = "", end = "" } = returnTimes(times, duration);
   const params = new URLSearchParams({

@@ -13,13 +13,15 @@ import { returnModes } from "../../../utils/misc";
 import { constructBuyLink } from "../../../utils/urls";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import LazMap from "../../../components/Map";
-import FixedExpiryPermits from "../../../components/FixedExpiryPermits";
+import SeasonTickets from "../../../components/SeasonTickets";
 
 const Components = {
   TMD: <DateTimePicker />,
   EVT: <EventPicker />,
   PST: <DurationSelector />,
-  FEP: <FixedExpiryPermits />,
+  FEP: <SeasonTickets IsFEP />,
+  FAP: <SeasonTickets IsFAP />,
+  MUP: <SeasonTickets IsMPS />,
 };
 
 const LocationsLayout = () => {
@@ -72,8 +74,6 @@ const LocationsLayout = () => {
       }
     }
   }, [selectedLocation, retrieveLocations]);
-
-  console.log(modes);
 
   return (
     <Box>

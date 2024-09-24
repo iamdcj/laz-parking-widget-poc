@@ -3,10 +3,11 @@ enum Endpoints {
   events = "events",
   time_increments = "locations/timeincrements",
   seasontickets = "locations/seasontickets",
+  passes = "locations/GetPasses",
 }
 
 export const fetchData = async (
-  type: "locations" | "events" | "time_increments" | "seasontickets",
+  type: "locations" | "events" | "time_increments" | "seasontickets" | "passes",
   params: Record<string, any>
 ) => {
   const searchParams = new URLSearchParams(params);

@@ -7,7 +7,7 @@ import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 
-const StartEndSelector = () => {
+const StartEndSelector = ({ hideEnd = false }) => {
   const [endStart, setEndStart] = useState(false);
   const {
     state: {
@@ -41,28 +41,30 @@ const StartEndSelector = () => {
           }
           onClose={onStartClose}
         />
-        <DateTimePicker
-          slotProps={{ textField: { size: "small" } }}
-          disablePast
-          label="End"
-          views={["year", "day", "hours", "minutes"]}
-          timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
-          minDateTime={start?.add(30, "minutes") || null}
-          skipDisabled
-          value={end}
-          open={endStart}
-          disabled={!start}
-          onOpen={() => setEndStart(true)}
-          viewRenderers={{
-            hours: renderDigitalClockTimeView,
-            minutes: null,
-            seconds: null,
-          }}
-          onChange={(date) => {
-            dispatch({ type: Actions.SET_END_TIME, payload: date });
-            setEndStart(false);
-          }}
-        />
+        {!hideEnd && (
+          <DateTimePicker
+            slotProps={{ textField: { size: "small" } }}
+            disablePast
+            label="End"
+            views={["year", "day", "hours", "minutes"]}
+            timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
+            minDateTime={start?.add(30, "minutes") || null}
+            skipDisabled
+            value={end}
+            open={endStart}
+            disabled={!start}
+            onOpen={() => setEndStart(true)}
+            viewRenderers={{
+              hours: renderDigitalClockTimeView,
+              minutes: null,
+              seconds: null,
+            }}
+            onChange={(date) => {
+              dispatch({ type: Actions.SET_END_TIME, payload: date });
+              setEndStart(false);
+            }}
+          />
+        )}
       </Box>
     </LocalizationProvider>
   );
