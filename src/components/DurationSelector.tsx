@@ -20,12 +20,12 @@ const DurationSelector = () => {
     return null;
   }
 
-  if (!isLoading && (timeIncrements && timeIncrements.length < 1)) {
+  if (!isLoading && timeIncrements && timeIncrements.length < 1) {
     return <ErrorNotice error="Unable to retrieve time increments" />;
   }
 
   return (
-    <FormControl fullWidth sx={{ mb: 3 }}>
+    <FormControl fullWidth sx={{ mb: 3 }} size="small">
       <InputLabel id="location">Select Duration</InputLabel>
       <Select
         labelId="location"

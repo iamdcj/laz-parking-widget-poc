@@ -23,12 +23,13 @@ const EventPicker = () => {
     }
   };
 
-  if(!events) {
-    return null
+  if (!events) {
+    return null;
   }
 
   return (
     <Autocomplete
+      size="small"
       disablePortal
       onChange={handleOnEventChange}
       renderOption={(props, option) => {

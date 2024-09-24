@@ -24,6 +24,7 @@ const StartEndSelector = () => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box display="grid" gridTemplateColumns="1fr" gap={2} mb={3}>
         <DateTimePicker
+          slotProps={{ textField: { size: "small" } }}
           disablePast
           label="Start"
           views={["year", "day", "hours", "minutes"]}
@@ -41,6 +42,7 @@ const StartEndSelector = () => {
           onClose={onStartClose}
         />
         <DateTimePicker
+          slotProps={{ textField: { size: "small" } }}
           disablePast
           label="End"
           views={["year", "day", "hours", "minutes"]}
