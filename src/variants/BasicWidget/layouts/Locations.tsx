@@ -99,6 +99,7 @@ const LocationsLayout = () => {
           selectedDuration ||
           (times?.start && times?.end)) && (
           <Button
+            id="btnGetRate"
             href={constructBuyLink({
               duration: selectedDuration,
               selectedLocation,

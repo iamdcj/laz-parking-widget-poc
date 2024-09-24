@@ -22,6 +22,7 @@ export interface Settings {
   currentPage: string;
   eventDriven: boolean;
   salesChannelKey: string;
+  styles?: string;
 }
 
 export const returnInitialConfig = (element: HTMLElement): Settings => ({

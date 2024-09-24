@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { AdvancedMarker, Map } from "@vis.gl/react-google-maps";
 import { useMapSetup } from "../variants/utils/maps";
-import { Box, Button, Icon } from "@mui/material";
+import { Box, Button, Icon, useTheme } from "@mui/material";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
-import { theme } from "../theme";
 import Icons from "./Icons";
 
 const LazMap = () => {
@@ -23,6 +22,7 @@ const LazMap = () => {
   } = useAppContext();
   const [center, recenter] = useMapSetup();
   const [zoomLevel, setZoomLevel] = useState(mapZoom);
+  const theme = useTheme();
 
   useEffect(() => {
     if (!selectedEvent) {

@@ -20,7 +20,7 @@ const EventsLayout = () => {
       useMap,
       widgetKey,
       agentId,
-      salesChannelKey
+      salesChannelKey,
     },
     dispatch,
   } = useAppContext();
@@ -55,12 +55,13 @@ const EventsLayout = () => {
       <div>
         {selectedLocation && (
           <Button
+            id="btnGetRate"
             href={constructBuyLink({
               selectedLocation,
               selectedEvent,
               widgetKey,
               agentId,
-              salesChannelKey
+              salesChannelKey,
             })}
             variant="outlined"
             fullWidth

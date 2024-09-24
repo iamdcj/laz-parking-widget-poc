@@ -5,6 +5,7 @@ import Icons from "./Icons";
 const Header = ({ headerText }: { headerText: string }) => {
   return (
     <Box
+      id="LAZ_WidgetHeader"
       sx={{
         display: "flex",
         justifyContent: "center",
