@@ -31,7 +31,7 @@ const LazMap = () => {
         payload: null,
       });
     }
-  }, [selectedEvent]);
+  }, [selectedEvent?.id]);
 
   return (
     <Map

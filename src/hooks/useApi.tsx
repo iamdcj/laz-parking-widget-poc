@@ -60,7 +60,7 @@ const useApi = () => {
         cleanObject({
           ArrayeDataLocationId: locationIds?.split(","),
           ClientId,
-          evid: selectedEvent,
+          evid: selectedEvent?.id,
           widgetkey,
         })
       );
@@ -73,7 +73,7 @@ const useApi = () => {
     } catch (error) {
       dispatch({ type: Actions.LOADING, payload: false });
     }
-  }, [selectedEvent, locationIds]);
+  }, [selectedEvent?.id, locationIds]);
 
   const retrieveSeasonTickets = useCallback(
     async ({

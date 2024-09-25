@@ -1,19 +1,27 @@
 import { Autocomplete, TextField } from "@mui/material";
-import React, { SyntheticEvent, useEffect } from "react";
+import React, { memo, SyntheticEvent, useEffect } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { updateParams } from "../variants/utils/location";
 import useApi from "../hooks/useApi";
 import ErrorNotice from "./ErrorNotice";
 
-const EventPicker = () => {
+const EventPicker = memo(() => {
   const { retrieveEvents } = useApi();
   const {
-    state: { events, hideEventDateTime, selectedLocation, isLoading },
+    state: {
+      events,
+      hideEventDateTime,
+      selectedLocation,
+      selectedEvent,
+      eventDriven,
+    },
     dispatch,
   } = useAppContext();
 
   useEffect(() => {
+    if (!selectedLocation) return;
+
     retrieveEvents(selectedLocation);
   }, [selectedLocation]);
 
@@ -22,21 +30,13 @@ const EventPicker = () => {
     data: Record<string, any>
   ) => {
     if (data?.id) {
-      dispatch({ type: Actions.SELECTED_EVENT, payload: data?.id });
+      dispatch({ type: Actions.SELECTED_EVENT, payload: data });
       updateParams("event", data?.id, true);
     } else {
       dispatch({ type: Actions.SELECTED_EVENT, payload: null });
       updateParams(null, null, true);
     }
   };
-
-  if (isLoading || !events) {
-    return null;
-  }
-
-  if (!isLoading && events && events.length < 1) {
-    return <ErrorNotice error="Unable to retrieve events data" />;
-  }
 
   return (
     <Autocomplete
@@ -50,6 +50,7 @@ const EventPicker = () => {
           </li>
         );
       }}
+      value={selectedEvent?.label || ""}
       sx={{ mb: 2 }}
       options={events.map(
         ({
@@ -82,6 +83,6 @@ const EventPicker = () => {
       renderInput={(params) => <TextField {...params} label="Select Event" />}
     />
   );
-};
+});
 
 export default EventPicker;

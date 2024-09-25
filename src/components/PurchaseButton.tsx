@@ -3,9 +3,7 @@ import { Button } from "@mui/material";
 import { useAppContext } from "../context";
 import { constructBuyLink } from "../utils/urls";
 
-const PurchaseButton = ({
-    label = "Get Rates"
-}) => {
+const PurchaseButton = ({ label = "Get Rates" }) => {
   const {
     state: {
       selectedEvent,
@@ -18,12 +16,12 @@ const PurchaseButton = ({
       agentId,
       salesChannelKey,
       rate,
-      canPurchase = false
+      canPurchase = false,
     },
   } = useAppContext();
 
-  if(!canPurchase) {
-    return null
+  if (!canPurchase) {
+    return null;
   }
 
   return (
@@ -32,7 +30,7 @@ const PurchaseButton = ({
       href={constructBuyLink({
         duration: selectedDuration,
         l: selectedLocation,
-        evid: selectedEvent,
+        evid: selectedEvent?.id,
         wk: widgetKey,
         mode: modes && modes.length === 1 ? modes[0] : selectedMode,
         times,

@@ -243,7 +243,7 @@ describe("returnInitialConfig", () => {
     });
   });
 
-  it("Overrides", () => {
+  it("Mode Overwrites", () => {
     document.body.innerHTML = `
     <div id="LAZ_Widget" class="parkingwidget" data-locationid="53582" data-arrive="0" data-depart="120" data-header="true" data-wk="adfd1bb28c7544d3866eb2bbaa35bb91" style="height: 40%;" data-mode-overwrite="true" data-mode="PST/TMD/EVT/MUP/MPS/FAP/FEP/FEX" ></div>
   `;
@@ -259,6 +259,67 @@ describe("returnInitialConfig", () => {
       locationIds: "53582",
       modes: ["PST", "TMD", "EVT", "MUP", "MPS", "FAP", "FEP", "FEX"],
       modeOverwrite: true,
+      widgetKey: "adfd1bb28c7544d3866eb2bbaa35bb91",
+    });
+  });
+
+  it("Complete config", () => {
+    document.body.innerHTML = `
+      <div 
+        id="LAZ_Widget"
+        data-agentid="53032676-a079-4387-b5e4-880929067768"
+        data-arrive="0" 
+        data-clientid="aa02ffab-9c45-4a6b-8c1d-1221d86373f9"
+        data-currentpage="true"
+        data-depart="120" 
+        data-endtime="14:00"
+        data-eventdriven="true"
+        data-fullwidget="true"
+        data-header-text="LAZ"
+        data-header="true" 
+        data-hide-event-date="true"
+        data-locationid="53582"
+        data-map="true"
+        data-mapplacelat="40.741112"
+        data-mapplacelng="-73.989723"
+        data-mapplacetxt="LAZ"
+        data-mapzoom="12"
+        data-mode-overwrite="true" 
+        data-mode="PST"
+        data-sc="df25f7a2-6e23-4359-8d9e-82a748e435bd"
+        data-starttime="12:00"
+        data-template="test"
+        data-wk="adfd1bb28c7544d3866eb2bbaa35bb91"
+      >
+      </div>
+  `;
+
+    const _RootElement = document.getElementById("LAZ_Widget");
+    const config = returnInitialConfig(_RootElement);
+
+    expect(config).toEqual({
+      agentId: "53032676-a079-4387-b5e4-880929067768",
+      arriveOffset: 0,
+      clientId: "aa02ffab-9c45-4a6b-8c1d-1221d86373f9",
+      currentPage: true,
+      departOffset: 120,
+      endTime: "14:00",
+      eventDriven: true,
+      headerText: "LAZ",
+      hideEventDateTime: true,
+      isHeaderEnabled: true,
+      locationIds: "53582",
+      mapLat: 40.741112,
+      mapLng: -73.989723,
+      mapTxt: "LAZ",
+      mapZoom: 12,
+      modeOverwrite: true,
+      modes: ["PST"],
+      salesChannelKey: "df25f7a2-6e23-4359-8d9e-82a748e435bd",
+      startTime: "12:00",
+      template: "test",
+      useFullWidget: true,
+      useMap: true,
       widgetKey: "adfd1bb28c7544d3866eb2bbaa35bb91",
     });
   });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useAppContext } from "../context";
 import MapWidget from "../variants/MapWidget";
 import BasicWidget from "../variants/BasicWidget";

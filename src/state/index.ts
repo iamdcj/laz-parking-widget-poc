@@ -124,7 +124,7 @@ export const appReducer = (
       return {
         ...state,
         selectedEvent: payload,
-        canPurchase: true,
+        canPurchase: payload && state.selectedLocation ? true : false,
       };
     case Actions.SET_TIME_INCREMENTS:
       return {
@@ -148,6 +148,7 @@ export const appReducer = (
       return {
         ...state,
         selectedLocation: payload,
+        canPurchase: state.eventDriven && payload ? true : false,
       };
     case Actions.FOCUSED_LOCATION:
       return {
