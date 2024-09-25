@@ -16,10 +16,6 @@ const StartEndSelector = ({ hideEnd = false }) => {
     dispatch,
   } = useAppContext();
 
-  const onStartClose = () => {
-    setEndStart(true);
-  };
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box display="grid" gridTemplateColumns="1fr" gap={2} mb={3}>
@@ -39,7 +35,7 @@ const StartEndSelector = ({ hideEnd = false }) => {
           onChange={(date) =>
             dispatch({ type: Actions.SET_START_TIME, payload: date })
           }
-          onClose={onStartClose}
+          onClose={() => setEndStart(true)}
         />
         {!hideEnd && (
           <DateTimePicker
