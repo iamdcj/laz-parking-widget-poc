@@ -8,17 +8,12 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 
 const StartEndSelector = ({ hideEnd = false }) => {
-  const [endStart, setEndStart] = useState(false);
   const {
     state: {
       times: { start, end },
     },
     dispatch,
   } = useAppContext();
-
-  const onStartClose = () => {
-    setEndStart(true);
-  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -39,7 +34,6 @@ const StartEndSelector = ({ hideEnd = false }) => {
           onChange={(date) =>
             dispatch({ type: Actions.SET_START_TIME, payload: date })
           }
-          onClose={onStartClose}
         />
         {!hideEnd && (
           <DateTimePicker
@@ -51,9 +45,7 @@ const StartEndSelector = ({ hideEnd = false }) => {
             minDateTime={start?.add(30, "minutes") || null}
             skipDisabled
             value={end}
-            open={endStart}
             disabled={!start}
-            onOpen={() => setEndStart(true)}
             viewRenderers={{
               hours: renderDigitalClockTimeView,
               minutes: null,
@@ -61,7 +53,6 @@ const StartEndSelector = ({ hideEnd = false }) => {
             }}
             onChange={(date) => {
               dispatch({ type: Actions.SET_END_TIME, payload: date });
-              setEndStart(false);
             }}
           />
         )}
