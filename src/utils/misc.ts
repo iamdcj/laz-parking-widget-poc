@@ -16,7 +16,7 @@ export interface AppDefaults {
   dataMode: string[] | string;
   startTime: string;
   endTime: string;
-  currentPage: string;
+  currentPage: boolean;
   eventDriven: boolean;
   salesChannelKey: string;
 }
@@ -47,12 +47,16 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   // ---- TODO: determine the use cases for the following: //
   startTime: element?.dataset?.starttime || null, // set the default start time of the widget (what is the format)
   endTime: element?.dataset?.endtime || null, // set the default end time of the widget (what is the format)
-  arriveOffset: Number(element?.dataset?.arrive), // offset in minutes (need use case)
-  departOffset: Number(element?.dataset?.depart), // offset in minutes (need use case)
+  arriveOffset: element?.dataset?.arrive
+    ? Number(element.dataset.arrive)
+    : null, // offset in minutes (need use case)
+  departOffset: element?.dataset?.depart
+    ? Number(element.dataset.depart)
+    : null, // offset in minutes (need use case)
   template: element?.dataset?.template || null, // load template and stub style sheet based on iso language code (need examples)
   useFullWidget: !!element?.dataset?.fullwidget, // set whether or not to open the full widget url in a new window or to change the current url (example)
   mapTxt: element?.dataset?.mapplacetxt || null, //! tbd
-  currentPage: element?.dataset?.currentpage || null, // Get the widget key (not sure about this one)
+  currentPage: !!element?.dataset?.currentpage, // Get the widget key (not sure about this one)
 });
 
 export const returnModes = (locations: any[], selectedLocation: string) =>
