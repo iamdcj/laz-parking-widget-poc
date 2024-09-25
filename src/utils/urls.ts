@@ -16,46 +16,75 @@ enum modeToWt {
 
 type DateTime = string | Dayjs | null;
 
-export const constructBuyLink = ({
-  selectedLocation,
-  selectedEvent,
-  widgetKey,
-  mode,
-  duration,
-  times,
-  agentId = "",
-  salesChannelKey = "",
-  rate = "",
-}: {
+interface Params {
   times?: {
     start: DateTime;
     end: DateTime;
   };
-  selectedLocation: string;
   duration?: string;
-  selectedEvent?: string;
   widgetKey?: string;
   mode?: string;
-  salesChannelKey?: string;
-  agentId?: string;
   rate?: string;
-}) => {
-  const cleanDuration = duration?.replace(/[MH]/g, "");
-  const { start = "", end = "" } = returnTimes(times, duration);
-  const params = new URLSearchParams({
-    l: selectedLocation,
-    t: selectedEvent ? "e" : "r",
-    wt: selectedEvent ? "evt" : modeToWt[mode as Modes],
-    evid: selectedEvent,
+  l?: string;
+  evid?: string;
+  wk?: string;
+  aid?: string;
+  sc?: string;
+}
+
+export const constructBuyLink = (data: Params) => {
+  const { times, mode, ...params } = data;
+  const { start = "", end = "" } = returnTimes(times, params.duration);
+  const urlParams = new URLSearchParams({
+    t: params.evid ? "e" : "r",
+    wt: params.evid ? "evt" : modeToWt[mode as Modes],
     isocode: "EN",
-    wk: widgetKey,
-    duration: cleanDuration || "",
-    start: start?.toString() || "",
-    end: end?.toString() || "",
-    sc: salesChannelKey,
-    aid: agentId,
-    rid: rate,
+    ...returnParams({ ...params, start, end }),
   });
 
-  return `https://go.lazparking.com/buynow?${params}`;
+  return `https://go.lazparking.com/buynow?${urlParams}`;
+};
+
+interface UrlParams extends Params {
+  start: string | Dayjs | Date;
+  end: string | Dayjs | Date;
+}
+
+const transformDuration = (duration: string) => {
+  const cleanDuration = duration?.replace(/[MH]/g, "");
+
+  if (duration.includes("H")) {
+    return Number(cleanDuration) * 60;
+  } else {
+    return cleanDuration;
+  }
+};
+
+const returnParams = (data: UrlParams): Record<string, any> => {
+  let params = Object.fromEntries(
+    Object.entries(data).filter(([_, value]) => value)
+  );
+
+  if (params.duration) {
+    params = {
+      ...params,
+      duration: transformDuration(params.duration),
+    };
+  }
+
+  if (params.start) {
+    params = {
+      ...params,
+      start: params.start?.toString(),
+    };
+  }
+
+  if (params.end) {
+    params = {
+      ...params,
+      end: params.end?.toString(),
+    };
+  }
+
+  return params;
 };

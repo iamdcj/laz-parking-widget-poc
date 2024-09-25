@@ -57,11 +57,11 @@ const EventsLayout = () => {
           <Button
             id="btnGetRate"
             href={constructBuyLink({
-              selectedLocation,
-              selectedEvent,
-              widgetKey,
-              agentId,
-              salesChannelKey,
+              l: selectedLocation,
+              evid: selectedEvent,
+              wk: widgetKey,
+              aid:agentId,
+              sc: salesChannelKey,
             })}
             variant="outlined"
             fullWidth

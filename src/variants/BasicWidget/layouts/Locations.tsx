@@ -72,7 +72,6 @@ const LocationsLayout = () => {
     }
   }, [selectedLocation, retrieveLocations]);
 
-  
   return (
     <Box>
       {locations?.length > 0 && (
@@ -105,14 +104,14 @@ const LocationsLayout = () => {
             id="btnGetRate"
             href={constructBuyLink({
               duration: selectedDuration,
-              selectedLocation,
-              selectedEvent,
-              widgetKey,
+              l: selectedLocation,
+              evid: selectedEvent,
+              wk: widgetKey,
               mode: modes && modes.length === 1 ? modes[0] : selectedMode,
               times,
-              agentId,
-              salesChannelKey,
-              rate
+              aid: agentId,
+              sc: salesChannelKey,
+              rate,
             })}
             variant="outlined"
             fullWidth
