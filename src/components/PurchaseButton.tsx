@@ -20,10 +20,6 @@ const PurchaseButton = ({ label = "Get Rates" }) => {
     },
   } = useAppContext();
 
-  if (!canPurchase) {
-    return null;
-  }
-
   return (
     <Button
       id="btnGetRate"
@@ -36,12 +32,13 @@ const PurchaseButton = ({ label = "Get Rates" }) => {
         times,
         aid: agentId,
         sc: salesChannelKey,
-        rate,
+        rid: rate,
       })}
       variant="outlined"
       fullWidth
       target="_blank"
       rel="noreferer"
+      disabled={!canPurchase}
     >
       {label}
     </Button>

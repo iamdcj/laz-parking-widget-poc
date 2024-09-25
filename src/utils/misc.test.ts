@@ -103,7 +103,7 @@ describe("returnInitialConfig", () => {
       data-arrive="0"
       data-depart="120"
       data-header="true"
-      style="height: 40%; padding-top: 2px"
+      style="height: 40%; "
       data-currentpage="true"
       data-wk="43f0240938c64892b2efafd038297529"
     >
@@ -161,7 +161,7 @@ describe("returnInitialConfig", () => {
         data-depart="120"
         data-header="true"
         data-wk="7a67991af9754471aac3956b6e44a51a"
-        style="height: 40%; padding-top: 2px"
+        style="height: 40%; "
         data-currentpage="true"
       ></div>
   `;
@@ -190,7 +190,7 @@ describe("returnInitialConfig", () => {
       data-depart="120"
       data-header="true"
       data-wk="a4e6d05d8e9b45bcb4b8a068e0d72c0c"
-      style="height: 40%; padding-top: 2px"
+      style="height: 40%; "
       data-currentpage="true"
       data-eventdriven="true"
     ></div>
@@ -222,7 +222,7 @@ describe("returnInitialConfig", () => {
       data-depart="120"
       data-header="true"
       data-wk="cfa9fbe5239a41c1abff761dbe1008f0"
-      style="height: 40%; padding-top: 2px"
+      style="height: 40%; "
       data-currentpage="true"
       data-eventdriven="true"
     ></div>

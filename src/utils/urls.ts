@@ -7,7 +7,7 @@ enum modeToWt {
   "PST" = "tmd",
   "TMD" = "tmd",
   "EVT" = "evt",
-  "MUP" = "mup",
+  "MUP" = "pass",
   "FAP" = "fap",
   "FEP" = "fex",
   "FEX" = "fex",
@@ -23,7 +23,7 @@ interface Params {
   duration?: string;
   widgetKey?: string;
   mode?: string;
-  rate?: string;
+  rid?: string;
   l?: string;
   evid?: string;
   wk?: string;

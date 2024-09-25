@@ -55,7 +55,7 @@ describe("returnParams", () => {
     const UrlParams = returnParams({
       duration: "",
       widgetKey: null,
-      rate: null,
+      rid: null,
       l: null,
       evid: null,
       wk: null,
