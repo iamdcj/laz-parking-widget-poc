@@ -36,8 +36,8 @@ export const constructBuyLink = (data: Params) => {
   const { start = "", end = "" } = returnTimes(times, params.duration);
 
   const urlParams = new URLSearchParams({
-    t: params.evid ? "e" : "r",
-    wt: params.evid ? "evt" : modeToWt[mode as Modes],
+    t: params?.evid ? "e" : "r",
+    wt: params?.evid ? "evt" : modeToWt[mode as Modes],
     isocode: "EN",
     ...returnParams({ ...params, start, end }),
   });
@@ -50,22 +50,20 @@ interface UrlParams extends Params {
   end: string | Dayjs | Date;
 }
 
-const transformDuration = (duration: string) => {
+export const transformDuration = (duration: string) => {
   const cleanDuration = duration?.replace(/[MH]/g, "");
 
   if (duration.includes("H")) {
-    return Number(cleanDuration) * 60;
+    return (Number(cleanDuration) * 60).toString();
   } else {
     return cleanDuration;
   }
 };
 
-const returnParams = (data: UrlParams): Record<string, any> => {
+export const returnParams = (data: UrlParams): Record<string, any> => {
   let params = Object.fromEntries(
     Object.entries(data).filter(([_, value]) => value)
   );
-
-  debugger;
 
   if (params.duration) {
     params = {
@@ -77,14 +75,14 @@ const returnParams = (data: UrlParams): Record<string, any> => {
   if (params.start) {
     params = {
       ...params,
-      start: params.start?.toString(),
+      start: params.start.toString(),
     };
   }
 
   if (params.end) {
     params = {
       ...params,
-      end: params.end?.toString(),
+      end: params.end.toString(),
     };
   }
 
