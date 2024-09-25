@@ -43,6 +43,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   dataMode: element?.dataset?.mode?.split("/") || null, // specify the mode
   salesChannelKey: element?.dataset?.sc || null, // pass as sc param to checkout
   agentId: element?.dataset?.agentid || null, // pass as aid param to checkout
+  eventDriven: !!element?.dataset?.eventdriven, // if uses events
   // ---- TODO: determine the use cases for the following: //
   startTime: element?.dataset?.starttime || null, // set the default start time of the widget (what is the format)
   endTime: element?.dataset?.endtime || null, // set the default end time of the widget (what is the format)
@@ -52,7 +53,6 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   useFullWidget: !!element?.dataset?.fullwidget, // set whether or not to open the full widget url in a new window or to change the current url (example)
   mapTxt: element?.dataset?.mapplacetxt || null, //! tbd
   currentPage: element?.dataset?.currentpage || null, // Get the widget key (not sure about this one)
-  eventDriven: !!element?.dataset?.eventdriven, // need use case
 });
 
 export const returnModes = (locations: any[], selectedLocation: string) =>

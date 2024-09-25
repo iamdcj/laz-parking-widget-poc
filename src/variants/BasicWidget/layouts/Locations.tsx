@@ -30,20 +30,12 @@ const LocationsLayout = () => {
   const {
     state: {
       locations,
-      selectedEvent = "",
-      selectedLocation = "",
-      selectedDuration,
-      selectedTime,
-      widgetKey,
+      selectedLocation,
       modes,
-      times,
       selectedMode,
       dataMode,
       dataModeOverwrite,
-      agentId,
-      salesChannelKey,
       useMap,
-      rate,
     },
     dispatch,
   } = useAppContext();
