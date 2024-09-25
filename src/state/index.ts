@@ -1,7 +1,7 @@
 export interface InitialState {
   isLoading: boolean;
-  locations: any[];
-  events: any[];
+  locations: null | any[];
+  events: null | any[];
   times: {
     start: null;
     end: null;
@@ -10,7 +10,7 @@ export interface InitialState {
   duration: string;
   selectedDuration: string;
   timeIncrements: null | any[];
-  modes: string;
+  modes: null | string[];
   selectedMode: string;
   selectedLocation: string;
   focusedLocation: string;
@@ -20,19 +20,19 @@ export interface InitialState {
 
 export const initialState: InitialState = {
   isLoading: false,
-  locations: [],
-  events: [],
-  seasonTickets: [],
+  modes: null,
+  locations: null,
+  events: null,
+  seasonTickets: null,
+  timeIncrements: null,
   times: {
     start: null,
     end: null,
   },
+  selectedMode: "",
+  duration: "",
   selectedEvent: "",
   selectedDuration: "",
-  duration: "",
-  timeIncrements: null,
-  modes: "",
-  selectedMode: "",
   selectedLocation: "",
   focusedLocation: "",
   rate: "",
@@ -115,12 +115,13 @@ export const appReducer = (
     case Actions.SELECTED_MODE:
       return {
         ...state,
-        selectedDuration: "",
+        events: null,
+        seasonTickets: null,
+        timeIncrements: null,
         times: {
           end: null,
           start: null,
         },
-        selectedEvent: "",
         selectedMode: payload,
       };
     case Actions.SELECTED_LOCATION:
