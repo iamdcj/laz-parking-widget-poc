@@ -7,13 +7,13 @@ export interface AppDefaults {
   mapLat: number;
   mapLng: number;
   mapTxt: string;
+  modes: null | string[];
   hideEventDateTime: boolean;
   arriveOffset: number;
   departOffset: number;
   agentId: string;
   useFullWidget: boolean;
-  dataModeOverwrite: boolean;
-  dataMode: string[] | string;
+  modeOverwrite: boolean;
   startTime: string;
   endTime: string;
   currentPage: boolean;
@@ -39,8 +39,8 @@ export const returnInitialConfig = (element: HTMLElement): Settings => ({
   mapLat: Number(element?.dataset?.mapplacelat || 0), // default map lat
   mapLng: Number(element?.dataset?.mapplacelng || 0), // default map lng
   hideEventDateTime: !!element?.dataset?.hideEventDate, // hide event listing date-time
-  dataModeOverwrite: !!element?.dataset?.modeOverwrite, // use dataMode
-  dataMode: element?.dataset?.mode?.split("/") || null, // specify the mode
+  modeOverwrite: !!element?.dataset?.modeOverwrite, // use mode
+  modes: element?.dataset?.mode?.split("/") || null, // specify the mode
   salesChannelKey: element?.dataset?.sc || null, // pass as sc param to checkout
   agentId: element?.dataset?.agentid || null, // pass as aid param to checkout
   eventDriven: !!element?.dataset?.eventdriven, // if uses events

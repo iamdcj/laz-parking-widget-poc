@@ -7,19 +7,11 @@ import { APIProvider } from "@vis.gl/react-google-maps";
 import EventPicker from "../../../components/EventPicker";
 import LocationPicker from "../../../components/LocationPicker";
 import useApi from "../../../hooks/useApi";
-import { constructBuyLink } from "../../../utils/urls";
 import PurchaseButton from "../../../components/PurchaseButton";
 
 const EventsLayout = () => {
   const {
-    state: {
-      locations,
-      selectedEvent,
-      selectedLocation = "",
-      locationIds,
-      events,
-      useMap,
-    },
+    state: { locations, selectedEvent, locationIds, events, useMap },
     dispatch,
   } = useAppContext();
 

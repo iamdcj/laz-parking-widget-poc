@@ -9,8 +9,8 @@ const baseProperties: any = {
   arriveOffset: null,
   clientId: null,
   currentPage: false,
-  dataMode: null,
-  dataModeOverwrite: false,
+  modes: null,
+  modeOverwrite: false,
   departOffset: null,
   endTime: null,
   eventDriven: false,
@@ -26,6 +26,7 @@ const baseProperties: any = {
   template: null,
   useFullWidget: false,
   useMap: false,
+  widgetKey: null,
 };
 
 describe("returnInitialConfig", () => {
@@ -239,6 +240,26 @@ describe("returnInitialConfig", () => {
       currentPage: true,
       locationIds: "96529,96532,96533,96534,112137,112138,145583",
       widgetKey: "cfa9fbe5239a41c1abff761dbe1008f0",
+    });
+  });
+
+  it("Overrides", () => {
+    document.body.innerHTML = `
+    <div id="LAZ_Widget" class="parkingwidget" data-locationid="53582" data-arrive="0" data-depart="120" data-header="true" data-wk="adfd1bb28c7544d3866eb2bbaa35bb91" style="height: 40%;" data-mode-overwrite="true" data-mode="PST/TMD/EVT/MUP/MPS/FAP/FEP/FEX" ></div>
+  `;
+
+    const _RootElement = document.getElementById("LAZ_Widget");
+    const config = returnInitialConfig(_RootElement);
+
+    expect(config).toEqual({
+      ...baseProperties,
+      arriveOffset: 0,
+      departOffset: 120,
+      isHeaderEnabled: true,
+      locationIds: "53582",
+      modes: ["PST", "TMD", "EVT", "MUP", "MPS", "FAP", "FEP", "FEX"],
+      modeOverwrite: true,
+      widgetKey: "adfd1bb28c7544d3866eb2bbaa35bb91",
     });
   });
 });

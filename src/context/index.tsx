@@ -28,10 +28,9 @@ function AppProvider({
   value: AppDefaults;
   children: ReactNode;
 }) {
-  debugger;
   const [state, dispatch] = useReducer(appReducer, {
-    ...value,
     ...initialState,
+    ...value,
   });
 
   return (

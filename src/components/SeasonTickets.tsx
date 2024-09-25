@@ -24,6 +24,7 @@ const SeasonTickets = ({
   const { retrieveSeasonTickets } = useApi();
 
   useEffect(() => {
+    debugger;
     retrieveSeasonTickets({ IsFEP, IsFAP, IsMPS, IsMUP });
   }, [selectedMode]);
 

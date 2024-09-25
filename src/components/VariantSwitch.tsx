@@ -17,7 +17,7 @@ const VariantSwitch = () => {
 
   return (
     <Box padding={1}>
-      <Component />;
+      <Component />
     </Box>
   );
 };

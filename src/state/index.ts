@@ -12,7 +12,6 @@ export interface InitialState extends AppDefaults {
   duration: null | string;
   selectedDuration: null | string;
   timeIncrements: null | any[];
-  modes: null | string[];
   selectedMode: null | string;
   selectedLocation: null | string;
   focusedLocation: null | string;
@@ -30,8 +29,7 @@ export const initialState: InitialState = {
   mapLat: null,
   mapLng: null,
   hideEventDateTime: false,
-  dataModeOverwrite: false,
-  dataMode: null,
+  modeOverwrite: false,
   salesChannelKey: null,
   agentId: null,
   startTime: null,
@@ -43,7 +41,6 @@ export const initialState: InitialState = {
   currentPage: null,
   eventDriven: false,
   isLoading: false,
-  modes: null,
   locations: null,
   events: null,
   seasonTickets: null,
@@ -60,6 +57,7 @@ export const initialState: InitialState = {
   focusedLocation: null,
   rate: null,
   canPurchase: false,
+  modes: null,
 };
 
 export enum Actions {
@@ -101,6 +99,7 @@ export const appReducer = (
           end: null,
           start: null,
         },
+        seasonTickets: null,
         canPurchase: false,
         selectedMode: payload,
       };

@@ -1,4 +1,9 @@
-import { constructBuyLink, returnParams, transformDuration } from "./urls";
+import {
+  cleanObject,
+  constructBuyLink,
+  returnParams,
+  transformDuration,
+} from "./urls";
 
 describe("constructBuyLink", () => {
   it("only return the params for the data provided", () => {
@@ -28,6 +33,20 @@ describe("transformDuration", () => {
     const duration = transformDuration("30M");
 
     expect(duration).toEqual("30");
+  });
+});
+
+describe("cleanObject", () => {
+  it("return an empty object if all fields are falsy", () => {
+    const data = cleanObject({
+      foo: 1,
+      bar: 0,
+      baz: "oi",
+      qux: "hello",
+      quux: undefined,
+    });
+
+    expect(data).toEqual({ foo: 1, baz: "oi", qux: "hello" });
   });
 });
 

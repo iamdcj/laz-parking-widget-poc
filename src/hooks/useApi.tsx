@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { fetchData } from "../utils/api";
+import { cleanObject } from "../utils/urls";
 
 const useApi = () => {
   const {
@@ -21,11 +22,14 @@ const useApi = () => {
     dispatch({ type: Actions.LOADING, payload: true });
 
     try {
-      const data = await fetchData("events", {
-        eDataLocationId: locations,
-        widgetkey,
-        eventdriven,
-      });
+      const data = await fetchData(
+        "events",
+        cleanObject({
+          eDataLocationId: locations,
+          widgetkey,
+          eventdriven,
+        })
+      );
 
       dispatch({ type: Actions.SET_EVENTS, payload: data });
     } catch (error) {
@@ -51,12 +55,15 @@ const useApi = () => {
     dispatch({ type: Actions.LOADING, payload: true });
 
     try {
-      const data = await fetchData("locations", {
-        ClientId,
-        ArrayeDataLocationId: locationIds?.split(","),
-        evid: selectedEvent ? selectedEvent : "",
-        WidgetKey: widgetkey ? widgetkey : "",
-      });
+      const data = await fetchData(
+        "locations",
+        cleanObject({
+          ArrayeDataLocationId: locationIds?.split(","),
+          ClientId,
+          evid: selectedEvent,
+          widgetkey,
+        })
+      );
 
       dispatch({ type: Actions.SET_LOCATIONS, payload: data });
 
@@ -93,14 +100,14 @@ const useApi = () => {
           IsMPS,
           IsFEP,
           IsFAP,
-          agentId,
+          AgentId: agentId,
         };
       }
 
       try {
         const data = await fetchData(
           IsMUP ? "passes" : "seasontickets",
-          params
+          cleanObject(params)
         );
 
         dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });

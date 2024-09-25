@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAppContext } from "../../../context";
 import DateTimePicker from "../../../components/DateTimePicker";
 import EventPicker from "../../../components/EventPicker";
@@ -33,8 +33,7 @@ const LocationsLayout = () => {
       selectedLocation,
       modes,
       selectedMode,
-      dataMode,
-      dataModeOverwrite,
+      modeOverwrite,
       useMap,
     },
     dispatch,
@@ -50,10 +49,10 @@ const LocationsLayout = () => {
     if (!selectedLocation) {
       dispatch({ type: Actions.RESET_EVENTS });
     } else {
-      if (dataModeOverwrite && dataMode) {
+      if (modeOverwrite && modes) {
         dispatch({
           type: Actions.SET_MODES,
-          payload: dataMode,
+          payload: modes,
         });
       } else {
         dispatch({
