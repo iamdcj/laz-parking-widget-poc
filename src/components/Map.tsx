@@ -100,7 +100,7 @@ const LazMap = () => {
           </Button>
         </Box>
       </Box>
-      {locations?.length > 1 &&
+      {locations?.length > 0 &&
         locations.map(
           ({
             ID,
