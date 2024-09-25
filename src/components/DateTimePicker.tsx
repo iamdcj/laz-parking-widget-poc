@@ -8,6 +8,7 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 
 const StartEndSelector = ({ hideEnd = false }) => {
+  const [endStart, setEndStart] = useState(false);
   const {
     state: {
       times: { start, end },
@@ -15,13 +16,17 @@ const StartEndSelector = ({ hideEnd = false }) => {
     dispatch,
   } = useAppContext();
 
+  const onStartClose = () => {
+    setEndStart(true);
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box display="grid" gridTemplateColumns="1fr" gap={2} mb={3}>
         <DateTimePicker
           slotProps={{ textField: { size: "small" } }}
           disablePast
-          label="Arrive After"
+          label="Start"
           views={["year", "day", "hours", "minutes"]}
           skipDisabled
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
@@ -34,18 +39,24 @@ const StartEndSelector = ({ hideEnd = false }) => {
           onChange={(date) =>
             dispatch({ type: Actions.SET_START_TIME, payload: date })
           }
+          onClose={onStartClose}
         />
         {!hideEnd && (
           <DateTimePicker
             slotProps={{ textField: { size: "small" } }}
             disablePast
-            label="Exit Before"
+            label="End"
             views={["year", "day", "hours", "minutes"]}
             timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
             minDateTime={start?.add(30, "minutes") || null}
             skipDisabled
             value={end}
+            open={endStart}
             disabled={!start}
+            onClose={() => {
+              setEndStart(false);
+            }}
+            onOpen={() => setEndStart(true)}
             viewRenderers={{
               hours: renderDigitalClockTimeView,
               minutes: null,
