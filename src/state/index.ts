@@ -1,24 +1,47 @@
-export interface InitialState {
+import { AppDefaults } from "../utils/misc";
+
+export interface InitialState extends AppDefaults {
   isLoading: boolean;
-  locations: null | any[];
-  events: null | any[];
   times: {
     start: null;
     end: null;
   };
-  selectedEvent: string;
-  duration: string;
-  selectedDuration: string;
+  events: null | string[];
+  locations: null | string[];
+  selectedEvent: null | string;
+  duration: null | string;
+  selectedDuration: null | string;
   timeIncrements: null | any[];
   modes: null | string[];
-  selectedMode: string;
-  selectedLocation: string;
-  focusedLocation: string;
+  selectedMode: null | string;
+  selectedLocation: null | string;
+  focusedLocation: null | string;
   seasonTickets: null | any[];
-  rate: string;
+  rate: null | string;
+  canPurchase: boolean;
 }
 
 export const initialState: InitialState = {
+  widgetKey: null,
+  clientId: null,
+  locationIds: null,
+  useMap: false,
+  mapZoom: null,
+  mapLat: null,
+  mapLng: null,
+  hideEventDateTime: false,
+  dataModeOverwrite: false,
+  dataMode: null,
+  salesChannelKey: null,
+  agentId: null,
+  startTime: null,
+  endTime: null,
+  arriveOffset: null,
+  departOffset: null,
+  useFullWidget: false,
+  mapTxt: null,
+  currentPage: null,
+  eventDriven: false,
   isLoading: false,
   modes: null,
   locations: null,
@@ -29,13 +52,14 @@ export const initialState: InitialState = {
     start: null,
     end: null,
   },
-  selectedMode: "",
-  duration: "",
-  selectedEvent: "",
-  selectedDuration: "",
-  selectedLocation: "",
-  focusedLocation: "",
-  rate: "",
+  selectedMode: null,
+  duration: null,
+  selectedEvent: null,
+  selectedDuration: null,
+  selectedLocation: null,
+  focusedLocation: null,
+  rate: null,
+  canPurchase: false,
 };
 
 export enum Actions {
@@ -63,6 +87,23 @@ export const appReducer = (
   const { type, payload } = action;
 
   switch (type) {
+    case Actions.SET_MODES:
+      return {
+        ...state,
+        modes: payload,
+      };
+    case Actions.SELECTED_MODE:
+      return {
+        ...state,
+        selectedEvent: null,
+        rate: null,
+        times: {
+          end: null,
+          start: null,
+        },
+        canPurchase: false,
+        selectedMode: payload,
+      };
     case Actions.LOADING:
       return {
         ...state,
@@ -84,6 +125,7 @@ export const appReducer = (
       return {
         ...state,
         selectedEvent: payload,
+        canPurchase: true,
       };
     case Actions.SET_TIME_INCREMENTS:
       return {
@@ -94,12 +136,8 @@ export const appReducer = (
     case Actions.SET_DURATION:
       return {
         ...state,
-        selectedEvent: "",
-        times: {
-          end: null,
-          start: null,
-        },
         selectedDuration: payload,
+        canPurchase: true,
       };
     case Actions.SET_LOCATIONS:
       return {
@@ -107,28 +145,9 @@ export const appReducer = (
         locations: payload,
         isLoading: false,
       };
-    case Actions.SET_MODES:
-      return {
-        ...state,
-        modes: payload,
-      };
-    case Actions.SELECTED_MODE:
-      return {
-        ...state,
-        events: null,
-        seasonTickets: null,
-        timeIncrements: null,
-        times: {
-          end: null,
-          start: null,
-        },
-        selectedMode: payload,
-      };
     case Actions.SELECTED_LOCATION:
       return {
         ...state,
-        selectedDuration: "",
-        selectedMode: null,
         selectedLocation: payload,
       };
     case Actions.FOCUSED_LOCATION:
@@ -139,8 +158,6 @@ export const appReducer = (
     case Actions.SET_START_TIME:
       return {
         ...state,
-        selectedDuration: "",
-        selectedEvent: "",
         times: {
           ...state.times,
           start: payload,
@@ -149,12 +166,11 @@ export const appReducer = (
     case Actions.SET_END_TIME:
       return {
         ...state,
-        selectedEvent: "",
-        selectedDuration: "",
         times: {
           ...state.times,
           end: payload,
         },
+        canPurchase: state.times.start ? true : false,
       };
     case Actions.SET_SEASON_TICKETS:
       return {
@@ -162,13 +178,13 @@ export const appReducer = (
         isLoading: false,
         seasonTickets: payload,
       };
-
     case Actions.SET_RATE:
       return {
         ...state,
         rate: payload,
+        canPurchase: true,
       };
     default:
-      return initialState;
+      return state;
   }
 };

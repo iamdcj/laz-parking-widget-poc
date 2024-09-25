@@ -14,6 +14,7 @@ import { constructBuyLink } from "../../../utils/urls";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import LazMap from "../../../components/Map";
 import SeasonTickets from "../../../components/SeasonTickets";
+import PurchaseButton from "../../../components/PurchaseButton";
 
 const Components = {
   TMD: <DateTimePicker />,
@@ -23,7 +24,6 @@ const Components = {
   FEX: <SeasonTickets IsFEP />,
   FAP: <SeasonTickets IsFAP />,
   MUP: <SeasonTickets IsMUP />,
-  MPS: <SeasonTickets IsMPS />,
 };
 
 const LocationsLayout = () => {
@@ -94,34 +94,7 @@ const LocationsLayout = () => {
           </>
         )}
       </Box>
-      <div>
-        {(selectedEvent ||
-          selectedTime ||
-          rate ||
-          selectedDuration ||
-          (times?.start && times?.end)) && (
-          <Button
-            id="btnGetRate"
-            href={constructBuyLink({
-              duration: selectedDuration,
-              l: selectedLocation,
-              evid: selectedEvent,
-              wk: widgetKey,
-              mode: modes && modes.length === 1 ? modes[0] : selectedMode,
-              times,
-              aid: agentId,
-              sc: salesChannelKey,
-              rate,
-            })}
-            variant="outlined"
-            fullWidth
-            target="_blank"
-            rel="noreferer"
-          >
-            Reserve
-          </Button>
-        )}
-      </div>
+      <PurchaseButton />
     </Box>
   );
 };

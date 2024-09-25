@@ -1,14 +1,14 @@
 import { Dayjs } from "dayjs";
 import { returnTimes } from "./time";
+import { log } from "console";
 
-type Modes = "PST" | "TMD" | "EVT" | "MUP" | "MPS" | "FAP" | "FEP" | "FEX";
+type Modes = "PST" | "TMD" | "EVT" | "MUP" | "FAP" | "FEP" | "FEX";
 
 enum modeToWt {
   "PST" = "tmd",
   "TMD" = "tmd",
   "EVT" = "evt",
   "MUP" = "mup",
-  "MPS" = "mps",
   "FAP" = "fap",
   "FEP" = "fex",
   "FEX" = "fex",
@@ -35,6 +35,16 @@ interface Params {
 export const constructBuyLink = (data: Params) => {
   const { times, mode, ...params } = data;
   const { start = "", end = "" } = returnTimes(times, params.duration);
+
+  console.log(data);
+  console.log(returnParams({ ...params, start, end }));
+
+  // let urlParams = Object.entries(
+  //   returnParams({ ...params, start, end })
+  // ).reduce((params: Record<string, any>, [k, v]) => {
+  //   return !v ? params : ((params[k] = v), params);
+  // }, {});
+
   const urlParams = new URLSearchParams({
     t: params.evid ? "e" : "r",
     wt: params.evid ? "evt" : modeToWt[mode as Modes],
@@ -64,6 +74,8 @@ const returnParams = (data: UrlParams): Record<string, any> => {
   let params = Object.fromEntries(
     Object.entries(data).filter(([_, value]) => value)
   );
+
+  debugger
 
   if (params.duration) {
     params = {

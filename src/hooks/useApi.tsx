@@ -9,6 +9,7 @@ const useApi = () => {
       locationIds,
       selectedEvent = "",
       clientId: ClientId = "",
+      eventDriven: eventdriven,
       widgetKey: widgetkey = "",
       selectedLocation,
       agentId,
@@ -23,7 +24,7 @@ const useApi = () => {
       const data = await fetchData("events", {
         eDataLocationId: locations,
         widgetkey,
-        eventdriven: widgetkey ? "true" : "false",
+        eventdriven,
       });
 
       dispatch({ type: Actions.SET_EVENTS, payload: data });
@@ -53,8 +54,8 @@ const useApi = () => {
       const data = await fetchData("locations", {
         ClientId,
         ArrayeDataLocationId: locationIds?.split(","),
-        evid: selectedEvent,
-        WidgetKey: widgetkey,
+        evid: selectedEvent ? selectedEvent : "",
+        WidgetKey: widgetkey ? widgetkey : "",
       });
 
       dispatch({ type: Actions.SET_LOCATIONS, payload: data });
@@ -86,18 +87,21 @@ const useApi = () => {
         WidgetKey: widgetkey,
       };
 
-      if(!IsMUP) {
+      if (!IsMUP) {
         params = {
           ...params,
           IsMPS,
           IsFEP,
           IsFAP,
-          agentId
-        }
+          agentId,
+        };
       }
 
       try {
-        const data = await fetchData(IsMUP ? "passes" : "seasontickets", params);
+        const data = await fetchData(
+          IsMUP ? "passes" : "seasontickets",
+          params
+        );
 
         dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });
 

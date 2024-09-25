@@ -8,6 +8,7 @@ import EventPicker from "../../../components/EventPicker";
 import LocationPicker from "../../../components/LocationPicker";
 import useApi from "../../../hooks/useApi";
 import { constructBuyLink } from "../../../utils/urls";
+import PurchaseButton from "../../../components/PurchaseButton";
 
 const EventsLayout = () => {
   const {
@@ -18,9 +19,6 @@ const EventsLayout = () => {
       locationIds,
       events,
       useMap,
-      widgetKey,
-      agentId,
-      salesChannelKey,
     },
     dispatch,
   } = useAppContext();
@@ -52,26 +50,7 @@ const EventsLayout = () => {
           <LocationPicker />
         </>
       )}
-      <div>
-        {selectedLocation && (
-          <Button
-            id="btnGetRate"
-            href={constructBuyLink({
-              l: selectedLocation,
-              evid: selectedEvent,
-              wk: widgetKey,
-              aid:agentId,
-              sc: salesChannelKey,
-            })}
-            variant="outlined"
-            fullWidth
-            target="_blank"
-            rel="noreferer"
-          >
-            Reserve
-          </Button>
-        )}
-      </div>
+      <PurchaseButton />
     </Box>
   );
 };

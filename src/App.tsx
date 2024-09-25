@@ -9,12 +9,12 @@ import { Settings } from "./utils/misc";
 import Header from "./components/Header";
 
 function App(props: Settings) {
-  const { isHeaderEnabled, headerText, styles } = props;
+  const { isHeaderEnabled, headerText, styles, ...state } = props;
   const widgetTheme = useThemeConfig(styles);
 
   return (
     <ThemeProvider theme={widgetTheme}>
-      <AppProvider value={props}>
+      <AppProvider value={state}>
         <Box>
           {isHeaderEnabled && <Header headerText={headerText} />}
           <Box position="relative">
