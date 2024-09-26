@@ -22,7 +22,7 @@ const StartEndSelector = ({ hideEnd = false }) => {
         <DateTimePicker
           slotProps={{ textField: { size: "small" } }}
           disablePast
-          label="Start"
+          label="Arrive after"
           views={["year", "day", "hours", "minutes"]}
           skipDisabled
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
@@ -41,7 +41,7 @@ const StartEndSelector = ({ hideEnd = false }) => {
           <DateTimePicker
             slotProps={{ textField: { size: "small" } }}
             disablePast
-            label="End"
+            label="Exit before"
             views={["year", "day", "hours", "minutes"]}
             timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
             minDateTime={start?.add(30, "minutes") || null}
