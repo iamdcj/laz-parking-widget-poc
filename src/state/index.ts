@@ -8,7 +8,7 @@ export interface InitialState extends AppDefaults {
   };
   events: null | string[];
   locations: null | string[];
-  selectedEvent: null | string;
+  selectedEvent: { id: string; label: string } | null;
   duration: null | string;
   selectedDuration: null | string;
   timeIncrements: null | any[];
@@ -58,6 +58,7 @@ export const initialState: InitialState = {
   rate: null,
   canPurchase: false,
   modes: null,
+  evid: null,
 };
 
 export enum Actions {
@@ -108,9 +109,20 @@ export const appReducer = (
         isLoading: payload,
       };
     case Actions.SET_EVENTS:
+      console.log(state.evid, payload);
+      const defaultEvent = state.evid
+        ? payload.find((event: any) => event.EventId === state.evid)
+        : null;
+
       return {
         ...state,
         events: payload,
+        selectedEvent: defaultEvent
+          ? {
+              id: defaultEvent.EventId,
+              label: defaultEvent.EventName,
+            }
+          : null,
         isLoading: false,
       };
     case Actions.RESET_EVENTS:

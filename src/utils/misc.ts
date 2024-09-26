@@ -21,7 +21,7 @@ export interface AppDefaults {
   currentPage: boolean;
   eventDriven: boolean;
   salesChannelKey: string;
-  selectedEvent: string;
+  evid: string;
 }
 
 export interface Settings extends AppDefaults {
@@ -43,7 +43,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     mapZoom: Number(element?.dataset?.mapzoom || 10),
     mapLat: Number(element?.dataset?.mapplacelat || 0),
     mapLng: Number(element?.dataset?.mapplacelng || 0),
-    selectedEvent: params.evid || null,
+    evid: params.evid || null,
     hideEventDateTime:
       params.hed === "true" ? true : !!element?.dataset?.hideEventDate,
     modeOverwrite: !!element?.dataset?.modeOverwrite,

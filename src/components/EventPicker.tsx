@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from "@mui/material";
-import React, { memo, SyntheticEvent, useEffect, useState } from "react";
+import React, { memo, SyntheticEvent, useEffect } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { updateParams } from "../variants/utils/location";
@@ -13,18 +13,40 @@ const EventPicker = memo(() => {
     dispatch,
   } = useAppContext();
 
-  const [value, setValue] = useState(null);
-  const [options, setOptions] = useState(null);
-
   useEffect(() => {
     if (!selectedLocation) return;
 
     retrieveEvents(selectedLocation);
   }, [selectedLocation]);
 
-  useEffect(() => {
-    setOptions(
-      events.map(
+  const handleOnEventChange = (
+    event: SyntheticEvent<Element, Event>,
+    data: Record<string, any>
+  ) => {
+    if (data?.id) {
+      dispatch({ type: Actions.SELECTED_EVENT, payload: data });
+      updateParams("event", data?.id, true);
+    } else {
+      dispatch({ type: Actions.SELECTED_EVENT, payload: null });
+      updateParams(null, null, true);
+    }
+  };
+
+  return (
+    <Autocomplete
+      size="small"
+      disablePortal
+      onChange={handleOnEventChange}
+      renderOption={(props, option) => {
+        return (
+          <li {...props} key={option.id}>
+            {option.label}
+          </li>
+        );
+      }}
+      value={selectedEvent}
+      sx={{ mb: 2 }}
+      options={events.map(
         ({
           EventId: id,
           EventName,
@@ -51,51 +73,7 @@ const EventPicker = memo(() => {
             label,
           };
         }
-      )
-    );
-  }, [events]);
-
-  useEffect(() => {
-    if (!options || options.length < 1) {
-      return;
-    }
-
-    setValue(
-      options.find((op: any) => {
-        debugger;
-        return op.id === selectedEvent;
-      })
-    );
-  }, [selectedEvent, options]);
-
-  const handleOnEventChange = (
-    event: SyntheticEvent<Element, Event>,
-    data: Record<string, any>
-  ) => {
-    if (data?.id) {
-      dispatch({ type: Actions.SELECTED_EVENT, payload: data.id });
-      updateParams("event", data?.id, true);
-    } else {
-      dispatch({ type: Actions.SELECTED_EVENT, payload: null });
-      updateParams(null, null, true);
-    }
-  };
-
-  if (!options || options.length < 1) {
-    return null;
-  }
-
-  return (
-    <Autocomplete
-      size="small"
-      disablePortal
-      onChange={handleOnEventChange}
-      value={value}
-      sx={{ mb: 2 }}
-      isOptionEqualToValue={(option, value) => {
-        return option.id === value;
-      }}
-      options={options}
+      )}
       renderInput={(params) => <TextField {...params} label="Select Event" />}
     />
   );
