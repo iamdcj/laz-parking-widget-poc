@@ -35,7 +35,9 @@ const StartEndSelector = ({ hideEnd = false }) => {
           onChange={(date) =>
             dispatch({ type: Actions.SET_START_TIME, payload: date })
           }
-          onClose={() => setEndStart(true)}
+          onClose={() => {
+            start && setEndStart(true);
+          }}
         />
         {!hideEnd && (
           <DateTimePicker
