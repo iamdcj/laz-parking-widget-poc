@@ -9,8 +9,8 @@ import { Settings } from "./utils/misc";
 import Header from "./components/Header";
 
 function App(props: Settings) {
-  const { isHeaderEnabled, headerText, styles, ...state } = props;
-  const widgetTheme = useThemeConfig(styles);
+  const { isHeaderEnabled, headerText, ...state } = props;
+  const widgetTheme = useThemeConfig();
 
   return (
     <ThemeProvider theme={widgetTheme}>

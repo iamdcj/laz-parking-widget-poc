@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-export const useThemeConfig = (styles?: string) => {
+export const useThemeConfig = () => {
   return createTheme({
     typography: {
       fontFamily: [

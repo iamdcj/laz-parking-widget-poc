@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AdvancedMarker, Map } from "@vis.gl/react-google-maps";
 import { useMapSetup } from "../variants/utils/maps";
-import { Box, Button, Icon, useTheme } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import Icons from "./Icons";
+import { useTheme } from "@mui/material/styles";
 
 const LazMap = () => {
   const {

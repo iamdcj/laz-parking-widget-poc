@@ -89,3 +89,17 @@ export const returnParams = (data: UrlParams): Record<string, any> => {
 
   return params;
 };
+
+export const getUrlParam = (): Record<string, string> => {
+  let searchParams = new URLSearchParams(window.location.search);
+  let urlParams = {};
+
+  for (const [key, value] of searchParams.entries()) {
+    urlParams = {
+      ...urlParams,
+      [key]: value,
+    };
+  }
+
+  return urlParams;
+};

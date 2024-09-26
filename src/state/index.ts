@@ -93,7 +93,6 @@ export const appReducer = (
     case Actions.SELECTED_MODE:
       return {
         ...state,
-        selectedEvent: null,
         rate: null,
         times: {
           end: null,

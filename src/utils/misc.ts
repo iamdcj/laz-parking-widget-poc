@@ -1,3 +1,5 @@
+import { getUrlParam } from "./urls";
+
 export interface AppDefaults {
   widgetKey: string;
   clientId: string;
@@ -19,45 +21,54 @@ export interface AppDefaults {
   currentPage: boolean;
   eventDriven: boolean;
   salesChannelKey: string;
+  selectedEvent: string;
 }
 
 export interface Settings extends AppDefaults {
   isHeaderEnabled: boolean;
   headerText: string;
-  styles?: string;
-  template: string;
+  language: "EN" | "FR";
 }
 
-export const returnInitialConfig = (element: HTMLElement): Settings => ({
-  isHeaderEnabled: !!element?.dataset?.header, // show header or not
-  headerText: element?.dataset?.headerText || null, // title text
-  widgetKey: element?.dataset?.wk || null, // query param
-  clientId: element?.dataset?.clientid || null, // query param
-  locationIds: element?.dataset?.locationid || null, // query param
-  useMap: !!element?.dataset?.map, // show/hide map
-  mapZoom: Number(element?.dataset?.mapzoom || 10), // default map zoom
-  mapLat: Number(element?.dataset?.mapplacelat || 0), // default map lat
-  mapLng: Number(element?.dataset?.mapplacelng || 0), // default map lng
-  hideEventDateTime: !!element?.dataset?.hideEventDate, // hide event listing date-time
-  modeOverwrite: !!element?.dataset?.modeOverwrite, // use mode
-  modes: element?.dataset?.mode?.split("/") || null, // specify the mode
-  salesChannelKey: element?.dataset?.sc || null, // pass as sc param to checkout
-  agentId: element?.dataset?.agentid || null, // pass as aid param to checkout
-  eventDriven: !!element?.dataset?.eventdriven, // if uses events
-  // ---- TODO: determine the use cases for the following: //
-  startTime: element?.dataset?.starttime || null, // set the default start time of the widget (what is the format)
-  endTime: element?.dataset?.endtime || null, // set the default end time of the widget (what is the format)
-  arriveOffset: element?.dataset?.arrive
-    ? Number(element.dataset.arrive)
-    : null, // offset in minutes (need use case)
-  departOffset: element?.dataset?.depart
-    ? Number(element.dataset.depart)
-    : null, // offset in minutes (need use case)
-  template: element?.dataset?.template || null, // load template and stub style sheet based on iso language code (need examples)
-  useFullWidget: !!element?.dataset?.fullwidget, // set whether or not to open the full widget url in a new window or to change the current url (example)
-  mapTxt: element?.dataset?.mapplacetxt || null, //! tbd
-  currentPage: !!element?.dataset?.currentpage, // Get the widget key (not sure about this one)
-});
+export const returnInitialConfig = (element: HTMLElement): Settings => {
+  const params = getUrlParam();
+
+  return {
+    isHeaderEnabled: !!element?.dataset?.header,
+    headerText: element?.dataset?.headerText || null,
+    widgetKey: params.wk ? params.wk : element?.dataset?.wk,
+    clientId: element?.dataset?.clientid || null,
+    locationIds: params.l ? params.l : element?.dataset?.locationid,
+    useMap: !!element?.dataset?.map,
+    mapZoom: Number(element?.dataset?.mapzoom || 10),
+    mapLat: Number(element?.dataset?.mapplacelat || 0),
+    mapLng: Number(element?.dataset?.mapplacelng || 0),
+    selectedEvent: params.evid || null,
+    hideEventDateTime:
+      params.hed === "true" ? true : !!element?.dataset?.hideEventDate,
+    modeOverwrite: !!element?.dataset?.modeOverwrite,
+    modes: params.wt
+      ? params.wt.split("/")
+      : element?.dataset?.mode?.split("/"),
+    salesChannelKey: params.sc ? params.sc : element?.dataset?.sc,
+    agentId: params.aid ? params.aid : element?.dataset?.agentid,
+    eventDriven: !!element?.dataset?.eventdriven,
+    language: params.isocode === "FR" ? "FR" : "EN",
+    // ---- TODO: determine the use cases for the following: //
+    startTime: params.start ? params.start : element?.dataset?.starttime, // set the default start time of the widget (what is the format)
+    endTime: params.end ? params.end : element?.dataset?.endtime, // set the default end time of the widget (what is the format)
+    arriveOffset: element?.dataset?.arrive
+      ? Number(element.dataset.arrive)
+      : null, // offset in minutes (need use case)
+    departOffset: element?.dataset?.depart
+      ? Number(element.dataset.depart)
+      : null, // offset in minutes (need use case)
+    useFullWidget: !!element?.dataset?.fullwidget, // set whether or not to open the full widget url in a new window or to change the current url (example)
+    mapTxt: element?.dataset?.mapplacetxt || null, //! tbd
+    currentPage: !!element?.dataset?.currentpage, // Get the widget key (not sure about this one)
+    // template: element?.dataset?.template || null, // load template and stub style sheet based on iso language code (need examples)
+  };
+};
 
 export const returnModes = (locations: any[], selectedLocation: string) =>
   locations
