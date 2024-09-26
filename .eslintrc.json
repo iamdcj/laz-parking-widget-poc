@@ -17,6 +17,12 @@
   },
   "plugins": ["react", "react-hooks"],
   "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*"]
+      }
+    ],
     "no-unused-vars": [
       "error",
       {
