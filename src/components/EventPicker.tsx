@@ -4,7 +4,6 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { updateParams } from "../variants/utils/location";
 import useApi from "../hooks/useApi";
-import ErrorNotice from "./ErrorNotice";
 
 const EventPicker = memo(() => {
   const { retrieveEvents } = useApi();
@@ -25,7 +24,7 @@ const EventPicker = memo(() => {
   ) => {
     if (data?.id) {
       dispatch({ type: Actions.SELECTED_EVENT, payload: data });
-      updateParams("event", data?.id, true);
+      updateParams("evid", data?.id, true);
     } else {
       dispatch({ type: Actions.SELECTED_EVENT, payload: null });
       updateParams(null, null, true);

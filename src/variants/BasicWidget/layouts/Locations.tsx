@@ -32,8 +32,8 @@ const LocationsLayout = () => {
       locations,
       selectedLocation,
       modes,
+      modesOverride,
       selectedMode,
-      modeOverwrite,
       useMap,
     },
     dispatch,
@@ -49,10 +49,10 @@ const LocationsLayout = () => {
     if (!selectedLocation) {
       dispatch({ type: Actions.RESET_EVENTS });
     } else {
-      if (modeOverwrite && modes) {
+      if (modesOverride) {
         dispatch({
           type: Actions.SET_MODES,
-          payload: modes,
+          payload: modesOverride,
         });
       } else {
         dispatch({

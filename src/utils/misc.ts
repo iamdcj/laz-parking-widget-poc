@@ -9,13 +9,12 @@ export interface AppDefaults {
   mapLat: number;
   mapLng: number;
   mapTxt: string;
-  modes: null | string[];
+  modesOverride: null | string[];
   hideEventDateTime: boolean;
   arriveOffset: number;
   departOffset: number;
   agentId: string;
   useFullWidget: boolean;
-  modeOverwrite: boolean;
   startTime: string;
   endTime: string;
   currentPage: boolean;
@@ -32,31 +31,29 @@ export interface Settings extends AppDefaults {
 
 export const returnInitialConfig = (element: HTMLElement): Settings => {
   const params = getUrlParam();
+  const modeOverwrite = !!element?.dataset?.modeOverwrite;
+  const modes = modeOverwrite ? element?.dataset?.mode : params.wt;
 
   return {
+    modesOverride: modes?.split("/"),
+    widgetKey: params.wk || element?.dataset?.wk,
+    locationIds: params.l || element?.dataset?.locationid,
+    salesChannelKey: params.sc || element?.dataset?.sc,
+    agentId: params.aid || element?.dataset?.agentid,
+    hideEventDateTime: !!params.hed || !!element?.dataset?.hideEventDate,
+    language: (params.isocode as "FR" | "EN") || "EN",
+    evid: params.evid || null,
     isHeaderEnabled: !!element?.dataset?.header,
     headerText: element?.dataset?.headerText || null,
-    widgetKey: params.wk ? params.wk : element?.dataset?.wk,
     clientId: element?.dataset?.clientid || null,
-    locationIds: params.l ? params.l : element?.dataset?.locationid,
     useMap: !!element?.dataset?.map,
     mapZoom: Number(element?.dataset?.mapzoom || 10),
     mapLat: Number(element?.dataset?.mapplacelat || 0),
     mapLng: Number(element?.dataset?.mapplacelng || 0),
-    evid: params.evid || null,
-    hideEventDateTime:
-      params.hed === "true" ? true : !!element?.dataset?.hideEventDate,
-    modeOverwrite: !!element?.dataset?.modeOverwrite,
-    modes: params.wt
-      ? params.wt.split("/")
-      : element?.dataset?.mode?.split("/"),
-    salesChannelKey: params.sc ? params.sc : element?.dataset?.sc,
-    agentId: params.aid ? params.aid : element?.dataset?.agentid,
     eventDriven: !!element?.dataset?.eventdriven,
-    language: params.isocode === "FR" ? "FR" : "EN",
     // ---- TODO: determine the use cases for the following: //
-    startTime: params.start ? params.start : element?.dataset?.starttime, // set the default start time of the widget (what is the format)
-    endTime: params.end ? params.end : element?.dataset?.endtime, // set the default end time of the widget (what is the format)
+    startTime: params.start || element?.dataset?.starttime, // set the default start time of the widget (what is the format)
+    endTime: params.end || element?.dataset?.endtime, // set the default end time of the widget (what is the format)
     arriveOffset: element?.dataset?.arrive
       ? Number(element.dataset.arrive)
       : null, // offset in minutes (need use case)

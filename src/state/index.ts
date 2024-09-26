@@ -18,6 +18,7 @@ export interface InitialState extends AppDefaults {
   seasonTickets: null | any[];
   rate: null | string;
   canPurchase: boolean;
+  modes: string[] | null;
 }
 
 export const initialState: InitialState = {
@@ -29,7 +30,6 @@ export const initialState: InitialState = {
   mapLat: null,
   mapLng: null,
   hideEventDateTime: false,
-  modeOverwrite: false,
   salesChannelKey: null,
   agentId: null,
   startTime: null,
@@ -59,6 +59,7 @@ export const initialState: InitialState = {
   canPurchase: false,
   modes: null,
   evid: null,
+  modesOverride: null,
 };
 
 export enum Actions {
