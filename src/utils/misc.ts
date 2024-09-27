@@ -57,9 +57,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     mapLng: element.dataset.mapplacelng
       ? Number(element.dataset.mapplacelng)
       : 0,
-    eventDriven: element.dataset.eventdriven
-      ? params.wt === "evt"
-      : element.dataset.eventdriven === "true",
+    eventDriven: params.wt === "evt" || element.dataset.eventdriven === "true",
     // ---- TODO: determine the use cases for the following: //
     startTime: params.start || element.dataset.starttime, // set the default start time of the widget (what is the format)
     endTime: params.end || element.dataset.endtime, // set the default end time of the widget (what is the format)
