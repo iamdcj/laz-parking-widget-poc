@@ -88,6 +88,7 @@ const LazMap = () => {
               height: 30,
               padding: 0,
               mb: 0.1,
+              borderRadius: "4px 4px 0 0",
             }}
           >
             +
@@ -95,7 +96,13 @@ const LazMap = () => {
           <Button
             variant="contained"
             onClick={() => setZoomLevel(zoomLevel - 1)}
-            sx={{ minWidth: "auto", width: 30, height: 30, padding: 0 }}
+            sx={{
+              minWidth: "auto",
+              width: 30,
+              height: 30,
+              padding: 0,
+              borderRadius: "0 0 4px 4px",
+            }}
           >
             -
           </Button>

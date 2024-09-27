@@ -32,7 +32,7 @@ const DurationSelector = () => {
         id="location"
         fullWidth
         label="Age"
-        value={selectedDuration}
+        value={selectedDuration || ""}
         onChange={(event) =>
           dispatch({ type: Actions.SET_DURATION, payload: event.target.value })
         }
