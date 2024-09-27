@@ -1,4 +1,4 @@
-import { AppDefaults } from "../utils/misc";
+import { AppDefaults, returnModes } from "../utils/misc";
 
 export interface InitialState extends AppDefaults {
   isLoading: boolean;
@@ -110,7 +110,6 @@ export const appReducer = (
         isLoading: payload,
       };
     case Actions.SET_EVENTS:
-      console.log(state.evid, payload);
       const defaultEvent = state.evid
         ? payload.find((event: any) => event.EventId === state.evid)
         : null;
@@ -159,6 +158,9 @@ export const appReducer = (
     case Actions.SELECTED_LOCATION:
       return {
         ...state,
+        modes: state.modesOverride
+          ? state.modes
+          : returnModes(state.locations, payload),
         selectedLocation: payload,
         canPurchase: state.eventDriven && payload ? true : false,
       };

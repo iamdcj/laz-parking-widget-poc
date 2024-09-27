@@ -76,7 +76,12 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
   };
 };
 
-export const returnModes = (locations: any[], selectedLocation: string) =>
-  locations
+export const returnModes = (locations: any[], selectedLocation: string) => {
+  if (!selectedLocation) {
+    return null;
+  }
+
+  return locations
     .find(({ ID }: { ID: any }) => ID === selectedLocation)
     .DefaultWidgetType.split("|");
+};

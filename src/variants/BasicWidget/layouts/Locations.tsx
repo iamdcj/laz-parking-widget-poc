@@ -10,7 +10,6 @@ import { Actions } from "../../../state";
 import { Mode } from "../../../../types";
 import ModePicker from "../../../components/ModePicker";
 import { returnModes } from "../../../utils/misc";
-import { constructBuyLink } from "../../../utils/urls";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import LazMap from "../../../components/Map";
 import SeasonTickets from "../../../components/SeasonTickets";
@@ -53,11 +52,6 @@ const LocationsLayout = () => {
         dispatch({
           type: Actions.SET_MODES,
           payload: modesOverride,
-        });
-      } else {
-        dispatch({
-          type: Actions.SET_MODES,
-          payload: returnModes(locations, selectedLocation),
         });
       }
     }
