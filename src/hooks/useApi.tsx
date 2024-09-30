@@ -66,14 +66,25 @@ const useApi = () => {
         })
       );
 
+      console.log(data);
+
       dispatch({
         type: Actions.SET_LOCATIONS,
         payload: data.map(
-          ({ DefaultWidgetType, LocationId, Name, RateID }: Location) => ({
+          ({
+            DefaultWidgetType,
+            LocationId,
+            Name,
+            RateID,
+            Latitude,
+            Longitude,
+          }: Location) => ({
             id: LocationId,
             modes: DefaultWidgetType,
             label: Name,
             rid: RateID,
+            lat: Latitude,
+            lng: Longitude,
           })
         ),
       });

@@ -5,7 +5,7 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { Mode } from "../../types";
+import { Modes } from "../../types";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 
@@ -34,7 +34,7 @@ const ModePicker = () => {
       >
         {modes &&
           modes.length > 0 &&
-          modes.map((mode: Mode) => (
+          modes.map((mode: Modes) => (
             <FormControlLabel
               key={mode}
               id={mode}

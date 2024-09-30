@@ -1,7 +1,6 @@
 import { Dayjs } from "dayjs";
 import { returnTimes } from "./time";
-
-type Modes = "PST" | "TMD" | "EVT" | "MUP" | "FAP" | "FEP" | "FEX";
+import { LinkParams, Modes } from "../../types";
 
 enum modeToWt {
   "PST" = "tmd",
@@ -13,25 +12,7 @@ enum modeToWt {
   "FEX" = "fex",
 }
 
-type DateTime = string | Dayjs | null;
-
-interface Params {
-  times?: {
-    start: DateTime;
-    end: DateTime;
-  };
-  duration?: string;
-  widgetKey?: string;
-  mode?: string;
-  rid?: string;
-  l?: string;
-  evid?: string;
-  wk?: string;
-  aid?: string;
-  sc?: string;
-}
-
-export const constructBuyLink = (data: Params) => {
+export const constructBuyLink = (data: LinkParams) => {
   const { times, mode, ...params } = data;
   const { start = "", end = "" } = returnTimes(times, params.duration);
 
@@ -45,7 +26,7 @@ export const constructBuyLink = (data: Params) => {
   return `https://go.lazparking.com/buynow?${urlParams}`;
 };
 
-interface UrlParams extends Params {
+interface UrlParams extends LinkParams {
   start: string | Dayjs | Date;
   end: string | Dayjs | Date;
 }

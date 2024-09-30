@@ -15,11 +15,9 @@ export const useMapSetup = () => {
 
     const bound = new core.LatLngBounds();
 
-    locations.forEach(
-      ({ Latitude, Longitude }: { Latitude: number; Longitude: number }) => {
-        bound.extend(new core.LatLng(Latitude, Longitude));
-      }
-    );
+    locations.forEach(({ lat, lng }: { lat: number; lng: number }) => {
+      bound.extend(new core.LatLng(lat, lng));
+    });
 
     setCenter(bound);
   }, [core, locations]);

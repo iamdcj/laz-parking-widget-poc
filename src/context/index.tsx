@@ -5,8 +5,8 @@ import React, {
   useContext,
   useReducer,
 } from "react";
-import { appReducer, InitialState, initialState } from "../state";
-import { AppDefaults } from "../utils/misc";
+import { appReducer, initialState } from "../state";
+import { AppDefaults, InitialState } from "../../types";
 
 const AppContext = createContext<{
   state: InitialState;

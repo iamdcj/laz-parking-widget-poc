@@ -5,7 +5,7 @@ import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
 import { useThemeConfig } from "./theme";
 import Loader from "./components/Loader";
-import { Settings } from "./utils/misc";
+import { Settings } from "../types";
 import Header from "./components/Header";
 
 function App(props: Settings) {

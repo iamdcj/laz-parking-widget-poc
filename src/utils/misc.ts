@@ -1,33 +1,5 @@
+import { Settings } from "../../types";
 import { getUrlParam } from "./urls";
-
-export interface AppDefaults {
-  agentId: string;
-  arriveOffset: number;
-  clientId: string;
-  currentPage: boolean;
-  departOffset: number;
-  endTime: string;
-  eventDriven: boolean;
-  evid: string;
-  hideEventDateTime: boolean;
-  locationIds: string;
-  mapLat: number;
-  mapLng: number;
-  mapTxt: string;
-  mapZoom: number;
-  modesOverride: null | string[];
-  salesChannelKey: string;
-  startTime: string;
-  useFullWidget: boolean;
-  useMap: boolean;
-  widgetKey: string;
-}
-
-export interface Settings extends AppDefaults {
-  isHeaderEnabled: boolean;
-  headerText: string;
-  language: "EN" | "FR";
-}
 
 export const returnInitialConfig = (element: HTMLElement): Settings => {
   const params = getUrlParam();

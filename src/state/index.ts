@@ -1,25 +1,5 @@
-import { AppDefaults, returnModes } from "../utils/misc";
-
-export interface InitialState extends AppDefaults {
-  canPurchase: boolean;
-  duration: null | string;
-  events: null | string[];
-  focusedLocation: null | string;
-  isLoading: boolean;
-  locations: null | string[];
-  modes: string[] | null;
-  rate: null | string;
-  seasonTickets: null | any[];
-  selectedDuration: null | string;
-  selectedEvent: { id: string; label: string } | null;
-  selectedLocation: null | string;
-  selectedMode: null | string;
-  times: {
-    start: null;
-    end: null;
-  };
-  timeIncrements: null | any[];
-}
+import { InitialState } from "../../types";
+import { returnModes } from "../utils/misc";
 
 export const initialState: InitialState = {
   agentId: null,

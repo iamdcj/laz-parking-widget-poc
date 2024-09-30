@@ -7,9 +7,8 @@ import LocationPicker from "../../../components/LocationPicker";
 import DurationSelector from "../../../components/DurationSelector";
 import useApi from "../../../hooks/useApi";
 import { Actions } from "../../../state";
-import { Mode } from "../../../../types";
+import { Modes } from "../../../../types";
 import ModePicker from "../../../components/ModePicker";
-import { returnModes } from "../../../utils/misc";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import LazMap from "../../../components/Map";
 import SeasonTickets from "../../../components/SeasonTickets";
@@ -71,11 +70,11 @@ const LocationsLayout = () => {
       )}
       <Box>
         {modes && modes.length === 1 ? (
-          Components[modes[0] as Mode]
+          Components[modes[0] as Modes]
         ) : (
           <>
             <ModePicker />
-            {Components[selectedMode as Mode]}
+            {Components[selectedMode as Modes]}
           </>
         )}
       </Box>

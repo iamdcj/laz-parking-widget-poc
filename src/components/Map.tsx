@@ -110,31 +110,23 @@ const LazMap = () => {
       </Box>
       {locations?.length > 0 &&
         locations.map(
-          ({
-            ID,
-            Latitude,
-            Longitude,
-          }: {
-            ID: string;
-            Latitude: number;
-            Longitude: number;
-          }) => {
-            const isActive = ID === focusedLocation || ID === selectedLocation;
+          ({ id, lat, lng }: { id: string; lat: number; lng: number }) => {
+            const isActive = id === focusedLocation || id === selectedLocation;
 
             return (
               <AdvancedMarker
                 onClick={() =>
-                  dispatch({ type: Actions.SELECTED_LOCATION, payload: ID })
+                  dispatch({ type: Actions.SELECTED_LOCATION, payload: id })
                 }
-                key={ID}
-                position={{ lat: Latitude, lng: Longitude }}
+                key={id}
+                position={{ lat, lng }}
                 style={{
                   pointerEvents: "all",
                 }}
               >
                 <Box
                   onMouseOver={() =>
-                    dispatch({ type: Actions.FOCUSED_LOCATION, payload: ID })
+                    dispatch({ type: Actions.FOCUSED_LOCATION, payload: id })
                   }
                   onMouseLeave={() =>
                     dispatch({ type: Actions.FOCUSED_LOCATION, payload: null })
