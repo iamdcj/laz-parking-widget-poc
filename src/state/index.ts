@@ -1,83 +1,83 @@
 import { AppDefaults, returnModes } from "../utils/misc";
 
 export interface InitialState extends AppDefaults {
+  canPurchase: boolean;
+  duration: null | string;
+  events: null | string[];
+  focusedLocation: null | string;
   isLoading: boolean;
+  locations: null | string[];
+  modes: string[] | null;
+  rate: null | string;
+  seasonTickets: null | any[];
+  selectedDuration: null | string;
+  selectedEvent: { id: string; label: string } | null;
+  selectedLocation: null | string;
+  selectedMode: null | string;
   times: {
     start: null;
     end: null;
   };
-  events: null | string[];
-  locations: null | string[];
-  selectedEvent: { id: string; label: string } | null;
-  duration: null | string;
-  selectedDuration: null | string;
   timeIncrements: null | any[];
-  selectedMode: null | string;
-  selectedLocation: null | string;
-  focusedLocation: null | string;
-  seasonTickets: null | any[];
-  rate: null | string;
-  canPurchase: boolean;
-  modes: string[] | null;
 }
 
 export const initialState: InitialState = {
-  widgetKey: null,
+  agentId: null,
+  arriveOffset: null,
   clientId: null,
+  currentPage: null,
+  departOffset: null,
+  endTime: null,
+  eventDriven: false,
+  events: null,
+  hideEventDateTime: false,
+  isLoading: false,
   locationIds: null,
-  useMap: false,
-  mapZoom: null,
+  locations: null,
   mapLat: null,
   mapLng: null,
-  hideEventDateTime: false,
-  salesChannelKey: null,
-  agentId: null,
-  startTime: null,
-  endTime: null,
-  arriveOffset: null,
-  departOffset: null,
-  useFullWidget: false,
   mapTxt: null,
-  currentPage: null,
-  eventDriven: false,
-  isLoading: false,
-  locations: null,
-  events: null,
+  mapZoom: null,
+  salesChannelKey: null,
   seasonTickets: null,
+  startTime: null,
   timeIncrements: null,
+  useFullWidget: false,
+  useMap: false,
+  widgetKey: null,
+  canPurchase: false,
+  duration: null,
+  evid: null,
+  focusedLocation: null,
+  modes: null,
+  modesOverride: null,
+  rate: null,
+  selectedDuration: null,
+  selectedEvent: null,
+  selectedLocation: null,
+  selectedMode: null,
   times: {
     start: null,
     end: null,
   },
-  selectedMode: null,
-  duration: null,
-  selectedEvent: null,
-  selectedDuration: null,
-  selectedLocation: null,
-  focusedLocation: null,
-  rate: null,
-  canPurchase: false,
-  modes: null,
-  evid: null,
-  modesOverride: null,
 };
 
 export enum Actions {
+  FOCUSED_LOCATION = "FOCUSED_LOCATION",
   LOADING = "LOADING",
-  SET_EVENTS = "SET_EVENTS",
   RESET_EVENTS = "RESET_EVENTS",
   SELECTED_EVENT = "SELECTED_EVENT",
-  SET_LOCATIONS = "SET_LOCATIONS",
   SELECTED_LOCATION = "SELECTED_LOCATION",
-  FOCUSED_LOCATION = "FOCUSED_LOCATION",
-  SET_MODES = "SET_MODES",
   SELECTED_MODE = "SELECTED_MODE",
-  SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
   SET_DURATION = "SET_DURATION",
-  SET_START_TIME = "SET_START_TIME",
   SET_END_TIME = "SET_END_TIME",
-  SET_SEASON_TICKETS = "SET_SEASON_TICKETS",
+  SET_EVENTS = "SET_EVENTS",
+  SET_LOCATIONS = "SET_LOCATIONS",
+  SET_MODES = "SET_MODES",
   SET_RATE = "SET_RATE",
+  SET_SEASON_TICKETS = "SET_SEASON_TICKETS",
+  SET_START_TIME = "SET_START_TIME",
+  SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
 }
 
 export const appReducer = (
