@@ -47,6 +47,7 @@ const MapWidget = () => {
               RateID,
               Latitude,
               Longitude,
+              ImageUrl,
             }: Location) => ({
               id: ID,
               modes: DefaultWidgetType,
@@ -54,6 +55,7 @@ const MapWidget = () => {
               rid: RateID,
               lat: Latitude,
               lng: Longitude,
+              imageUrl: ImageUrl,
             })
           ),
         });

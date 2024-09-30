@@ -11,6 +11,7 @@ export type Location = {
   Longitude: number;
   DefaultWidgetType: string;
   DefaultCustomerFlow: string;
+  ImageUrl: string;
   TimeZone: string;
   RateID: number;
   Status: string | null;
