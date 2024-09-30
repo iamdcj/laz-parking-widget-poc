@@ -17,7 +17,7 @@ const VariantSwitch = () => {
   const Component = Variants[variant as "basic" | "map"];
 
   return (
-    <Box padding={1}>
+    <Box>
       <APIProvider apiKey="AIzaSyDXK45jkgLDFMq5Lr33HGrK2a8qITI3Lqc">
         <Component />
       </APIProvider>

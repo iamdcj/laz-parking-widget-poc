@@ -26,7 +26,7 @@ const LazMap = () => {
   return (
     <Map
       mapId="basic-map"
-      style={{ width: "100%", height: "100vh", marginBottom: 10 }}
+      style={{ width: "100%", height: "100vh" }}
       defaultCenter={center ? center.getCenter() : { lat: mapLat, lng: mapLng }}
       gestureHandling={"greedy"}
       clickableIcons={false}
@@ -46,7 +46,7 @@ const LazMap = () => {
           color: "#fff",
           display: "flex",
           flexDirection: "column",
-          height: `calc(100% - 14px)`,
+          height: `calc(100% - 24px)`,
           justifyContent: "end",
         }}
       >

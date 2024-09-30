@@ -11,7 +11,9 @@ export const fetchData = async (
   params: Record<string, any>
 ) => {
   const searchParams = new URLSearchParams(params);
-  const res = await fetch(`https://grs-external.lazparking.com/api/${Endpoints[type]}?${searchParams}`);
+  const res = await fetch(
+    `https://grs-external.lazparking.com/api/${Endpoints[type]}?${searchParams}`
+  );
 
   if (!res.ok) {
     throw new Error("Unable to retrieve data");
