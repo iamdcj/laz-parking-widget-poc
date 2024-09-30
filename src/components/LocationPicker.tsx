@@ -37,15 +37,15 @@ const LocationPicker = () => {
         label="Age"
         disabled={locations.length === 1}
       >
-        {locations.map(({ ID, Name }: { ID: string; Name: string }) => (
+        {locations.map(({ id, label }: { id: string; label: string }) => (
           <MenuItem
-            key={ID}
-            value={ID}
+            key={id}
+            value={id}
             onMouseOver={() =>
-              dispatch({ type: Actions.FOCUSED_LOCATION, payload: ID })
+              dispatch({ type: Actions.FOCUSED_LOCATION, payload: id })
             }
           >
-            {Name}
+            {label}
           </MenuItem>
         ))}
       </Select>

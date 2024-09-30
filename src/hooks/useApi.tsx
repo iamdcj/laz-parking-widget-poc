@@ -3,6 +3,7 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { fetchData } from "../utils/api";
 import { cleanObject } from "../utils/urls";
+import { Location } from "../../types";
 
 const useApi = () => {
   const {
@@ -65,7 +66,17 @@ const useApi = () => {
         })
       );
 
-      dispatch({ type: Actions.SET_LOCATIONS, payload: data });
+      dispatch({
+        type: Actions.SET_LOCATIONS,
+        payload: data.map(
+          ({ DefaultWidgetType, LocationId, Name, RateID }: Location) => ({
+            id: LocationId,
+            modes: DefaultWidgetType,
+            label: Name,
+            rid: RateID,
+          })
+        ),
+      });
 
       if (data.length === 1) {
         dispatch({ type: Actions.SELECTED_LOCATION, payload: data[0].ID });
