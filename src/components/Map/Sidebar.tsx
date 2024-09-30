@@ -59,8 +59,9 @@ const MapSidebar = () => {
             imageUrl: string;
           }) => {
             const isActive = id === focusedLocation || id === selectedLocation;
-
-            console.log(imageUrl);
+            const image = imageUrl
+              ? `https://xpark.lazparking.com/${imageUrl}`
+              : "https://go.lazparking.com/static/media/default_bg.9175f9eefa59a42c0776.png";
 
             return (
               <Card
@@ -90,19 +91,23 @@ const MapSidebar = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  {imageUrl && (
-                    <CardMedia
-                      component="img"
-                      image={`https://xpark.lazparking.com/${imageUrl}`}
-                      width={100}
-                      height={100}
-                      sx={{
-                        objectFit: "cover",
-                        borderRadius: 2,
-                      }}
-                    />
-                  )}
-                  <Box textAlign="right">
+                  <CardMedia
+                    component="img"
+                    image={image}
+                    width={100}
+                    height={100}
+                    sx={{
+                      objectFit: "cover",
+                      borderRadius: 2,
+                    }}
+                  />
+                  <Box
+                    textAlign="right"
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="space-between"
+                    alignItems="end"
+                  >
                     <Typography
                       gutterBottom
                       sx={{ color: "text.secondary", fontSize: 14 }}
@@ -110,7 +115,7 @@ const MapSidebar = () => {
                       {label}
                     </Typography>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       component={Link}
                       href={`https://go.lazparking.com/subnow?l=${id}`}
                       target="_blank"
