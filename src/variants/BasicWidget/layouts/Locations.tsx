@@ -9,7 +9,6 @@ import useApi from "../../../hooks/useApi";
 import { Actions } from "../../../state";
 import { Modes } from "../../../../types";
 import ModePicker from "../../../components/ModePicker";
-import { APIProvider } from "@vis.gl/react-google-maps";
 import LazMap from "../../../components/Map";
 import SeasonTickets from "../../../components/SeasonTickets";
 import PurchaseButton from "../../../components/PurchaseButton";
@@ -61,11 +60,7 @@ const LocationsLayout = () => {
       {locations?.length > 0 && (
         <>
           <LocationPicker />
-          {useMap && (
-            <APIProvider apiKey="">
-              <LazMap />
-            </APIProvider>
-          )}
+          {useMap && <LazMap />}
         </>
       )}
       <Box>

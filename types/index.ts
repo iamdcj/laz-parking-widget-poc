@@ -37,6 +37,7 @@ export interface AppDefaults {
   startTime: string;
   useFullWidget: boolean;
   useMap: boolean;
+  variant: "basic" | "map";
   widgetKey: string;
 }
 

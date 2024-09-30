@@ -35,6 +35,7 @@ export const initialState: InitialState = {
   timeIncrements: null,
   useFullWidget: false,
   useMap: false,
+  variant: "basic",
   widgetKey: null,
   times: {
     start: null,
@@ -54,10 +55,12 @@ export enum Actions {
   SET_EVENTS = "SET_EVENTS",
   SET_LOCATIONS = "SET_LOCATIONS",
   SET_MODES = "SET_MODES",
+  SRT_ZOOM = "SRT_ZOOM",
   SET_RATE = "SET_RATE",
   SET_SEASON_TICKETS = "SET_SEASON_TICKETS",
   SET_START_TIME = "SET_START_TIME",
   SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
+  SET_ZOOM = "SET_ZOOM",
 }
 
 export const appReducer = (
@@ -138,9 +141,9 @@ export const appReducer = (
     case Actions.SELECTED_LOCATION:
       return {
         ...state,
-        modes: state.modesOverride
-          ? state.modes
-          : returnModes(state.locations, payload),
+        // modes: state.modesOverride
+        //   ? state.modes
+        //   : returnModes(state.locations, payload),
         selectedLocation: payload,
         canPurchase: state.eventDriven && payload ? true : false,
       };
@@ -177,6 +180,11 @@ export const appReducer = (
         ...state,
         rate: payload,
         canPurchase: true,
+      };
+    case Actions.SET_ZOOM:
+      return {
+        ...state,
+        mapZoom: payload,
       };
     default:
       return state;

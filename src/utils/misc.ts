@@ -5,13 +5,18 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
   const params = getUrlParam();
   const modeOverwrite = !!element.dataset.modeOverwrite;
   const modes = modeOverwrite ? element.dataset.mode : params.wt;
+  const isMap = element.dataset.variant === "map";
+  const isHeaderEnabled = isMap
+    ? false
+    : element.dataset.header
+    ? element.dataset.header === "true"
+    : true;
 
   return {
+    variant: isMap ? "map" : "basic",
     modesOverride: modes ? modes?.split("/") : null,
     useMap: element.dataset.map ? element.dataset.map === "true" : true,
-    isHeaderEnabled: element.dataset.header
-      ? element.dataset.header === "true"
-      : true,
+    isHeaderEnabled,
     widgetKey: params.wk || element.dataset.wk,
     locationIds: params.l || element.dataset.locationid,
     salesChannelKey: params.sc || element.dataset.sc || null,
@@ -54,6 +59,6 @@ export const returnModes = (locations: any[], selectedLocation: string) => {
   }
 
   return locations
-    .find(({ ID }: { ID: any }) => ID === selectedLocation)
-    .DefaultWidgetType.split("|");
+    .find(({ id }: { id: any; modes: string }) => id === selectedLocation)
+    .modes.split("|");
 };

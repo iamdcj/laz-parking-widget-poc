@@ -15,6 +15,8 @@ export const useMapSetup = () => {
 
     const bound = new core.LatLngBounds();
 
+    console.log("locations: ", locations);
+
     locations.forEach(({ lat, lng }: { lat: number; lng: number }) => {
       bound.extend(new core.LatLng(lat, lng));
     });

@@ -49,9 +49,9 @@ export const useThemeConfig = () => {
     spacing: 6,
     palette: {
       primary: {
-        main: "#007dba",
-        light: "#36aefa",
-        dark: "#072a4a",
+        main: "#36aefa",
+        light: "#E0F0FE",
+        dark: "#006cba",
       },
       secondary: {
         main: "#5BFAD7",
