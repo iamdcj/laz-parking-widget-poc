@@ -65,6 +65,7 @@ const LazMap = () => {
             city,
             state,
             zipCode,
+            imageUrl,
           }: {
             id: string;
             lat: number;
@@ -74,10 +75,12 @@ const LazMap = () => {
             city: string;
             state: string;
             zipCode: string;
+            imageUrl: string;
           }) => (
             <MapMarker
               key={`${id}-map-marker`}
               id={id}
+              imageUrl={imageUrl}
               lat={lat}
               lng={lng}
               label={label}

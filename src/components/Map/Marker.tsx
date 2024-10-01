@@ -20,8 +20,10 @@ const MapMarker = ({
   city,
   state,
   zipCode,
+  imageUrl,
 }: {
   id: string;
+  imageUrl: string;
   lat: number;
   lng: number;
   label: string;
@@ -92,6 +94,7 @@ const MapMarker = ({
       </AdvancedMarker>
       <MarkerInfoWindow
         anchor={marker}
+        imageUrl={imageUrl}
         id={id}
         label={label}
         address={address}

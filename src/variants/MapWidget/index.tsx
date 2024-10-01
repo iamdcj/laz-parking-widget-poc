@@ -97,8 +97,6 @@ const MapWidget = () => {
     getAddressPosition();
   }, [geocoding]);
 
-  console.log(isMobile);
-
   return (
     <Box display="grid" gridTemplateColumns={gridLayout}>
       {isMobile ? (

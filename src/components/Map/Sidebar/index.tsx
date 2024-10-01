@@ -7,14 +7,10 @@ import {
   CardMedia,
   Link,
   Paper,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import { useAppContext } from "../../../context";
 import { Actions } from "../../../state";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import MapIcon from "@mui/icons-material/Map";
 import MapSidebarHeader from "./SidebarHeader";
 
 const MapSidebar = ({
