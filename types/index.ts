@@ -33,6 +33,7 @@ export interface AppDefaults {
   evid: string;
   hideEventDateTime: boolean;
   locationIds: string;
+  apiKey: string;
   mapLat: number;
   mapLng: number;
   mapTxt: string;

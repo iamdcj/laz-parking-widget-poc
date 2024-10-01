@@ -1,8 +1,8 @@
 import { InitialState } from "../../types";
-import { returnModes } from "../utils/misc";
 
 export const initialState: InitialState = {
   agentId: null,
+  apiKey: null,
   arriveOffset: null,
   canPurchase: false,
   clientId: null,

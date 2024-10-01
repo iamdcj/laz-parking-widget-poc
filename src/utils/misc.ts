@@ -14,6 +14,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
 
   return {
     variant: isMap ? "map" : "basic",
+    apiKey: element.dataset.key || null,
     modesOverride: modes ? modes?.split("/") : null,
     useMap: element.dataset.map ? element.dataset.map === "true" : true,
     isHeaderEnabled,
