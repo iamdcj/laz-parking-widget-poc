@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   Link,
+  Paper,
   Typography,
 } from "@mui/material";
 import { useAppContext } from "../../context";
@@ -46,89 +47,109 @@ const MapSidebar = () => {
   }, [selectedLocation]);
 
   return (
-    <Box component="aside" sx={{ height: "100vh", overflow: "auto" }}>
-      {locations?.length > 0 &&
-        locations.map(
-          ({
-            label,
-            id,
-            imageUrl,
-          }: {
-            id: string;
-            label: string;
-            imageUrl: string;
-          }) => {
-            const isActive = id === focusedLocation || id === selectedLocation;
-            const image = imageUrl
-              ? `https://xpark.lazparking.com/${imageUrl}`
-              : "https://go.lazparking.com/static/media/default_bg.9175f9eefa59a42c0776.png";
+    <Paper component="aside" sx={{ height: "100vh", overflow: "auto" }}>
+      {locations?.length > 0 && (
+        <>
+          <Box padding={2}>
+            <Typography fontSize={16}>
+              {locations.length} Locations available
+            </Typography>
+          </Box>
+          {locations.map(
+            ({
+              label,
+              id,
+              imageUrl,
+              address,
+              city,
+              state,
+              zipCode,
+            }: {
+              id: string;
+              label: string;
+              imageUrl: string;
+              address: string;
+              city: string;
+              state: string;
+              zipCode: string;
+            }) => {
+              const isActive =
+                id === focusedLocation || id === selectedLocation;
+              const image = imageUrl
+                ? `https://xpark.lazparking.com/${imageUrl}`
+                : "https://go.lazparking.com/static/media/default_bg.9175f9eefa59a42c0776.png";
 
-            return (
-              <Card
-                sx={{
-                  border: "1px solid lightgrey",
-                  mb: 2,
-                  backgroundColor: isActive && "primary.light",
-                }}
-                onMouseEnter={() =>
-                  dispatch({ type: Actions.FOCUSED_LOCATION, payload: id })
-                }
-                ref={(node) => {
-                  const map = getMap();
-
-                  if (node) {
-                    map.set(id, node);
-                  } else {
-                    map.delete(id);
-                  }
-                }}
-              >
-                <CardContent
+              return (
+                <Card
+                  key={id}
                   sx={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 3fr",
-                    rowGap: 2,
-                    justifyContent: "space-between",
+                    border: "1px solid lightgrey",
+                    mb: 2,
+                    backgroundColor: isActive && "primary.light",
+                  }}
+                  onMouseEnter={() =>
+                    dispatch({ type: Actions.FOCUSED_LOCATION, payload: id })
+                  }
+                  ref={(node) => {
+                    const map = getMap();
+
+                    if (node) {
+                      map.set(id, node);
+                    } else {
+                      map.delete(id);
+                    }
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    image={image}
-                    width={100}
-                    height={100}
+                  <CardContent
                     sx={{
-                      objectFit: "cover",
-                      borderRadius: 2,
+                      display: "grid",
+                      gridTemplateColumns: "120px 3fr",
+                      rowGap: 2,
+                      justifyContent: "space-between",
                     }}
-                  />
-                  <Box
-                    textAlign="right"
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="space-between"
-                    alignItems="end"
                   >
-                    <Typography
-                      gutterBottom
-                      sx={{ color: "text.secondary", fontSize: 14 }}
+                    <CardMedia
+                      component="img"
+                      image={image}
+                      width={120}
+                      height={120}
+                      sx={{
+                        objectFit: "cover",
+                        borderRadius: 2,
+                      }}
+                    />
+                    <Box
+                      textAlign="right"
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="space-between"
+                      alignItems="end"
                     >
-                      {label}
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      component={Link}
-                      href={`https://go.lazparking.com/subnow?l=${id}`}
-                      target="_blank"
-                    >
-                      Buy Now
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
-            );
-          }
-        )}
-    </Box>
+                      <Typography variant="h6">{label}</Typography>
+                      <Typography
+                        sx={{ color: "text.secondary", fontSize: 14, mb: 2 }}
+                      >
+                        {address}
+                        <br />
+                        {city}, {state}, {zipCode}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        component={Link}
+                        href={`https://go.lazparking.com/subnow?l=${id}`}
+                        target="_blank"
+                      >
+                        Buy Now
+                      </Button>
+                    </Box>
+                  </CardContent>
+                </Card>
+              );
+            }
+          )}
+        </>
+      )}
+    </Paper>
   );
 };
 

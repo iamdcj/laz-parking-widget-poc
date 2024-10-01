@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 export const useThemeConfig = () => {
   return createTheme({
+    cssVariables: false,
     typography: {
       fontFamily: [
         '"Figtree"',
@@ -52,6 +53,7 @@ export const useThemeConfig = () => {
         main: "#36aefa",
         light: "#E0F0FE",
         dark: "#006cba",
+        contrastText: "#fff",
       },
       secondary: {
         main: "#5BFAD7",

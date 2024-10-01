@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AdvancedMarker,
-  InfoWindow,
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 import {} from "../../variants/utils/maps";
@@ -10,17 +9,26 @@ import { Actions } from "../../state";
 import Icons from "../Icons";
 import { useTheme } from "@mui/material/styles";
 import { Box, Button, Link, Typography } from "@mui/material";
+import MarkerInfoWindow from "./InfoWindow";
 
 const MapMarker = ({
   id,
   lat,
   lng,
   label,
+  address,
+  city,
+  state,
+  zipCode,
 }: {
   id: string;
   lat: number;
   lng: number;
   label: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
 }) => {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const {
@@ -37,7 +45,6 @@ const MapMarker = ({
         onClick={() =>
           dispatch({ type: Actions.SELECTED_LOCATION, payload: id })
         }
-        key={id}
         position={{ lat, lng }}
         style={{
           pointerEvents: "all",
@@ -83,24 +90,15 @@ const MapMarker = ({
           />
         </Box>
       </AdvancedMarker>
-      {id === selectedLocation && (
-        <InfoWindow anchor={marker}>
-          <Typography
-            gutterBottom
-            sx={{ color: "text.secondary", fontSize: 14 }}
-          >
-            {label}
-          </Typography>
-          <Button
-            variant="outlined"
-            component={Link}
-            href={`https://go.lazparking.com/subnow?l=${id}`}
-            target="_blank"
-          >
-            Buy Now
-          </Button>
-        </InfoWindow>
-      )}
+      <MarkerInfoWindow
+        anchor={marker}
+        id={id}
+        label={label}
+        address={address}
+        city={city}
+        state={state}
+        zipCode={zipCode}
+      />
     </>
   );
 };

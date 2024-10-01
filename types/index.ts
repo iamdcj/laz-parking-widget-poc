@@ -16,6 +16,10 @@ export type Location = {
   RateID: number;
   Status: string | null;
   TimeZoneDate: string;
+  Address1: string;
+  City: string;
+  State: string;
+  Zip: string;
 };
 
 export interface AppDefaults {

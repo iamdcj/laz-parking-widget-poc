@@ -15,13 +15,18 @@ const MapWidget = () => {
 
   useEffect(() => {
     async function getAddressPosition() {
-      if (geolocation && geocoding) {
+      if (geocoding) {
+        const address = geolocation ? geolocation : "New York,USA";
+
         const geocoder = new geocoding.Geocoder();
-        const response = await geocoder.geocode({ address: geolocation });
+
+        const response = await geocoder.geocode({ address });
 
         const location = response.results[0];
         const neCoords = location.geometry.bounds.getNorthEast();
         const swCoorsds = location.geometry.bounds.getSouthWest();
+
+        debugger;
 
         const searchParams = new URLSearchParams({
           nelat: neCoords.lat().toString(),
@@ -48,6 +53,10 @@ const MapWidget = () => {
               Latitude,
               Longitude,
               ImageUrl,
+              Address1,
+              City,
+              State,
+              Zip,
             }: Location) => ({
               id: ID,
               modes: DefaultWidgetType,
@@ -56,6 +65,10 @@ const MapWidget = () => {
               lat: Latitude,
               lng: Longitude,
               imageUrl: ImageUrl,
+              address: Address1,
+              city: City,
+              state: State,
+              zipCode: Zip,
             })
           ),
         });
@@ -64,10 +77,6 @@ const MapWidget = () => {
 
     getAddressPosition();
   }, [geocoding]);
-
-  if (!geolocation) {
-    return null;
-  }
 
   return (
     <Box display="grid" gridTemplateColumns="1fr 3fr">
