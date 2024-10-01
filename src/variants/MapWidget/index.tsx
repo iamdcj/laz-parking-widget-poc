@@ -6,19 +6,22 @@ import { Box } from "@mui/material";
 import { getUrlParam } from "../../utils/urls";
 import { Actions } from "../../state";
 import { Location } from "../../../types";
-import MapSidebar from "../../components/Map/Sidebar";{ useTheme }
-improt from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import MapSidebar from "../../components/Map/Sidebar";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import MapSidebarHeader from "../../components/Map/Sidebar/SidebarHeader";
 
 const MapWidget = () => {
   const {
-    state: { apiKey: key },
+    state: { apiKey: key, locations },
     dispatch,
   } = useAppContext();
+  const [view, setView] = useState("list");
   const geocoding = useMapsLibrary("geocoding");
-  const { location: geolocation } = getUrlParam(); 
+  const { location: geolocation } = getUrlParam();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const gridLayout = !isMobile ? "minmax(400px,1fr) 3fr" : "1fr";
 
   useEffect(() => {
     async function getAddressPosition() {
@@ -94,10 +97,31 @@ const MapWidget = () => {
     getAddressPosition();
   }, [geocoding]);
 
+  console.log(isMobile);
+
   return (
-    <Box display="grid" gridTemplateColumns="minmax(400px,1fr) 3fr">
-      <MapSidebar />
-      <LazMap />
+    <Box display="grid" gridTemplateColumns={gridLayout}>
+      {isMobile ? (
+        <>
+          {view === "map" ? (
+            <>
+              <MapSidebarHeader
+                setView={setView}
+                view={view}
+                count={locations.length}
+              />
+              <LazMap />
+            </>
+          ) : (
+            <MapSidebar setView={setView} view={view} />
+          )}
+        </>
+      ) : (
+        <>
+          <MapSidebar />
+          <LazMap />
+        </>
+      )}
     </Box>
   );
 };

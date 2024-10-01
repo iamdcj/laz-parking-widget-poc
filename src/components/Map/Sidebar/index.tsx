@@ -7,12 +7,23 @@ import {
   CardMedia,
   Link,
   Paper,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import { useAppContext } from "../../context";
-import { Actions } from "../../state";
+import { useAppContext } from "../../../context";
+import { Actions } from "../../../state";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import MapIcon from "@mui/icons-material/Map";
+import MapSidebarHeader from "./SidebarHeader";
 
-const MapSidebar = () => {
+const MapSidebar = ({
+  setView,
+  view,
+}: {
+  setView?: (view: string) => void;
+  view?: string;
+}) => {
   const locationsRef = useRef(null);
   const {
     state: { locations, focusedLocation, selectedLocation },
@@ -47,14 +58,14 @@ const MapSidebar = () => {
   }, [selectedLocation]);
 
   return (
-    <Paper component="aside" sx={{ height: "100vh", overflow: "auto" }}>
+    <Paper component="aside" sx={{ height: "75vh", overflow: "auto" }}>
       {locations?.length > 0 && (
         <>
-          <Box padding={2}>
-            <Typography fontSize={16}>
-              {locations.length} Locations available
-            </Typography>
-          </Box>
+          <MapSidebarHeader
+            setView={setView}
+            view={view}
+            count={locations.length}
+          />
           {locations.map(
             ({
               label,
