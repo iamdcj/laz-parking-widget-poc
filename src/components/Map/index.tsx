@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Map } from "@vis.gl/react-google-maps";
 import { useMapSetup } from "../../variants/utils/maps";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
 import MapControls from "./Controls";
@@ -22,6 +22,8 @@ const LazMap = () => {
       });
     }
   }, [selectedEvent?.id]);
+
+  if (!locations) return null;
 
   return (
     <Map

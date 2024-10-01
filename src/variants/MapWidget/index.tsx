@@ -25,6 +25,10 @@ const MapWidget = () => {
           const geocoder = new geocoding.Geocoder();
           const response = await geocoder.geocode({ address });
 
+          if (!response.results || response.results.length < 1) {
+            throw new Error("Unable to perform geocode lookup");
+          }
+
           const location = response.results[0];
           const neCoords = location.geometry.bounds.getNorthEast();
           const swCoorsds = location.geometry.bounds.getSouthWest();

@@ -1,4 +1,5 @@
 import { Dayjs } from "dayjs";
+
 export type Modes = "TMD" | "EVT" | "PST" | "MUP" | "FAP" | "FEX" | "FEP";
 
 export type Component = Record<string, () => React.JSX.Element | null>;

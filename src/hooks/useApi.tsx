@@ -66,8 +66,6 @@ const useApi = () => {
         })
       );
 
-      console.log(data);
-
       dispatch({
         type: Actions.SET_LOCATIONS,
         payload: data.map(
