@@ -6,7 +6,9 @@ import { Box } from "@mui/material";
 import { getUrlParam } from "../../utils/urls";
 import { Actions } from "../../state";
 import { Location } from "../../../types";
-import MapSidebar from "../../components/Map/Sidebar";
+import MapSidebar from "../../components/Map/Sidebar";{ useTheme }
+improt from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const MapWidget = () => {
   const {
@@ -14,7 +16,9 @@ const MapWidget = () => {
     dispatch,
   } = useAppContext();
   const geocoding = useMapsLibrary("geocoding");
-  const { location: geolocation } = getUrlParam();
+  const { location: geolocation } = getUrlParam(); 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
     async function getAddressPosition() {
@@ -42,7 +46,7 @@ const MapWidget = () => {
           });
 
           const res = await fetch(
-            `https://xpark.lazparking.com/api/v1/Locations/FindLocaionsByLatLng?${searchParams}`
+            `https://xpark.lazparking.com/api/v1/Locations/FindLocationsByLatLng?${searchParams}`
           );
 
           if (!res.ok) {
@@ -91,7 +95,7 @@ const MapWidget = () => {
   }, [geocoding]);
 
   return (
-    <Box display="grid" gridTemplateColumns="1fr 3fr">
+    <Box display="grid" gridTemplateColumns="minmax(400px,1fr) 3fr">
       <MapSidebar />
       <LazMap />
     </Box>
