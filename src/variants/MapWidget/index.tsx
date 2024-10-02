@@ -98,7 +98,11 @@ const MapWidget = () => {
   }, [geocoding]);
 
   return (
-    <Box display="grid" gridTemplateColumns={gridLayout}>
+    <Box
+      display="grid"
+      gridTemplateColumns={gridLayout}
+      gridTemplateRows="50vh"
+    >
       {isMobile ? (
         <>
           {view === "map" ? (

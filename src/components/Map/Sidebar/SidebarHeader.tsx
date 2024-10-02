@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  Paper,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
@@ -18,11 +19,16 @@ const MapSidebarHeader = ({
   count: number;
 }) => {
   return (
-    <Box
-      padding={2}
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
+    <Paper
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderBottom: "1px solid grey",
+        borderRadius: "0 0 2px 2px",
+        px: 2,
+        height: 48,
+      }}
     >
       <Typography fontSize={16}>{count} Locations available</Typography>
       {setView && (
@@ -39,7 +45,7 @@ const MapSidebarHeader = ({
           </ToggleButton>
         </ToggleButtonGroup>
       )}
-    </Box>
+    </Paper>
   );
 };
 

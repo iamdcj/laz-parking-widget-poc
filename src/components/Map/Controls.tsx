@@ -49,7 +49,7 @@ const MapControls = ({ recenter }: { recenter: () => void }) => {
         <Button
           variant="contained"
           onClick={() =>
-            dispatch({ type: Actions.SET_ZOOM, payload: mapZoom + 1 })
+            dispatch({ type: Actions.SET_ZOOM, payload: mapZoom - 1 })
           }
           sx={{
             minWidth: "auto",
