@@ -12,6 +12,7 @@ import {
 import { useAppContext } from "../../../context";
 import { Actions } from "../../../state";
 import MapSidebarHeader from "./SidebarHeader";
+import PayButtons from "../PayButtons";
 
 const MapSidebar = ({
   setView,
@@ -140,14 +141,7 @@ const MapSidebar = ({
                         <br />
                         {city}, {state}, {zipCode}
                       </Typography>
-                      <Button
-                        variant="contained"
-                        component={Link}
-                        href={`https://go.lazparking.com/subnow?l=${id}`}
-                        target="_blank"
-                      >
-                        Buy Now
-                      </Button>
+                      <PayButtons id={id} />
                     </Box>
                   </CardContent>
                 </Card>

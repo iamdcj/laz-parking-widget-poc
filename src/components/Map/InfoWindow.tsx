@@ -3,15 +3,8 @@ import { InfoWindow } from "@vis.gl/react-google-maps";
 import {} from "../../variants/utils/maps";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Link,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CardMedia, Link, Typography } from "@mui/material";
+import PayButtons from "./PayButtons";
 
 const MarkerInfoWindow = ({
   anchor,
@@ -90,15 +83,7 @@ const MarkerInfoWindow = ({
           </Typography>
         </Box>
       </Box>
-      <Button
-        variant="outlined"
-        fullWidth
-        component={Link}
-        href={`https://go.lazparking.com/subnow?l=${id}`}
-        target="_blank"
-      >
-        Buy Now
-      </Button>
+      <PayButtons id={id} size="small" />
     </InfoWindow>
   );
 };
