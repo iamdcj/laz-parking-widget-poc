@@ -1,10 +1,9 @@
 import React from "react";
 import { InfoWindow } from "@vis.gl/react-google-maps";
-import {} from "../../variants/utils/maps";
-import { useAppContext } from "../../context";
-import { Actions } from "../../state";
+import { useAppContext } from "../../../context";
+import { Actions } from "../../../state";
 import { Box, Button, CardMedia, Link, Typography } from "@mui/material";
-import PayButtons from "./PayButtons";
+import PayButtons from "../PayButtons";
 
 const MarkerInfoWindow = ({
   anchor,

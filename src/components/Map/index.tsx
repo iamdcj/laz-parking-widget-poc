@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
 import MapControls from "./Controls";
-import MapMarker from "./Marker";
+import MapMarkers from "./Markers";
 
 const LazMap = () => {
   const {
@@ -24,11 +24,11 @@ const LazMap = () => {
   }, [selectedEvent?.id]);
 
   if (!locations) return null;
-
+  
   return (
     <Map
       mapId="basic-map"
-      style={{ height: "100%" }}
+      style={{ height: "calc(50vh - 49px)" }}
       defaultCenter={center ? center.getCenter() : { lat: mapLat, lng: mapLng }}
       gestureHandling={"greedy"}
       clickableIcons={false}
@@ -54,43 +54,7 @@ const LazMap = () => {
       >
         <MapControls recenter={recenter} />
       </Box>
-      {locations?.length > 0 &&
-        locations.map(
-          ({
-            id,
-            lat,
-            lng,
-            label,
-            address,
-            city,
-            state,
-            zipCode,
-            imageUrl,
-          }: {
-            id: string;
-            lat: number;
-            lng: number;
-            label: string;
-            address: string;
-            city: string;
-            state: string;
-            zipCode: string;
-            imageUrl: string;
-          }) => (
-            <MapMarker
-              key={`${id}-map-marker`}
-              id={id}
-              imageUrl={imageUrl}
-              lat={lat}
-              lng={lng}
-              label={label}
-              address={address}
-              city={city}
-              state={state}
-              zipCode={zipCode}
-            />
-          )
-        )}
+      {locations?.length > 0 && <MapMarkers />}
     </Map>
   );
 };

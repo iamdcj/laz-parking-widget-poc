@@ -68,7 +68,7 @@ const MapSidebar = ({
           />
           <Box
             sx={{
-              height: "calc(100% - 48px)",
+              height: isMobile ? "calc(100vh - 49px)" : "calc(75vh - 49px)",
               overflow: "auto",
               px: 1,
             }}
