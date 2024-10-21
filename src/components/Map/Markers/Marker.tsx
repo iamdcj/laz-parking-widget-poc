@@ -1,5 +1,8 @@
 import React, { memo, useCallback } from "react";
-import { AdvancedMarker, useAdvancedMarkerRef } from "@vis.gl/react-google-maps";
+import {
+  AdvancedMarker,
+  useAdvancedMarkerRef,
+} from "@vis.gl/react-google-maps";
 import { useAppContext } from "../../../context";
 import { Actions } from "../../../state";
 import MapMarkerPin from "./Pin";
@@ -29,13 +32,18 @@ const MapMarker = memo(
     zipCode: string;
     setMarkerRef: any;
   }) => {
-    const { dispatch } = useAppContext();
+    const {
+      dispatch,
+      state: { variant },
+    } = useAppContext();
     const [markerRef, marker] = useAdvancedMarkerRef();
+
+    const isMap = variant === "map";
 
     const ref = useCallback(
       (marker: google.maps.marker.AdvancedMarkerElement) => {
-        markerRef(marker)
-        setMarkerRef(marker, id)
+        markerRef(marker);
+        setMarkerRef(marker, id);
       },
       [setMarkerRef, id]
     );
@@ -55,16 +63,18 @@ const MapMarker = memo(
         >
           <MapMarkerPin id={id} />
         </AdvancedMarker>
-        <MarkerInfoWindow
-          anchor={marker}
-          imageUrl={imageUrl}
-          id={id}
-          label={label}
-          address={address}
-          city={city}
-          state={state}
-          zipCode={zipCode}
-        />
+        {isMap && (
+          <MarkerInfoWindow
+            anchor={marker}
+            imageUrl={imageUrl}
+            id={id}
+            label={label}
+            address={address}
+            city={city}
+            state={state}
+            zipCode={zipCode}
+          />
+        )}
       </>
     );
   }

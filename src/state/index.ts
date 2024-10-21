@@ -1,4 +1,5 @@
 import { InitialState } from "../../types";
+import { returnModes } from "../utils/misc";
 
 export const initialState: InitialState = {
   agentId: null,
@@ -141,9 +142,9 @@ export const appReducer = (
     case Actions.SELECTED_LOCATION:
       return {
         ...state,
-        // modes: state.modesOverride
-        //   ? state.modes
-        //   : returnModes(state.locations, payload),
+        modes: state.modesOverride
+          ? state.modes
+          : returnModes(state.locations, payload),
         selectedLocation: payload,
         canPurchase: state.eventDriven && payload ? true : false,
       };

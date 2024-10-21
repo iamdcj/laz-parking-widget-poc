@@ -6,9 +6,12 @@ import { Actions } from "../../state";
 
 const MapControls = ({ recenter }: { recenter: () => void }) => {
   const {
-    state: { locations, mapZoom },
+    state: { locations, mapZoom, variant },
     dispatch,
   } = useAppContext();
+
+  const isMap = variant === 'map'
+  
 
   return (
     <>

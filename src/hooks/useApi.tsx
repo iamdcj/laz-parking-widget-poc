@@ -71,13 +71,15 @@ const useApi = () => {
         payload: data.map(
           ({
             DefaultWidgetType,
+            ID,
             LocationId,
             Name,
             RateID,
             Latitude,
             Longitude,
           }: Location) => ({
-            id: LocationId,
+            locationId: LocationId,
+            id: ID,
             modes: DefaultWidgetType,
             label: Name,
             rid: RateID,
@@ -88,7 +90,7 @@ const useApi = () => {
       });
 
       if (data.length === 1) {
-        dispatch({ type: Actions.SELECTED_LOCATION, payload: data[0].ID });
+        dispatch({ type: Actions.SELECTED_LOCATION, payload: data[0].LocationId });
       }
     } catch (error) {
       dispatch({ type: Actions.LOADING, payload: false });
@@ -133,7 +135,7 @@ const useApi = () => {
         dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });
 
         if (data.length === 1) {
-          dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });
+          dispatch({ type: Actions.SET_RATE, payload: data[0].Id });
         }
       } catch (error) {
         dispatch({ type: Actions.LOADING, payload: false });

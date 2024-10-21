@@ -14,15 +14,6 @@ const LazMap = () => {
   } = useAppContext();
   const [center, recenter] = useMapSetup();
 
-  useEffect(() => {
-    if (!selectedEvent) {
-      dispatch({
-        type: Actions.SELECTED_LOCATION,
-        payload: null,
-      });
-    }
-  }, [selectedEvent?.id]);
-
   if (!locations) return null;
   
   return (

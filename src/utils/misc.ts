@@ -59,7 +59,14 @@ export const returnModes = (locations: any[], selectedLocation: string) => {
     return null;
   }
 
-  return locations
-    .find(({ id }: { id: any; modes: string }) => id === selectedLocation)
-    .modes.split("|");
+  const location = locations
+  .find(({ id }: { id: any; modes: string }) => id === selectedLocation)
+
+  if (!location) {
+    return null;
+  }
+
+  const modes = location?.modes.split("|");
+
+  return modes
 };

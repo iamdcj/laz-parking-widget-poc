@@ -35,6 +35,10 @@ const SeasonTickets = ({
     return <ErrorNotice error="Unable to retrieve pass data" />;
   }
 
+
+  console.log(rate);
+  
+
   return (
     <>
       <FormControl fullWidth sx={{ mb: 3 }} size="small">
