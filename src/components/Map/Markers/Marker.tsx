@@ -1,8 +1,9 @@
 import React, { memo, useCallback } from "react";
-import { AdvancedMarker } from "@vis.gl/react-google-maps";
+import { AdvancedMarker, useAdvancedMarkerRef } from "@vis.gl/react-google-maps";
 import { useAppContext } from "../../../context";
 import { Actions } from "../../../state";
 import MapMarkerPin from "./Pin";
+import MarkerInfoWindow from "./InfoWindow";
 
 const MapMarker = memo(
   ({
@@ -10,6 +11,12 @@ const MapMarker = memo(
     lat,
     lng,
     setMarkerRef,
+    imageUrl,
+    label,
+    address,
+    city,
+    state,
+    zipCode,
   }: {
     id: string;
     imageUrl: string;
@@ -23,13 +30,19 @@ const MapMarker = memo(
     setMarkerRef: any;
   }) => {
     const { dispatch } = useAppContext();
+    const [markerRef, marker] = useAdvancedMarkerRef();
 
     const ref = useCallback(
-      (marker: google.maps.marker.AdvancedMarkerElement) =>
-        setMarkerRef(marker, id),
+      (marker: google.maps.marker.AdvancedMarkerElement) => {
+        markerRef(marker)
+        setMarkerRef(marker, id)
+      },
       [setMarkerRef, id]
     );
 
+
+    console.log(markerRef);
+    
     return (
       <>
         <AdvancedMarker
@@ -45,16 +58,16 @@ const MapMarker = memo(
         >
           <MapMarkerPin id={id} />
         </AdvancedMarker>
-        {/* <MarkerInfoWindow
-        anchor={marker}
-        imageUrl={imageUrl}
-        id={id}
-        label={label}
-        address={address}
-        city={city}
-        state={state}
-        zipCode={zipCode}
-      /> */}
+        <MarkerInfoWindow
+          anchor={marker}
+          imageUrl={imageUrl}
+          id={id}
+          label={label}
+          address={address}
+          city={city}
+          state={state}
+          zipCode={zipCode}
+        />
       </>
     );
   }
