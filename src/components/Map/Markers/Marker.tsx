@@ -40,9 +40,6 @@ const MapMarker = memo(
       [setMarkerRef, id]
     );
 
-
-    console.log(markerRef);
-    
     return (
       <>
         <AdvancedMarker
