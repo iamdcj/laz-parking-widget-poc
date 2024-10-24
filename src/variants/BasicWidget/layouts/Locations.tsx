@@ -31,7 +31,6 @@ const LocationsLayout = () => {
       modes,
       modesOverride,
       selectedMode,
-      useMap,
     },
     dispatch,
   } = useAppContext();
@@ -55,31 +54,20 @@ const LocationsLayout = () => {
     }
   }, [selectedLocation, retrieveLocations]);
 
-  console.log(modes, modes?.length);
-  console.log(selectedMode);
-  console.log(selectedLocation);
-
   return (
     <Box>
-      {locations?.length > 0 && (
-        <>
-          <Box p={1}>
-            <LocationPicker />
-          </Box>
-          {/* {useMap && <LazMap />} */}
-        </>
-      )}
+      {locations?.length > 0 && <LocationPicker />}
       {modes && modes.length === 1 ? (
-        <Box p={1}>{Components[modes[0] as Modes]}</Box>
+        <Box>{Components[modes[0] as Modes]}</Box>
       ) : (
         selectedLocation && (
-          <Box p={1}>
+          <Box>
             <ModePicker />
-            {selectedMode && Components[selectedMode as Modes]}
+            {selectedMode && <Box>{Components[selectedMode as Modes]}</Box>}
           </Box>
         )
       )}
-      <Box p={1} display="flex" justifyContent="center">
+      <Box py={1} display="flex" justifyContent="center">
         <PurchaseButton />
       </Box>
     </Box>

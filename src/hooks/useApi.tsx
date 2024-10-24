@@ -90,7 +90,7 @@ const useApi = () => {
       });
 
       if (data.length === 1) {
-        dispatch({ type: Actions.SELECTED_LOCATION, payload: data[0].LocationId });
+        dispatch({ type: Actions.SELECTED_LOCATION, payload: data[0].ID });
       }
     } catch (error) {
       dispatch({ type: Actions.LOADING, payload: false });

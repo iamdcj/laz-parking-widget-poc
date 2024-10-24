@@ -22,12 +22,13 @@ const LocationPicker = () => {
       type: Actions.SELECTED_LOCATION,
       payload: event?.target?.value,
     });
+    
     dispatch({ type: Actions.FOCUSED_LOCATION, payload: event?.target?.value });
     updateParams("lot", event?.target?.value);
   };
 
   return (
-    <FormControl fullWidth size="small">
+    <FormControl fullWidth size="small" sx={{ mb: 2 }}>
       <InputLabel id="location-label">Location</InputLabel>
       <Select
         labelId="location"

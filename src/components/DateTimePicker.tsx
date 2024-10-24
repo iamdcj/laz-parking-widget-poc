@@ -18,7 +18,7 @@ const StartEndSelector = ({ hideEnd = false }) => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box display="grid" gridTemplateColumns="1fr 1fr" gap={2}>
+      <Box display="grid" gridTemplateColumns={hideEnd ? "1fr" : "1fr 1fr"} gap={2} mb={2}>
         <DateTimePicker
           slotProps={{ textField: { size: "small" } }}
           disablePast

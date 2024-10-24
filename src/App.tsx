@@ -17,7 +17,7 @@ function App(props: Settings) {
       <AppProvider value={state}>
         <Box width={400} border={`1px solid ${widgetTheme.palette.accent.light}`} borderRadius={1}>
           {isHeaderEnabled && <Header headerText={headerText} />}
-          <Box position="relative" padding={1}>
+          <Box position="relative" padding={2}>
             <Loader />
             <VariantSwitch />
           </Box>

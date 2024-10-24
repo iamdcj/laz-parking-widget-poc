@@ -35,19 +35,15 @@ const SeasonTickets = ({
     return <ErrorNotice error="Unable to retrieve pass data" />;
   }
 
-
-  console.log(rate);
-  
-
   return (
     <>
       <FormControl fullWidth sx={{ mb: 3 }} size="small">
-        <InputLabel id="location">Select Option</InputLabel>
+        <InputLabel id="season-passes-label">Select Option</InputLabel>
         <Select
-          labelId="location"
-          id="location"
+          labelId="season-passes"
+          id="season-passes"
           fullWidth
-          label="Age"
+          label="Select Option"
           value={rate}
           onChange={(event) =>
             dispatch({ type: Actions.SET_RATE, payload: event.target.value })

@@ -21,7 +21,7 @@ const ModePicker = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          mb: 1.5,
+          mb: 2,
         }}
         name="modes"
         value={selectedMode}
@@ -39,7 +39,7 @@ const ModePicker = () => {
               key={mode}
               id={mode}
               value={mode}
-              control={<Radio />}
+              control={<Radio sx={{ py: 0 }} />}
               label={mode}
             />
           ))}

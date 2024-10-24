@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import LazMap from "../../../components/Map";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAppContext } from "../../../context";
 import { Actions } from "../../../state";
-import { APIProvider } from "@vis.gl/react-google-maps";
 import EventPicker from "../../../components/EventPicker";
 import LocationPicker from "../../../components/LocationPicker";
 import useApi from "../../../hooks/useApi";
@@ -16,8 +14,6 @@ const EventsLayout = () => {
       selectedEvent,
       locationIds,
       events,
-      selectedLocation,
-      useMap,
     },
     dispatch,
   } = useAppContext();
@@ -38,13 +34,8 @@ const EventsLayout = () => {
 
   return (
     <Box>
-      {events?.length > 0 && <EventPicker />}
-      {locations?.length > 0 && (
-        <>
-          {useMap && <LazMap />}
-          <LocationPicker />
-        </>
-      )}
+      {events?.length > 0 && <EventPicker refetchEvents={false} />}
+      {locations?.length > 0 && <LocationPicker />}
       <PurchaseButton />
     </Box>
   );
