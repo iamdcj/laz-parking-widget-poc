@@ -9,6 +9,7 @@ import React from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { updateParams } from "../variants/utils/location";
+import LazMap from "./Map";
 
 const LocationPicker = () => {
   const {
@@ -37,6 +38,7 @@ const LocationPicker = () => {
         label="Location"
         disabled={locations.length === 1}
       >
+        <LazMap />
         {locations.map(({ id, label }: { id: string; label: string }) => (
           <MenuItem
             key={id}

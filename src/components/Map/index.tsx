@@ -19,7 +19,7 @@ const LazMap = () => {
   return (
     <Map
       mapId="basic-map"
-      style={{ height: "calc(50vh - 49px)" }}
+      style={{ height: 300 }}
       defaultCenter={center ? center.getCenter() : { lat: mapLat, lng: mapLng }}
       gestureHandling={"greedy"}
       clickableIcons={false}
