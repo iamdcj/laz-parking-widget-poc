@@ -34,8 +34,7 @@ const PurchaseButton = ({ label = "Get Rates" }) => {
         sc: salesChannelKey,
         rid: rate,
       })}
-      variant="outlined"
-      fullWidth
+      variant="contained"
       target="_blank"
       rel="noreferer"
       disabled={!canPurchase}

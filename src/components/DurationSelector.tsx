@@ -25,7 +25,7 @@ const DurationSelector = () => {
   }
 
   return (
-    <FormControl fullWidth sx={{ mb: 3 }} size="small">
+    <FormControl fullWidth size="small">
       <InputLabel id="location">Select Duration</InputLabel>
       <Select
         labelId="location"

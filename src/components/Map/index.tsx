@@ -9,7 +9,7 @@ import MapMarkers from "./Markers";
 
 const LazMap = () => {
   const {
-    state: { locations, selectedEvent, mapZoom, mapLat, mapLng },
+    state: { locations, mapZoom, mapLat, mapLng },
     dispatch,
   } = useAppContext();
   const [center, recenter] = useMapSetup();

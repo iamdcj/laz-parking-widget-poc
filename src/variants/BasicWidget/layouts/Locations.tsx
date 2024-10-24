@@ -55,27 +55,33 @@ const LocationsLayout = () => {
     }
   }, [selectedLocation, retrieveLocations]);
 
-  console.log(modes);
-  
+  console.log(modes, modes?.length);
+  console.log(selectedMode);
+  console.log(selectedLocation);
+
   return (
     <Box>
       {locations?.length > 0 && (
         <>
-          <LocationPicker />
-          {useMap && <LazMap />}
+          <Box p={1}>
+            <LocationPicker />
+          </Box>
+          {/* {useMap && <LazMap />} */}
         </>
       )}
-      <Box>
-        {modes && modes.length === 1 ? (
-          Components[modes[0] as Modes]
-        ) : (
-          <>
+      {modes && modes.length === 1 ? (
+        <Box p={1}>{Components[modes[0] as Modes]}</Box>
+      ) : (
+        selectedLocation && (
+          <Box p={1}>
             <ModePicker />
-            {Components[selectedMode as Modes]}
-          </>
-        )}
+            {selectedMode && Components[selectedMode as Modes]}
+          </Box>
+        )
+      )}
+      <Box p={1} display="flex" justifyContent="center">
+        <PurchaseButton />
       </Box>
-      <PurchaseButton />
     </Box>
   );
 };

@@ -26,15 +26,15 @@ const LocationPicker = () => {
   };
 
   return (
-    <FormControl fullWidth sx={{ mb: 1 }} size="small">
-      <InputLabel id="location">Location</InputLabel>
+    <FormControl fullWidth size="small">
+      <InputLabel id="location-label">Location</InputLabel>
       <Select
         labelId="location"
         id="location"
         value={selectedLocation || ""}
         onChange={handleOnLocationChange}
         fullWidth
-        label="Age"
+        label="Location"
         disabled={locations.length === 1}
       >
         {locations.map(({ id, label }: { id: string; label: string }) => (
