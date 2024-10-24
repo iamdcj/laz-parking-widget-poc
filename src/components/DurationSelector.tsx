@@ -26,12 +26,12 @@ const DurationSelector = () => {
 
   return (
     <FormControl fullWidth size="small">
-      <InputLabel id="location">Select Duration</InputLabel>
+      <InputLabel id="duration-label">Select Duration</InputLabel>
       <Select
-        labelId="location"
-        id="location"
+        labelId="duration"
+        id="duration"
         fullWidth
-        label="Age"
+        label="Select Duration"
         value={selectedDuration || ""}
         onChange={(event) =>
           dispatch({ type: Actions.SET_DURATION, payload: event.target.value })
