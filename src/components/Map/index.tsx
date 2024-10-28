@@ -7,7 +7,7 @@ import { Actions } from "../../state";
 import MapControls from "./Controls";
 import MapMarkers from "./Markers";
 
-const LazMap = () => {
+const LazMap = ({ height = 300, width = "100%" }) => {
   const {
     state: { locations, mapZoom, mapLat, mapLng },
     dispatch,
@@ -15,11 +15,11 @@ const LazMap = () => {
   const [center, recenter] = useMapSetup();
 
   if (!locations) return null;
-  
+
   return (
     <Map
       mapId="basic-map"
-      style={{ height: 300 }}
+      style={{ height, width }}
       defaultCenter={center ? center.getCenter() : { lat: mapLat, lng: mapLng }}
       gestureHandling={"greedy"}
       clickableIcons={false}

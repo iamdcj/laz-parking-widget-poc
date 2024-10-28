@@ -77,6 +77,7 @@ export const appReducer = (
         modes: payload,
       };
     case Actions.SELECTED_MODE:
+      debugger
       return {
         ...state,
         rate: null,
@@ -145,8 +146,7 @@ export const appReducer = (
         modes: state.modesOverride
           ? state.modes
           : returnModes(state.locations, payload),
-        selectedLocation: payload,
-        canPurchase: state.eventDriven && payload ? true : false,
+        selectedLocation: payload
       };
     case Actions.FOCUSED_LOCATION:
       return {

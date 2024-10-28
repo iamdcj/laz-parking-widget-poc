@@ -45,6 +45,7 @@ const SeasonTickets = ({
           fullWidth
           label="Select Option"
           value={rate}
+          disabled={seasonTickets.length === 1}
           onChange={(event) =>
             dispatch({ type: Actions.SET_RATE, payload: event.target.value })
           }

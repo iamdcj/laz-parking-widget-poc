@@ -37,6 +37,7 @@ const EventPicker = memo(
         size="small"
         disablePortal
         onChange={handleOnEventChange}
+        disabled={events.length === 1}
         renderOption={(props, option) => {
           return (
             <li {...props} key={option.id}>
