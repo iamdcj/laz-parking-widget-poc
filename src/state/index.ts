@@ -77,10 +77,10 @@ export const appReducer = (
         modes: payload,
       };
     case Actions.SELECTED_MODE:
-      debugger
       return {
         ...state,
         rate: null,
+        selectedDuration: null,
         times: {
           end: null,
           start: null,
