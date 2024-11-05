@@ -135,9 +135,23 @@ export const appReducer = (
         canPurchase: true,
       };
     case Actions.SET_LOCATIONS:
+      let locations = payload;
+
+      if (state.mapLat && state.mapLng) {
+        locations = [
+          ...locations,
+          {
+            label: state.mapTxt,
+            lat: state.mapLat,
+            lng: state.mapLng,
+            isPlace: true,
+          },
+        ];
+      }
+
       return {
         ...state,
-        locations: payload,
+        locations,
         isLoading: false,
       };
     case Actions.SELECTED_LOCATION:
@@ -146,7 +160,7 @@ export const appReducer = (
         modes: state.modesOverride
           ? state.modes
           : returnModes(state.locations, payload),
-        selectedLocation: payload
+        selectedLocation: payload,
       };
     case Actions.FOCUSED_LOCATION:
       return {

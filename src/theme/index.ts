@@ -50,9 +50,9 @@ export const useThemeConfig = () => {
     spacing: 6,
     palette: {
       primary: {
-        main: "#36aefa",
+        main: "#005EB8",
         light: "#E0F0FE",
-        dark: "#006cba",
+        dark: "#072a4a",
         contrastText: "#fff",
       },
       secondary: {

@@ -15,9 +15,15 @@ function App(props: Settings) {
   return (
     <ThemeProvider theme={widgetTheme}>
       <AppProvider value={state}>
-        <Box width={400} border={`1px solid ${widgetTheme.palette.accent.light}`} borderRadius={1}>
+        <Box width={400}>
           {isHeaderEnabled && <Header headerText={headerText} />}
-          <Box position="relative" padding={2}>
+          <Box
+            position="relative"
+            p={2}
+            pt={3}
+            border={`1px solid ${widgetTheme.palette.accent.light}`}
+            borderRadius="0 0 4px 4px"
+          >
             <Loader />
             <VariantSwitch />
           </Box>

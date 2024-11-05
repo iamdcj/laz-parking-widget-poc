@@ -12,8 +12,10 @@ const Header = ({ headerText }: { headerText: string }) => {
         alignItems: "center",
         backgroundColor: "primary.main",
         padding: 1.5,
-        marginBottom: 2,
-        borderRadius: "0 0 5px 5px",
+        borderRadius: "0 0 4px 4px",
+        mb: -0.5,
+        position: "relative",
+        zIndex: 1
       }}
     >
       {headerText ? (

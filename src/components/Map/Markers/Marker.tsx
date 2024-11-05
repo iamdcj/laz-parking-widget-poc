@@ -20,6 +20,7 @@ const MapMarker = memo(
     city,
     state,
     zipCode,
+    isPlace,
   }: {
     id: string;
     imageUrl: string;
@@ -31,6 +32,7 @@ const MapMarker = memo(
     state: string;
     zipCode: string;
     setMarkerRef: any;
+    isPlace: boolean;
   }) => {
     const {
       dispatch,
@@ -61,9 +63,9 @@ const MapMarker = memo(
           }}
           ref={ref}
         >
-          <MapMarkerPin id={id} />
+          <MapMarkerPin id={id} isPlace={isPlace} />
         </AdvancedMarker>
-        {isMap && (
+        {isMap && !isPlace && (
           <MarkerInfoWindow
             anchor={marker}
             imageUrl={imageUrl}

@@ -28,7 +28,7 @@ const LocationPicker = () => {
   };
 
   return (
-    <FormControl fullWidth size="small" sx={{ mb: 2 }}>
+    <FormControl fullWidth size="small" sx={{ mb: 3 }}>
       <InputLabel id="location-label">Location</InputLabel>
       <Select
         labelId="location"

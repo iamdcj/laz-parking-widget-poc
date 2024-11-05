@@ -1,13 +1,11 @@
 import React, { memo } from "react";
 import { useAppContext } from "../context";
-import MapWidget from "../variants/MapWidget";
-import BasicWidget from "../variants/BasicWidget";
 import { Box } from "@mui/material";
 import { APIProvider } from "@vis.gl/react-google-maps";
 
 const Variants = {
-  basic: BasicWidget,
-  map: MapWidget,
+  basic:  React.lazy(() => import('../variants/BasicWidget')),
+  map:  React.lazy(() => import('../variants/MapWidget')),
 };
 
 const VariantSwitch = () => {
