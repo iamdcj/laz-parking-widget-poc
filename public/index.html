@@ -3,8 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* div#LAZ_Widget div#LAZ_WidgetHeader {
+        width: 100%;
+        height: auto;
+      }
+      #LAZ_WidgetHeader {
+        background: #f3c811 !important;
+      }
+      #LAZ_WidgetHeader .LAZ_WidgetHeader_Content {
+        color: #000 !important;
+      }
+      #btnGetRate {
+        height: auto;
+        padding: 15px 65px;
+        margin: 25px auto !important;
+        background: #f3c811 !important;
+        border-radius: 50px !important;
+        border: 2px solid #f3c811 !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+        color: #000 !important;
+        width: auto !important;
+        cursor: pointer;
+      }
+      div#LAZ_Widget .LAZ_WidgetHeader_Content {
+        height: auto;
+        font-size: 20px;
+        line-height: 50px;
+      }
+      div#LAZ_Widget div#WidgetFaceDiv {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        position: relative;
+        height: 260px;
+      } */
+    </style>
   </head>
-  <body style="display:grid; justify-content: center;">
+  <body style="margin: 0">
     <!-- Map -->
     <!-- <div
       id="LAZ_Widget"
@@ -39,15 +76,21 @@
     <!-- Multiple Locations, with Standard/Timed Rates -->
     <div
       id="LAZ_Widget"
+      class="parkingwidget"
+      data-variant="map"
+      data-key="cea8dee4-01b6-44e6-8655-02ac0161145d"
       data-locationid="1043,68741,68720,68702,167956,8744,149679,1214,269,3880,78833,146978"
       data-arrive="0"
       data-depart="120"
       data-header="true"
       data-wk="479d79c6c76f4d85b2e1b06e48fc09fd"
-      style="height: 40%;"
-      data-mapplacelat="53.581093"
-      data-mapplacelng="-2.536825"
-      data-mapplacetxt="Hello World"
+      data-header-text="RESERVE PARKING NOW!"
+      style="height: 100vh"
+      data-theme='{
+        "primary": "#1D3B54",
+        "secondary": "#222",
+        "tertiary": "#efg"
+      }'
     ></div>
 
     <!-- Single Location, with Fixed Access Passes -->

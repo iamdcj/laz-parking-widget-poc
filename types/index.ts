@@ -52,9 +52,11 @@ export interface Settings extends AppDefaults {
   isHeaderEnabled: boolean;
   headerText: string;
   language: "EN" | "FR";
+  theme: null | JSON;
 }
 
 export interface InitialState extends AppDefaults {
+  bounds: any | null;
   canPurchase: boolean;
   duration: null | string;
   events: null | string[];

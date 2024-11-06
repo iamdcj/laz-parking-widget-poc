@@ -58,19 +58,33 @@ const MapSidebar = ({
   }, [selectedLocation]);
 
   return (
-    <Paper component="aside">
+    <Paper
+      component="aside"
+      sx={{
+        position: "absolute",
+        left: 20,
+        top: 20,
+        width: 400,
+        height: "calc(100% - 40px)",
+        overflow: "hidden",
+        zIndex: 2,
+        boxSizing: "border-box",
+      }}
+    >
       {locations?.length > 0 && (
         <>
-          <MapSidebarHeader
+          {/* <MapSidebarHeader
             setView={setView}
             view={view}
             count={locations.length}
-          />
+          /> */}
           <Box
             sx={{
-              height: isMobile ? "calc(100vh - 49px)" : "calc(75vh - 49px)",
+              height: isMobile ? "calc(100vh - 49px)" : "100%",
               overflow: "auto",
               px: 1,
+              scrollbarWidth: "none",
+              pb: 10,
             }}
           >
             {locations.map(

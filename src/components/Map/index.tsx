@@ -7,23 +7,32 @@ import { Actions } from "../../state";
 import MapControls from "./Controls";
 import MapMarkers from "./Markers";
 
-const LazMap = ({ height = 300, width = "100%" }) => {
+const LazMap = ({
+  height = 300,
+  width = "100%",
+}: {
+  height?: string | number;
+  width?: string | number;
+}) => {
   const {
-    state: { locations, mapZoom, mapLat, mapLng },
+    state: { locations, mapZoom },
     dispatch,
   } = useAppContext();
   const [center, recenter] = useMapSetup();
 
-  if (!locations) return null;
+  if (!center) return;
 
   return (
     <Map
       mapId="basic-map"
       style={{ height, width }}
-      defaultCenter={center ? center.getCenter() : { lat: mapLat, lng: mapLng }}
+      defaultCenter={center}
       gestureHandling={"greedy"}
       clickableIcons={false}
       disableDefaultUI={true}
+      onIdle={(param) => {
+        dispatch({ type: Actions.SET_BOUNDS, payload:  param.map.getBounds().toJSON() });
+      }}
       onZoomChanged={({ detail }) => {
         dispatch({ type: Actions.SET_ZOOM, payload: detail.zoom });
       }}

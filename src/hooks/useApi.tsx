@@ -15,6 +15,8 @@ const useApi = () => {
       widgetKey: widgetkey = "",
       selectedLocation,
       agentId,
+      bounds,
+      apiKey: key
     },
     dispatch,
   } = useAppContext();
@@ -144,11 +146,67 @@ const useApi = () => {
     [locationIds]
   );
 
+  const retrieveLocationsByBounds = useCallback(async (params: any) => {
+    dispatch({ type: Actions.LOADING, payload: true });
+
+    const searchParams = new URLSearchParams({
+      ...params,
+      _: "1621281148859",
+      key,
+    });
+
+    try {
+      const res = await fetch(
+        `https://xpark.lazparking.com/api/v1/Locations/FindLocationsByLatLng?${searchParams}`
+      );
+
+      if (!res.ok) {
+        throw new Error("Unable to retrieve locations");
+      }
+
+      const data = await res.json();
+
+      dispatch({
+        type: Actions.SET_LOCATIONS,
+        payload: data.map(
+          ({
+            DefaultWidgetType,
+            ID,
+            Name,
+            RateID,
+            Latitude,
+            Longitude,
+            ImageUrl,
+            Address1,
+            City,
+            State,
+            Zip,
+          }: Location) => ({
+            id: ID,
+            modes: DefaultWidgetType,
+            label: Name,
+            rid: RateID,
+            lat: Latitude,
+            lng: Longitude,
+            imageUrl: ImageUrl,
+            address: Address1,
+            city: City,
+            state: State,
+            zipCode: Zip,
+          })
+        ),
+      });
+    } catch (error) {
+      dispatch({ type: Actions.LOADING, payload: false });
+    }
+  }, []);
+
   return {
     retrieveEvents,
     retrieveLocations,
     retrieveTimeIncrements,
     retrieveSeasonTickets,
+    retrieveLocationsByBounds
   };
 };
 

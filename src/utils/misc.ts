@@ -13,6 +13,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     : true;
 
   return {
+    theme: element.dataset.theme ? JSON.parse(element.dataset.theme) : null,
     variant: isMap ? "map" : "basic",
     apiKey: element.dataset.key || null,
     modesOverride: modes ? modes?.split("/") : null,

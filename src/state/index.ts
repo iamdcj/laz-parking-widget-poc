@@ -5,6 +5,7 @@ export const initialState: InitialState = {
   agentId: null,
   apiKey: null,
   arriveOffset: null,
+  bounds: null,
   canPurchase: false,
   clientId: null,
   currentPage: null,
@@ -62,6 +63,7 @@ export enum Actions {
   SET_START_TIME = "SET_START_TIME",
   SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
   SET_ZOOM = "SET_ZOOM",
+  SET_BOUNDS = "SET_BOUNDS",
 }
 
 export const appReducer = (
@@ -200,6 +202,11 @@ export const appReducer = (
       return {
         ...state,
         mapZoom: payload,
+      };
+    case Actions.SET_BOUNDS:
+      return {
+        ...state,
+        bounds: payload,
       };
     default:
       return state;

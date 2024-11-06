@@ -45,7 +45,7 @@ const MapMarker = memo(
     const ref = useCallback(
       (marker: google.maps.marker.AdvancedMarkerElement) => {
         markerRef(marker);
-        setMarkerRef(marker, id);
+        // setMarkerRef(marker, id);
       },
       [setMarkerRef, id]
     );

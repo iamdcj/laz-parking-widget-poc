@@ -86,7 +86,7 @@ const MapMarkers = memo(() => {
       state,
       zipCode,
       imageUrl,
-      isPlace,
+      isPlace
     }: {
       id: string;
       lat: number;
@@ -97,7 +97,7 @@ const MapMarkers = memo(() => {
       state: string;
       zipCode: string;
       imageUrl: string;
-      isPlace: boolean;
+      isPlace: boolean
     }) => (
       <MapMarker
         setMarkerRef={setMarkerRef}

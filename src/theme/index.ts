@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-export const useThemeConfig = () => {
+export const useThemeConfig = (theme: Record<string, any>) => {
   return createTheme({
     cssVariables: false,
     typography: {
@@ -50,18 +50,18 @@ export const useThemeConfig = () => {
     spacing: 6,
     palette: {
       primary: {
-        main: "#005EB8",
+        main: theme.primary || "#005EB8",
         light: "#E0F0FE",
         dark: "#072a4a",
         contrastText: "#fff",
       },
       secondary: {
-        main: "#5BFAD7",
+        main: theme.secondary || "#5BFAD7",
         light: "#CAFFEE",
         dark: "#00D4AF",
       },
       accent: {
-        main: "#AAB2F7",
+        main: theme.tertiary || "#AAB2F7",
         light: "#E2E6FD",
         dark: "#706BE9",
       },
