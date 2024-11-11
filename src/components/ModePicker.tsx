@@ -8,8 +8,10 @@ import {
 import { Modes } from "../../types";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
+import { useTheme } from "@mui/material/styles";
 
 const ModePicker = () => {
+  const theme = useTheme();
   const {
     state: { modes, selectedMode = "" },
     dispatch,
@@ -39,7 +41,17 @@ const ModePicker = () => {
               key={mode}
               id={mode}
               value={mode}
-              control={<Radio sx={{ py: 0 }} />}
+              control={
+                <Radio
+                  sx={{
+                    py: 0,
+                    color: theme.palette.custom.radioButtonColor,
+                    "&.Mui-checked": {
+                      color: theme.palette.custom.radioButtonColor,
+                    },
+                  }}
+                />
+              }
               label={mode}
             />
           ))}

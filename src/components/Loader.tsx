@@ -19,11 +19,11 @@ const Loader = () => {
         height: "100%",
         top: 0,
         right: 0,
-        zIndex: 2,
+        zIndex: 13,
         background: "rgba(255, 255, 255, .65)",
       }}
     >
-      <CircularProgress size={60} />
+      <CircularProgress size={80} />
     </Box>
   );
 };

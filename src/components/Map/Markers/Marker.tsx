@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import {
   AdvancedMarker,
   useAdvancedMarkerRef,
@@ -36,18 +36,21 @@ const MapMarker = memo(
   }) => {
     const {
       dispatch,
-      state: { variant },
+      state: { variant, focusedLocation, selectedLocation },
     } = useAppContext();
     const [markerRef, marker] = useAdvancedMarkerRef();
+    const isActive = useMemo(() => {
+      return id === focusedLocation || id === selectedLocation;
+    }, [focusedLocation, selectedLocation]);
 
     const isMap = variant === "map";
 
     const ref = useCallback(
       (marker: google.maps.marker.AdvancedMarkerElement) => {
         markerRef(marker);
-        // setMarkerRef(marker, id);
+        setMarkerRef(marker, id);
       },
-      [setMarkerRef, id]
+      [marker, id]
     );
 
     return (
@@ -61,9 +64,10 @@ const MapMarker = memo(
           style={{
             pointerEvents: "all",
           }}
+          zIndex={isActive ? 20 : 10}
           ref={ref}
         >
-          <MapMarkerPin id={id} isPlace={isPlace} />
+          <MapMarkerPin isActive={isActive} id={id} isPlace={isPlace} />
         </AdvancedMarker>
         {isMap && !isPlace && (
           <MarkerInfoWindow

@@ -50,18 +50,18 @@ export const useThemeConfig = (theme: Record<string, any>) => {
     spacing: 6,
     palette: {
       primary: {
-        main: theme.primary || "#005EB8",
+        main: "#005EB8",
         light: "#E0F0FE",
         dark: "#072a4a",
         contrastText: "#fff",
       },
       secondary: {
-        main: theme.secondary || "#5BFAD7",
+        main: "#5BFAD7",
         light: "#CAFFEE",
         dark: "#00D4AF",
       },
       accent: {
-        main: theme.tertiary || "#AAB2F7",
+        main:   "#AAB2F7",
         light: "#E2E6FD",
         dark: "#706BE9",
       },
@@ -85,6 +85,9 @@ export const useThemeConfig = (theme: Record<string, any>) => {
         light: "#8c94a4",
         dark: "#25272c",
       },
+      custom: {
+        ...theme
+      }
     },
     components: {
       MuiButton: {
@@ -101,6 +104,6 @@ export const useThemeConfig = (theme: Record<string, any>) => {
           },
         },
       },
-    },
+    }
   });
 };

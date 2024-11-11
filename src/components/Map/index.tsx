@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Map } from "@vis.gl/react-google-maps";
 import { useMapSetup } from "../../variants/utils/maps";
 import { Box } from "@mui/material";
@@ -6,6 +6,7 @@ import { useAppContext } from "../../context";
 import { Actions } from "../../state";
 import MapControls from "./Controls";
 import MapMarkers from "./Markers";
+import { ColorScheme } from "@vis.gl/react-google-maps";
 
 const LazMap = ({
   height = 300,
@@ -15,12 +16,14 @@ const LazMap = ({
   width?: string | number;
 }) => {
   const {
-    state: { locations, mapZoom },
+    state: { locations, mapZoom, useMap, variant },
     dispatch,
   } = useAppContext();
-  const [center, recenter] = useMapSetup();
+  const renderMap = variant === "map" || useMap;
 
-  if (!center) return;
+  const [center, recenter] = useMapSetup(renderMap);
+
+  if(!renderMap) return null;
 
   return (
     <Map
@@ -30,8 +33,12 @@ const LazMap = ({
       gestureHandling={"greedy"}
       clickableIcons={false}
       disableDefaultUI={true}
+      colorScheme={ColorScheme.LIGHT}
       onIdle={(param) => {
-        dispatch({ type: Actions.SET_BOUNDS, payload:  param.map.getBounds().toJSON() });
+        dispatch({
+          type: Actions.SET_BOUNDS,
+          payload: param?.map?.getBounds()?.toJSON(),
+        });
       }}
       onZoomChanged={({ detail }) => {
         dispatch({ type: Actions.SET_ZOOM, payload: detail.zoom });

@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../context";
 import { constructBuyLink } from "../utils/urls";
+import { useTheme } from "@mui/material/styles";
 
 const PurchaseButton = ({ label = "Get Rates" }) => {
   const {
@@ -19,6 +20,7 @@ const PurchaseButton = ({ label = "Get Rates" }) => {
       canPurchase = false,
     },
   } = useAppContext();
+  const theme = useTheme();
 
   return (
     <Box py={1} display="flex" justifyContent="center">
@@ -39,6 +41,9 @@ const PurchaseButton = ({ label = "Get Rates" }) => {
         target="_blank"
         rel="noreferer"
         disabled={!canPurchase}
+        sx={{
+          backgroundColor: theme.palette.custom.mainButtonBackground || ''
+        }}
       >
         {label}
       </Button>

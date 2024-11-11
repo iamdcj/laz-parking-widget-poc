@@ -17,7 +17,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     variant: isMap ? "map" : "basic",
     apiKey: element.dataset.key || null,
     modesOverride: modes ? modes?.split("/") : null,
-    useMap: element.dataset.map ? element.dataset.map === "true" : true,
+    useMap: element.dataset.map ? element.dataset.map === "true" : false,
     isHeaderEnabled,
     widgetKey: params.wk || element.dataset.wk,
     locationIds: params.l || element.dataset.locationid,
@@ -67,7 +67,7 @@ export const returnModes = (locations: any[], selectedLocation: string) => {
     return null;
   }
 
-  const modes = location?.modes.split("|");
+  const modes = location?.modes?.split("|");
 
   return modes
 };

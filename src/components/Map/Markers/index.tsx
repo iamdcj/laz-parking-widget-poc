@@ -50,12 +50,12 @@ const MapMarkers = memo(() => {
     });
   }, [map]);
 
-  useEffect(() => {
-    if (!clusterer) return;
+  // useEffect(() => {
+  //   if (!clusterer) return;
 
-    clusterer.clearMarkers();
-    clusterer.addMarkers(Object.values(markers));
-  }, [markers]);
+  //   clusterer.clearMarkers();
+  //   clusterer.addMarkers(Object.values(markers));
+  // }, [markers]);
 
   const setMarkerRef = useCallback(
     (marker: Marker | null, id: string) => {

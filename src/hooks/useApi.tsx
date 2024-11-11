@@ -4,6 +4,7 @@ import { Actions } from "../state";
 import { fetchData } from "../utils/api";
 import { cleanObject } from "../utils/urls";
 import { Location } from "../../types";
+import { log } from "console";
 
 const useApi = () => {
   const {
@@ -16,7 +17,7 @@ const useApi = () => {
       selectedLocation,
       agentId,
       bounds,
-      apiKey: key
+      apiKey: key,
     },
     dispatch,
   } = useAppContext();
@@ -165,6 +166,7 @@ const useApi = () => {
       }
 
       const data = await res.json();
+      const rates = await retrieveRatesByLocations(data);
 
       dispatch({
         type: Actions.SET_LOCATIONS,
@@ -176,26 +178,69 @@ const useApi = () => {
             RateID,
             Latitude,
             Longitude,
+            LocNo,
             ImageUrl,
             Address1,
             City,
             State,
             Zip,
-          }: Location) => ({
-            id: ID,
-            modes: DefaultWidgetType,
-            label: Name,
-            rid: RateID,
-            lat: Latitude,
-            lng: Longitude,
-            imageUrl: ImageUrl,
-            address: Address1,
-            city: City,
-            state: State,
-            zipCode: Zip,
-          })
+          }: Location) => {
+            const rateData = rates.find(
+              ({ eDataLocationId }: { eDataLocationId: string }) => 
+                eDataLocationId === LocNo
+            );
+            
+            return {
+              id: ID,
+              modes: DefaultWidgetType,
+              label: Name,
+              rid: RateID,
+              lat: Latitude,
+              lng: Longitude,
+              imageUrl: ImageUrl,
+              address: Address1,
+              city: City,
+              state: State,
+              zipCode: Zip,
+            };
+          }
         ),
       });
+    } catch (error) {
+      dispatch({ type: Actions.LOADING, payload: false });
+    }
+  }, []);
+
+  const retrieveRatesByLocations = useCallback(async (locations: any) => {
+    dispatch({ type: Actions.LOADING, payload: true });
+
+    try {
+      const res = await fetch(
+        `https://grsv2api-a7gkc9becmebc8fq.z01.azurefd.net/api/v1/Rate/GetMultipleRates`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            Criteria: locations.map(({ ID }: { ID: string }) => ({
+              LotId: ID,
+              ParkingBeginDateTime: "2024/11/07 12:53 PM",
+              ParkingEndDateTime: "2024/11/07 2:53 PM",
+              SalesChannelKey: "",
+            })),
+            loadFromSearchCache: true,
+          }),
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Unable to retrieve locations");
+      }
+
+      const data = await res.json();
+
+      return JSON.parse(data.d);
     } catch (error) {
       dispatch({ type: Actions.LOADING, payload: false });
     }
@@ -206,7 +251,7 @@ const useApi = () => {
     retrieveLocations,
     retrieveTimeIncrements,
     retrieveSeasonTickets,
-    retrieveLocationsByBounds
+    retrieveLocationsByBounds,
   };
 };
 

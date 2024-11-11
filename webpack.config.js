@@ -49,5 +49,6 @@ module.exports = {
   devServer: {
     allowedHosts: "all",
     port: 1919,
+    hot: true,
   },
 };

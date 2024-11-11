@@ -13,7 +13,7 @@ const BasicWidget = () => {
   } = useAppContext();
 
   return (
-    <Box width={400} height={300} id="WidgetFaceDiv">
+    <Box id="WidgetFaceDiv">
       {isHeaderEnabled && <Header headerText={headerText} />}
       <Box
         position="relative"
@@ -21,6 +21,7 @@ const BasicWidget = () => {
         pt={3}
         border={`1px solid ${theme.palette.accent.light}`}
         borderRadius="0 0 4px 4px"
+        zIndex={1}
       >
         {eventDriven ? <EventsLayout /> : <LocationsLayout />}
       </Box>

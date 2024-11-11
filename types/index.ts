@@ -7,6 +7,7 @@ export type Component = Record<string, () => React.JSX.Element | null>;
 export type Location = {
   LocationId: number;
   ID: string;
+  LocNo: string;
   Name: string;
   Latitude: number;
   Longitude: number;

@@ -5,7 +5,7 @@ import { getUrlParam } from "../../utils/urls";
 import useApi from "../../hooks/useApi";
 import { Actions } from "../../state";
 
-export const useMapSetup = () => {
+export const useMapSetup = (useLocations = false) => {
   const {
     state: { locations, bounds, variant },
     dispatch,
@@ -44,26 +44,23 @@ export const useMapSetup = () => {
   }
 
   const fitMapBoundsUsingLocations = useCallback(() => {
-    console.log("map: ", map);
-    if (!core || !locations || !map) return;
-
     const bound = new core.LatLngBounds();
 
     locations.forEach(({ lat, lng }: { lat: number; lng: number }) => {
       bound.extend(new core.LatLng(lat, lng));
     });
 
-    return map.fitBounds(bound, { left: 300 });
-  }, [core, locations]);
+    return map.fitBounds(bound, { left: useLocations ? 0 : 300 });
+  }, [core, locations, map]);
 
   useEffect(() => {
-    if (!geocoding || !isMap) return;
+    if (useLocations || !geocoding || !isMap) return;
 
     getAddressPosition();
   }, [geocoding]);
 
   useEffect(() => {
-    if (!bounds) return;
+    if (useLocations || !bounds) return;
 
     retrieveLocationsByBounds({
       nelat: bounds.north,
@@ -72,6 +69,12 @@ export const useMapSetup = () => {
       swlng: bounds.west,
     });
   }, [bounds?.north]);
+
+  useEffect(() => {
+    if (!useLocations || !core || !locations || !map) return;
+
+    fitMapBoundsUsingLocations();
+  }, [locations, core, map]);
 
   return [center, fitMapBoundsUsingLocations];
 };
