@@ -6,6 +6,7 @@ import MapSidebar from "../../components/Map/Sidebar";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MapSidebarHeader from "../../components/Map/Sidebar/SidebarHeader";
+import Loader from "../../components/Loader";
 
 const MapWidget = () => {
   const {
@@ -16,7 +17,8 @@ const MapWidget = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Box height="100%" boxSizing="border-box">
+    <Box height="100%" position="relative">
+      <Loader />
       {isMobile ? (
         <>
           {view === "map" ? (

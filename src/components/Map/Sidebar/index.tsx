@@ -68,7 +68,6 @@ const MapSidebar = ({
         height: "calc(100% - 40px)",
         overflow: "hidden",
         zIndex: 2,
-        boxSizing: "border-box",
       }}
     >
       {locations?.length > 0 && (

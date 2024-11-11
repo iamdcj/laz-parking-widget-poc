@@ -5,6 +5,7 @@ import LocationsLayout from "./layouts/Locations";
 import Header from "../../components/Header";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import Loader from "../../components/Loader";
 
 const BasicWidget = () => {
   const theme = useTheme();
@@ -13,7 +14,8 @@ const BasicWidget = () => {
   } = useAppContext();
 
   return (
-    <Box id="WidgetFaceDiv">
+    <Box id="WidgetFaceDiv" position="relative">
+      <Loader />
       {isHeaderEnabled && <Header headerText={headerText} />}
       <Box
         position="relative"

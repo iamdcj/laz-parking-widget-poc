@@ -13,7 +13,6 @@ function App(props: Settings) {
   return (
     <ThemeProvider theme={widgetTheme}>
       <AppProvider value={state}>
-        <Loader />
         <VariantSwitch />
       </AppProvider>
     </ThemeProvider>

@@ -23,7 +23,7 @@ const Loader = () => {
         background: "rgba(255, 255, 255, .65)",
       }}
     >
-      <CircularProgress size={80} />
+      <CircularProgress size={50} />
     </Box>
   );
 };
