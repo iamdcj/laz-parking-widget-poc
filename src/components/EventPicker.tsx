@@ -4,12 +4,13 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { updateParams } from "../variants/utils/location";
 import useApi from "../hooks/useApi";
+import ErrorNotice from "./ErrorNotice";
 
 const EventPicker = memo(
   ({ refetchEvents = true }: { refetchEvents?: boolean }) => {
     const { retrieveEvents } = useApi();
     const {
-      state: { events, hideEventDateTime, selectedLocation, selectedEvent },
+      state: { events, hideEventDateTime, selectedLocation, selectedEvent, isLoading },
       dispatch,
     } = useAppContext();
 
@@ -31,6 +32,14 @@ const EventPicker = memo(
         updateParams(null, null, true);
       }
     };
+
+    if (isLoading || !events) {
+      return null;
+    }
+  
+    if (!isLoading && events && events.length < 1) {
+      return <ErrorNotice error="Unable to retrieve pass data" />;
+    }
 
     return (
       <Autocomplete

@@ -37,6 +37,7 @@ const useApi = () => {
 
       dispatch({ type: Actions.SET_EVENTS, payload: data });
     } catch (error) {
+      dispatch({ type: Actions.SET_EVENTS, payload: [] });
       dispatch({ type: Actions.LOADING, payload: false });
     }
   }, []);

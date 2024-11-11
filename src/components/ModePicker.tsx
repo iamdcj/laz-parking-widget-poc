@@ -23,6 +23,7 @@ const ModePicker = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
+          rowGap: 1,
           mb: 3,
         }}
         name="modes"
