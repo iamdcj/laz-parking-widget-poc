@@ -13,6 +13,9 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     : true;
 
   return {
+    buttonText: element.dataset.buttonText
+      ? element.dataset.buttonText
+      : "Get Rates",
     theme: element.dataset.theme ? JSON.parse(element.dataset.theme) : null,
     variant: isMap ? "map" : "basic",
     apiKey: element.dataset.key || null,
@@ -60,8 +63,9 @@ export const returnModes = (locations: any[], selectedLocation: string) => {
     return null;
   }
 
-  const location = locations
-  .find(({ id }: { id: any; modes: string }) => id === selectedLocation)
+  const location = locations.find(
+    ({ id }: { id: any; modes: string }) => id === selectedLocation
+  );
 
   if (!location) {
     return null;
@@ -69,5 +73,5 @@ export const returnModes = (locations: any[], selectedLocation: string) => {
 
   const modes = location?.modes?.split("|");
 
-  return modes
+  return modes;
 };

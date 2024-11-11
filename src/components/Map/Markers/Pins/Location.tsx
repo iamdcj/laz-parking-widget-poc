@@ -15,19 +15,26 @@ const LocationPin = memo(({ isActive }: { isActive: boolean }) => {
         transform: isActive ? "scale(1.35)" : "scale(1)",
         transformOrigin: "center center",
         pointerEvents: "all",
-        borderRadius: 2,
+        opacity: isActive ? 1 : 0.8,
         willChange: "transform",
-        background: theme.palette.primary.main,
-        fontSize: 14,
-        color: isActive ? "#fff" : theme.palette.primary.main,
-        padding: 0.5,
-        zIndex: isActive ? 10 : 2,
-        width: 42,
-        height: 62,
-        fill: theme.palette.primary.dark,
       }}
     >
-      <Icons type="logo" width={25} style={{}} />
+      <svg width={35} height={54} viewBox="0 0 41.65 61.41">
+        <path
+          fill={theme.palette.primary.main}
+          d="M20.69 61.41 36.77 34.2A20.82 20.82 0 1 0 0 20.82a20.63 20.63 0 0 0 1.51 7.76h-.18l.75 1.27a19.94 19.94 0 0 0 1.79 3Z"
+        />
+      </svg>
+      <Icons
+        type="logo"
+        width={20}
+        style={{
+          position: "absolute",
+          top: 15,
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      />
     </Box>
   );
 });

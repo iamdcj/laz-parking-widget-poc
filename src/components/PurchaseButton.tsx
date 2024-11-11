@@ -4,7 +4,7 @@ import { useAppContext } from "../context";
 import { constructBuyLink } from "../utils/urls";
 import { useTheme } from "@mui/material/styles";
 
-const PurchaseButton = ({ label = "Get Rates" }) => {
+const PurchaseButton = () => {
   const {
     state: {
       selectedEvent,
@@ -18,6 +18,7 @@ const PurchaseButton = ({ label = "Get Rates" }) => {
       salesChannelKey,
       rate,
       canPurchase = false,
+      buttonText,
     },
   } = useAppContext();
   const theme = useTheme();
@@ -42,10 +43,10 @@ const PurchaseButton = ({ label = "Get Rates" }) => {
         rel="noreferer"
         disabled={!canPurchase}
         sx={{
-          backgroundColor: theme.palette.custom.mainButtonBackground || ''
+          backgroundColor: theme.palette.custom.mainButtonBackground
         }}
       >
-        {label}
+        {buttonText}
       </Button>
     </Box>
   );

@@ -54,6 +54,7 @@ export interface Settings extends AppDefaults {
   headerText: string;
   language: "EN" | "FR";
   theme: null | JSON;
+  buttonText: string;
 }
 
 export interface InitialState extends AppDefaults {
