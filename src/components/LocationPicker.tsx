@@ -42,7 +42,7 @@ const LocationPicker = () => {
         <LazMap />
         {locations.map(({ id, label }: { id: string; label: string }) => (
           <MenuItem
-            key={id}
+            key={`${id}-${label}`}
             value={id}
             onMouseOver={() =>
               dispatch({ type: Actions.FOCUSED_LOCATION, payload: id })

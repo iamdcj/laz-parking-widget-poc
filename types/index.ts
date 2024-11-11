@@ -36,9 +36,9 @@ export interface AppDefaults {
   hideEventDateTime: boolean;
   locationIds: string;
   apiKey: string;
-  mapLat: number;
-  mapLng: number;
-  mapTxt: string;
+  mapLocationLat: number;
+  mapLocationLng: number;
+  mapLocationText: string;
   mapZoom: number;
   modesOverride: null | string[];
   salesChannelKey: string;

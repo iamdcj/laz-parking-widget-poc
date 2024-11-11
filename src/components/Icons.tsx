@@ -19,6 +19,15 @@ const Icons = ({
         </svg>
       );
 
+    case "pin":
+      return (
+        <svg {...props} viewBox="0 0 41.65 61.41">
+          <path
+            fill={props.fill as string}
+            d="M20.69 61.41 36.77 34.2A20.82 20.82 0 1 0 0 20.82a20.63 20.63 0 0 0 1.51 7.76h-.18l.75 1.27a19.94 19.94 0 0 0 1.79 3Z"
+          />
+        </svg>
+      );
     default:
       return null;
   }

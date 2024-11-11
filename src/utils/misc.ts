@@ -33,12 +33,13 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     headerText: element.dataset.headerText || null,
     clientId: element.dataset.clientid || null,
     mapZoom: element.dataset.mapzoom ? Number(element.dataset.mapzoom) : 12,
-    mapLat: element.dataset.mapplacelat
+    mapLocationLat: element.dataset.mapplacelat
       ? Number(element.dataset.mapplacelat)
       : 0,
-    mapLng: element.dataset.mapplacelng
+    mapLocationLng: element.dataset.mapplacelng
       ? Number(element.dataset.mapplacelng)
       : 0,
+    mapLocationText: element.dataset.mapplacetxt || null,
     eventDriven: params.wt === "evt" || element.dataset.eventdriven === "true",
     // ---- TODO: determine the use cases for the following: //
     startTime: params.start || element.dataset.starttime || null, // set the default start time of the widget (what is the format)
@@ -52,7 +53,6 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     useFullWidget: element.dataset.fullwidget
       ? element.dataset.fullwidget === "true"
       : false, // set whether or not to open the full widget url in a new window or to change the current url (example)
-    mapTxt: element.dataset.mapplacetxt || null, //! tbd
     currentPage: !!element.dataset.currentpage, // Get the widget key (not sure about this one)
     // template: element.dataset.template || null, // load template and stub style sheet based on iso language code (need examples)
   };

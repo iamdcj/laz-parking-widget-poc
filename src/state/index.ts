@@ -20,9 +20,9 @@ export const initialState: InitialState = {
   isLoading: false,
   locationIds: null,
   locations: null,
-  mapLat: null,
-  mapLng: null,
-  mapTxt: null,
+  mapLocationLat: null,
+  mapLocationLng: null,
+  mapLocationText: null,
   mapZoom: null,
   modes: null,
   modesOverride: null,
@@ -139,13 +139,13 @@ export const appReducer = (
     case Actions.SET_LOCATIONS:
       let locations = payload;
 
-      if (state.mapLat && state.mapLng) {
+      if (state.mapLocationLat && state.mapLocationLng) {
         locations = [
           ...locations,
           {
-            label: state.mapTxt,
-            lat: state.mapLat,
-            lng: state.mapLng,
+            label: state.mapLocationText,
+            lat: state.mapLocationLat,
+            lng: state.mapLocationLng,
             isPlace: true,
           },
         ];
@@ -157,12 +157,14 @@ export const appReducer = (
         isLoading: false,
       };
     case Actions.SELECTED_LOCATION:
+      debugger;
       return {
         ...state,
         modes: state.modesOverride
           ? state.modes
           : returnModes(state.locations, payload),
         selectedLocation: payload,
+        canPurchase: state.eventDriven ? true : state.canPurchase,
       };
     case Actions.FOCUSED_LOCATION:
       return {
