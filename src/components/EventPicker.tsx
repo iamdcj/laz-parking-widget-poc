@@ -10,7 +10,13 @@ const EventPicker = memo(
   ({ refetchEvents = true }: { refetchEvents?: boolean }) => {
     const { retrieveEvents } = useApi();
     const {
-      state: { events, hideEventDateTime, selectedLocation, selectedEvent, isLoading },
+      state: {
+        events,
+        hideEventDateTime,
+        selectedLocation,
+        selectedEvent,
+        isLoading,
+      },
       dispatch,
     } = useAppContext();
 
@@ -36,7 +42,7 @@ const EventPicker = memo(
     if (isLoading || !events) {
       return null;
     }
-  
+
     if (!isLoading && events && events.length < 1) {
       return <ErrorNotice error="Unable to events data" />;
     }
@@ -47,13 +53,11 @@ const EventPicker = memo(
         disablePortal
         onChange={handleOnEventChange}
         disabled={events.length === 1}
-        renderOption={(props, option) => {
-          return (
-            <li {...props} key={option.id}>
-              {option.label}
-            </li>
-          );
-        }}
+        renderOption={(props, option) => (
+          <li {...props} key={option.id}>
+            {option.label}
+          </li>
+        )}
         value={selectedEvent}
         sx={{ mb: 2 }}
         options={events.map(

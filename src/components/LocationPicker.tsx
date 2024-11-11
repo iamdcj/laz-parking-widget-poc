@@ -5,7 +5,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { updateParams } from "../variants/utils/location";
@@ -16,16 +16,21 @@ const LocationPicker = () => {
     state: { locations, selectedLocation },
     dispatch,
   } = useAppContext();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleOnLocationChange = (event: SelectChangeEvent<any>) => {
     dispatch({
       type: Actions.SELECTED_LOCATION,
       payload: event?.target?.value,
     });
-    
+
     dispatch({ type: Actions.FOCUSED_LOCATION, payload: event?.target?.value });
     updateParams("lot", event?.target?.value);
   };
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [selectedLocation]);
 
   return (
     <FormControl fullWidth size="small" sx={{ mb: 3 }}>
@@ -36,6 +41,8 @@ const LocationPicker = () => {
         value={selectedLocation || ""}
         onChange={handleOnLocationChange}
         fullWidth
+        open={isOpen}
+        onOpen={() => setIsOpen(true)}
         label="Location"
         disabled={locations.length === 1}
       >
