@@ -38,7 +38,7 @@ const EventPicker = memo(
     }
   
     if (!isLoading && events && events.length < 1) {
-      return <ErrorNotice error="Unable to retrieve pass data" />;
+      return <ErrorNotice error="Unable to events data" />;
     }
 
     return (
