@@ -12,6 +12,10 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     ? element.dataset.header === "true"
     : true;
 
+
+    console.log(params);
+    
+
   return {
     buttonText: element.dataset.buttonText
       ? element.dataset.buttonText

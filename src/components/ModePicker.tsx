@@ -46,9 +46,9 @@ const ModePicker = () => {
                 <Radio
                   sx={{
                     py: 0,
-                    color: theme.palette.custom.radioButtonColor,
+                    color: theme.palette.primary.main,
                     "&.Mui-checked": {
-                      color: theme.palette.custom.radioButtonColor,
+                      color: theme.palette.primary.main,
                     },
                   }}
                 />

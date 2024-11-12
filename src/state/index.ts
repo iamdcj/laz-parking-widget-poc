@@ -64,6 +64,7 @@ export enum Actions {
   SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
   SET_ZOOM = "SET_ZOOM",
   SET_BOUNDS = "SET_BOUNDS",
+  SET_OVERRIDES = "SET_OVERRIDES"
 }
 
 export const appReducer = (
@@ -97,19 +98,9 @@ export const appReducer = (
         isLoading: payload,
       };
     case Actions.SET_EVENTS:
-      const defaultEvent = state.evid
-        ? payload.find((event: any) => event.EventId === state.evid)
-        : null;
-
       return {
         ...state,
         events: payload,
-        selectedEvent: defaultEvent
-          ? {
-              id: defaultEvent.EventId,
-              label: defaultEvent.EventName,
-            }
-          : null,
         isLoading: false,
       };
     case Actions.RESET_EVENTS:
@@ -119,6 +110,7 @@ export const appReducer = (
         events: [],
       };
     case Actions.SELECTED_EVENT:
+      debugger;
       return {
         ...state,
         selectedEvent: payload,
@@ -209,6 +201,11 @@ export const appReducer = (
         ...state,
         bounds: payload,
       };
+      case Actions.SET_OVERRIDES:
+        return {
+          ...state,
+          ...payload,
+        };
     default:
       return state;
   }

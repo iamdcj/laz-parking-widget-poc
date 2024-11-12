@@ -2,7 +2,6 @@ import { Autocomplete, TextField } from "@mui/material";
 import React, { memo, SyntheticEvent, useEffect } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
-import { updateParams } from "../variants/utils/location";
 import useApi from "../hooks/useApi";
 import ErrorNotice from "./ErrorNotice";
 
@@ -32,10 +31,8 @@ const EventPicker = memo(
     ) => {
       if (data?.id) {
         dispatch({ type: Actions.SELECTED_EVENT, payload: data });
-        updateParams("evid", data?.id, true);
       } else {
         dispatch({ type: Actions.SELECTED_EVENT, payload: null });
-        updateParams(null, null, true);
       }
     };
 
@@ -46,7 +43,7 @@ const EventPicker = memo(
     if (!isLoading && events && events.length < 1) {
       return <ErrorNotice error="Unable to events data" />;
     }
-
+    
     return (
       <Autocomplete
         size="small"

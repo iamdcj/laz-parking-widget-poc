@@ -14,9 +14,9 @@ const BasicWidget = () => {
   } = useAppContext();
 
   return (
-    <Box id="WidgetFaceDiv" position="relative">
+    <Box id="WidgetFaceDiv" position="relative" width="100%">
       <Loader />
-      {isHeaderEnabled && <Header headerText={headerText} />}
+      {isHeaderEnabled && <Header />}
       <Box
         position="relative"
         p={2}

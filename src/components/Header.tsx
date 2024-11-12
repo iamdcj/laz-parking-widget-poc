@@ -2,16 +2,19 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import Icons from "./Icons";
 import { useTheme } from "@mui/material/styles";
+import { useAppContext } from "../context";
 
-const Header = ({ headerText }: { headerText: string }) => {
+const Header = () => {
+  const {
+    state: { headerText, logo },
+  } = useAppContext();
   const theme = useTheme();
 
   return (
     <Box
       id="LAZ_WidgetHeader"
       sx={{
-        backgroundColor:
-          theme.palette.custom.headerBackground || "primary.main",
+        backgroundColor: "primary.main",
         zIndex: 3,
         borderRadius: "0 0 4px 4px",
         position: "relative",
@@ -19,6 +22,7 @@ const Header = ({ headerText }: { headerText: string }) => {
     >
       <Box
         className="LAZ_WidgetHeader_Content"
+        height={48}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -27,8 +31,14 @@ const Header = ({ headerText }: { headerText: string }) => {
           mb: -0.5,
         }}
       >
-        {headerText ? (
-          <Typography component="p" color="#fff">
+        {logo ? (
+          <img
+            src={logo}
+            alt="Client Logo"
+            style={{ height: 30, width: "auto" }}
+          />
+        ) : headerText ? (
+          <Typography component="p" color={theme.palette.primary.contrastText}>
             {headerText}
           </Typography>
         ) : (

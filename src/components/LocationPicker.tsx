@@ -8,7 +8,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
-import { updateParams } from "../variants/utils/location";
 import LazMap from "./Map";
 
 const LocationPicker = () => {
@@ -25,7 +24,6 @@ const LocationPicker = () => {
     });
 
     dispatch({ type: Actions.FOCUSED_LOCATION, payload: event?.target?.value });
-    updateParams("lot", event?.target?.value);
   };
 
   useEffect(() => {
@@ -41,8 +39,6 @@ const LocationPicker = () => {
         value={selectedLocation || ""}
         onChange={handleOnLocationChange}
         fullWidth
-        open={isOpen}
-        onOpen={() => setIsOpen(true)}
         label="Location"
         disabled={locations.length === 1}
       >

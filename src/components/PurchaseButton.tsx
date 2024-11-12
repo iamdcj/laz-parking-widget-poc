@@ -39,12 +39,10 @@ const PurchaseButton = () => {
           rid: rate,
         })}
         variant="contained"
+        color="secondary"
         target="_blank"
         rel="noreferer"
         disabled={!canPurchase}
-        sx={{
-          backgroundColor: theme.palette.custom.mainButtonBackground
-        }}
       >
         {buttonText}
       </Button>

@@ -44,7 +44,7 @@ const SeasonTickets = ({
           id="season-passes"
           fullWidth
           label="Select Option"
-          value={rate}
+          value={rate || ""}
           disabled={seasonTickets.length === 1}
           onChange={(event) =>
             dispatch({ type: Actions.SET_RATE, payload: event.target.value })
@@ -61,11 +61,15 @@ const SeasonTickets = ({
               RateName: string;
               RateDetailName: string;
               RateId: string;
-            }) => (
-              <MenuItem key={Id || RateId} value={Id || RateId}>
-                {RateName || RateDetailName}
-              </MenuItem>
-            )
+            }) => {
+              const value = Id || RateId;
+
+              return (
+                <MenuItem key={value} value={value}>
+                  {RateName || RateDetailName}
+                </MenuItem>
+              );
+            }
           )}
         </Select>
       </FormControl>

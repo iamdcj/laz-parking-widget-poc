@@ -1,6 +1,13 @@
 import { createTheme } from "@mui/material/styles";
+import { useAppContext } from "../context";
 
-export const useThemeConfig = (theme: Record<string, any>) => {
+export const useThemeConfig = () => {
+  const {
+    state: { theme },
+  } = useAppContext();
+
+  debugger
+
   return createTheme({
     cssVariables: false,
     typography: {
@@ -50,44 +57,14 @@ export const useThemeConfig = (theme: Record<string, any>) => {
     spacing: 6,
     palette: {
       primary: {
-        main: "#005EB8",
-        light: "#E0F0FE",
-        dark: "#072a4a",
-        contrastText: "#fff",
+        main: theme?.primary || "#005EB8",
       },
       secondary: {
-        main: "#5BFAD7",
-        light: "#CAFFEE",
-        dark: "#00D4AF",
+        main: theme?.secondary || "#5BFAD7",
       },
       accent: {
-        main:   "#AAB2F7",
-        light: "#E2E6FD",
-        dark: "#706BE9",
+        main: theme?.accent || "#AAB2F7",
       },
-      error: {
-        main: "#FC2B2B",
-        light: "#E2E6FD",
-        dark: "#706BE9",
-      },
-      success: {
-        main: "#179C54",
-        light: "#CAFFEE",
-        dark: "#155232",
-      },
-      warning: {
-        main: "#FDB122",
-        light: "#FFEFC6",
-        dark: "#792E0E",
-      },
-      info: {
-        main: "#596170",
-        light: "#8c94a4",
-        dark: "#25272c",
-      },
-      custom: {
-        ...theme
-      }
     },
     components: {
       MuiButton: {
@@ -104,6 +81,6 @@ export const useThemeConfig = (theme: Record<string, any>) => {
           },
         },
       },
-    }
+    },
   });
 };

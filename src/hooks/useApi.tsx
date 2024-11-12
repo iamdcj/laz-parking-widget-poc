@@ -4,7 +4,6 @@ import { Actions } from "../state";
 import { fetchData } from "../utils/api";
 import { cleanObject } from "../utils/urls";
 import { Location } from "../../types";
-import { log } from "console";
 
 const useApi = () => {
   const {
@@ -17,6 +16,7 @@ const useApi = () => {
       selectedLocation,
       agentId,
       bounds,
+      salesChannelKey = "",
       apiKey: key,
     },
     dispatch,
@@ -187,10 +187,10 @@ const useApi = () => {
             Zip,
           }: Location) => {
             const rateData = rates.find(
-              ({ eDataLocationId }: { eDataLocationId: string }) => 
+              ({ eDataLocationId }: { eDataLocationId: string }) =>
                 eDataLocationId === LocNo
             );
-            
+
             return {
               id: ID,
               modes: DefaultWidgetType,
@@ -225,7 +225,7 @@ const useApi = () => {
               LotId: ID,
               ParkingBeginDateTime: "2024/11/07 12:53 PM",
               ParkingEndDateTime: "2024/11/07 2:53 PM",
-              SalesChannelKey: "",
+              SalesChannelKey: salesChannelKey,
             })),
             loadFromSearchCache: true,
           }),
