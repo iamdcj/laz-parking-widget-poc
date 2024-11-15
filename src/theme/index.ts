@@ -68,6 +68,7 @@ export const useThemeConfig = () => {
       MuiButton: {
         styleOverrides: {
           root: {
+            textTransform: "none",
             borderRadius: 4,
           },
         },

@@ -1,4 +1,5 @@
 import {
+  Box,
   FormControl,
   InputLabel,
   MenuItem,
@@ -12,7 +13,7 @@ import LazMap from "./Map";
 
 const LocationPicker = () => {
   const {
-    state: { locations, selectedLocation, labels },
+    state: { locations, selectedLocation, labels, useMap },
     dispatch,
   } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -34,19 +35,28 @@ const LocationPicker = () => {
     <FormControl fullWidth size="small" sx={{ mb: 3 }}>
       <InputLabel id="location-label">{labels.SELECTLOCATION}</InputLabel>
       <Select
-        labelId="location"
+        labelId="location-label"
         id="location"
         value={selectedLocation || ""}
         onChange={handleOnLocationChange}
         fullWidth
-        label="Location"
-        disabled={locations.length === 1}
+        label={labels.SELECTLOCATION}
+        disabled={locations.length === 1 && !useMap}
       >
-        <LazMap />
+        <Box
+          sx={{
+            padding: 1,
+          }}
+        >
+          <LazMap height={184} />
+        </Box>
         {locations.map(({ id, label }: { id: string; label: string }) => (
           <MenuItem
             key={`${id}-${label}`}
             value={id}
+            sx={{
+              mx: 1
+            }}
             onMouseOver={() =>
               dispatch({ type: Actions.FOCUSED_LOCATION, payload: id })
             }

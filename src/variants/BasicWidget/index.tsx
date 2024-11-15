@@ -19,12 +19,12 @@ const BasicWidget = () => {
     retrieveLanguages();
   }, []);
 
-  if(isInitializing) {
-    return null
+  if (isInitializing) {
+    return null;
   }
 
   return (
-    <Box id="WidgetFaceDiv" position="relative" width="100%">
+    <Box id="WidgetFaceDiv" position="relative" width="100%" maxWidth={286}>
       <Loader />
       {isHeaderEnabled && <Header />}
       <Box
@@ -33,6 +33,7 @@ const BasicWidget = () => {
         pt={3}
         border={`1px solid ${theme.palette.accent.light}`}
         borderRadius="0 0 4px 4px"
+        boxShadow="0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06)"
         zIndex={1}
       >
         {eventDriven ? <EventsLayout /> : <LocationsLayout />}

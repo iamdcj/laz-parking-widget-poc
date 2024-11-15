@@ -44,18 +44,17 @@ const Header = () => {
       sx={{
         backgroundColor: "primary.main",
         zIndex: 3,
-        borderRadius: "0 0 4px 4px",
+        borderRadius: "4px 4px 0 0",
         position: "relative",
       }}
     >
       <Box
         className="LAZ_WidgetHeader_Content"
-        height={48}
+        height={36}
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          padding: 1.5,
           mb: -0.5,
         }}
       >
@@ -65,7 +64,12 @@ const Header = () => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
-          sx={{ color: "#fff", position: "absolute", left: 10 }}
+          sx={{
+            color: "#fff",
+            position: "absolute",
+            left: 0,
+            minWidth: "auto",
+          }}
         >
           <MenuIcon color="inherit" />
         </Button>
@@ -88,7 +92,7 @@ const Header = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  width: "100%"
+                  width: "100%",
                 }}
               >
                 {labels.MYACCOUNT || labels.MANAGEMYBOOKING} <ChevronRight />
@@ -105,7 +109,7 @@ const Header = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  width: "100%"
+                  width: "100%",
                 }}
               >
                 {labels.CANCELRESERVATION} <ChevronRight />
@@ -122,7 +126,7 @@ const Header = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  width: "100%"
+                  width: "100%",
                 }}
               >
                 {labels.EDITRESERVATION} <ChevronRight />
@@ -138,7 +142,11 @@ const Header = () => {
             style={{ height: 30, width: "auto" }}
           />
         ) : (
-          <Typography component="p" color={theme.palette.primary.contrastText}>
+          <Typography
+            component="p"
+            fontWeight={600}
+            color={theme.palette.primary.contrastText}
+          >
             {headerText || labels.RESERVEPARKING}
           </Typography>
         )}

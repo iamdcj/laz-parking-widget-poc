@@ -33,29 +33,27 @@ const PurchaseButton = () => {
   }
 
   return (
-    <Box py={1} display="flex" justifyContent="center">
-      <Button
-        id="btnGetRate"
-        href={constructBuyLink({
-          duration: selectedDuration,
-          l: selectedLocation,
-          evid: selectedEvent?.id,
-          wk: widgetKey,
-          mode: modes && modes.length === 1 ? modes[0] : selectedMode,
-          times,
-          aid: agentId,
-          sc: salesChannelKey,
-          rid: rate,
-        })}
-        variant="contained"
-        color="secondary"
-        target="_blank"
-        rel="noreferer"
-        disabled={!canPurchase}
-      >
-        {ButtonLabels[selectedMode] || labels.GETRATE}
-      </Button>
-    </Box>
+    <Button
+      href={constructBuyLink({
+        duration: selectedDuration,
+        l: selectedLocation,
+        evid: selectedEvent?.id,
+        wk: widgetKey,
+        mode: modes && modes.length === 1 ? modes[0] : selectedMode,
+        times,
+        aid: agentId,
+        sc: salesChannelKey,
+        rid: rate,
+      })}
+      variant="contained"
+      color="primary"
+      target="_blank"
+      rel="noreferer"
+      fullWidth
+      disabled={!canPurchase}
+    >
+      {ButtonLabels[selectedMode] || labels.GETRATE}
+    </Button>
   );
 };
 
