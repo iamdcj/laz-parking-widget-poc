@@ -5,6 +5,7 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 import ErrorNotice from "./ErrorNotice";
 import StartEndSelector from "./DateTimePicker";
+import { log } from "console";
 
 const SeasonTickets = ({
   IsFEP = false,
@@ -34,18 +35,23 @@ const SeasonTickets = ({
   if (!isLoading && seasonTickets && seasonTickets.length < 1) {
     return <ErrorNotice error="Unable to retrieve pass data" />;
   }
+  
+  enum Labels {
+    FEP = labels.CHOOSEFIXEDEXPIRY || labels.CHOOSEFIXEDEXPIRYTICKET,
+    FAP = labels.CHOOSEFIXEDACCESS || labels.CHOOSEFIXEDACCESSTICKET,
+  }
 
   return (
     <>
       <FormControl fullWidth sx={{ mb: 3 }} size="small">
         <InputLabel id="season-passes-label">
-          {labels.CHOOSEPASSTYPE}
+          {Labels[selectedMode] || labels.CHOOSEPASSTYPE}
         </InputLabel>
         <Select
           labelId="season-passes"
           id="season-passes"
           fullWidth
-          label={labels.CHOOSEPASSTYPE}
+          label={Labels[selectedMode] || labels.CHOOSEPASSTYPE}
           value={rate || ""}
           disabled={seasonTickets.length === 1}
           onChange={(event) =>

@@ -169,11 +169,15 @@ export const appReducer = (
         isLoading: false,
       };
     case Actions.SELECTED_LOCATION:
+      const modes = state.modesOverride
+          ? state.modes
+          : returnModes(state.locations, payload)
+
+          debugger
       return {
         ...state,
-        modes: state.modesOverride
-          ? state.modes
-          : returnModes(state.locations, payload),
+        modes, 
+        selectedMode: modes.length === 1 ? modes[0] : state.selectedMode,
         selectedLocation: payload,
         canPurchase: state.eventDriven ? true : state.canPurchase,
       };
