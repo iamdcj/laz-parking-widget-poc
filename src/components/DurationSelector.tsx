@@ -7,7 +7,13 @@ import ErrorNotice from "./ErrorNotice";
 
 const DurationSelector = () => {
   const {
-    state: { timeIncrements, selectedDuration, selectedLocation, isLoading },
+    state: {
+      timeIncrements,
+      selectedDuration,
+      selectedLocation,
+      isLoading,
+      labels,
+    },
     dispatch,
   } = useAppContext();
   const { retrieveTimeIncrements } = useApi();
@@ -24,14 +30,16 @@ const DurationSelector = () => {
     return <ErrorNotice error="Unable to retrieve time increments" />;
   }
 
+  console.log(timeIncrements);
+
   return (
     <FormControl fullWidth size="small">
-      <InputLabel id="duration-label">Select Duration</InputLabel>
+      <InputLabel id="duration-label">{labels.CHOOSEPRESET}</InputLabel>
       <Select
         labelId="duration"
         id="duration"
         fullWidth
-        label="Select Duration"
+        label={labels.CHOOSEPRESET}
         value={selectedDuration || ""}
         onChange={(event) =>
           dispatch({ type: Actions.SET_DURATION, payload: event.target.value })
@@ -40,7 +48,7 @@ const DurationSelector = () => {
         {timeIncrements.map(
           ({ Duration, Display }: { Duration: string; Display: string }) => (
             <MenuItem key={Duration} value={Duration}>
-              {Display}
+              {Duration === "00M" ? labels.PARKRIGHTNOW : Display}
             </MenuItem>
           )
         )}

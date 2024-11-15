@@ -13,6 +13,7 @@ const VariantSwitch = () => {
     state: { variant },
   } = useAppContext();
   const Component = Variants[variant as "basic" | "map"];
+  
 
   return (
     <APIProvider apiKey="AIzaSyDXK45jkgLDFMq5Lr33HGrK2a8qITI3Lqc">

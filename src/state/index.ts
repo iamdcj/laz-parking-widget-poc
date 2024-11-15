@@ -18,6 +18,8 @@ export const initialState: InitialState = {
   focusedLocation: null,
   hideEventDateTime: false,
   isLoading: false,
+  isInitializing: true,
+  labels: null,
   locationIds: null,
   locations: null,
   mapLocationLat: null,
@@ -48,6 +50,7 @@ export const initialState: InitialState = {
 export enum Actions {
   FOCUSED_LOCATION = "FOCUSED_LOCATION",
   LOADING = "LOADING",
+  INITIALIZING = "INITIALIZING",
   RESET_EVENTS = "RESET_EVENTS",
   SELECTED_EVENT = "SELECTED_EVENT",
   SELECTED_LOCATION = "SELECTED_LOCATION",
@@ -57,14 +60,14 @@ export enum Actions {
   SET_EVENTS = "SET_EVENTS",
   SET_LOCATIONS = "SET_LOCATIONS",
   SET_MODES = "SET_MODES",
-  SRT_ZOOM = "SRT_ZOOM",
   SET_RATE = "SET_RATE",
   SET_SEASON_TICKETS = "SET_SEASON_TICKETS",
   SET_START_TIME = "SET_START_TIME",
   SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
   SET_ZOOM = "SET_ZOOM",
   SET_BOUNDS = "SET_BOUNDS",
-  SET_OVERRIDES = "SET_OVERRIDES"
+  SET_OVERRIDES = "SET_OVERRIDES",
+  SET_LABELS = "SET_LABELS"
 }
 
 export const appReducer = (
@@ -74,6 +77,16 @@ export const appReducer = (
   const { type, payload } = action;
 
   switch (type) {
+    case Actions.INITIALIZING:
+      return {
+        ...state,
+        isInitializing: payload,
+      };
+    case Actions.LOADING:
+      return {
+        ...state,
+        isLoading: payload,
+      };
     case Actions.SET_MODES:
       return {
         ...state,
@@ -110,7 +123,6 @@ export const appReducer = (
         events: [],
       };
     case Actions.SELECTED_EVENT:
-      debugger;
       return {
         ...state,
         selectedEvent: payload,
@@ -128,6 +140,14 @@ export const appReducer = (
         selectedDuration: payload,
         canPurchase: true,
       };
+      case Actions.SET_LABELS:
+        return {
+          ...state,
+          labels: {
+            ...state.labels,
+            ...payload
+          }
+        };
     case Actions.SET_LOCATIONS:
       let locations = payload;
 

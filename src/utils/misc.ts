@@ -1,4 +1,5 @@
 import { Settings } from "../../types";
+import { defaultLanguageLabels } from "./language";
 import { getUrlParam } from "./urls";
 
 export const returnInitialConfig = (element: HTMLElement): Settings => {
@@ -6,15 +7,13 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
   const modeOverwrite = !!element.dataset.modeOverwrite;
   const modes = modeOverwrite ? element.dataset.mode : params.wt;
   const isMap = element.dataset.variant === "map";
+  const eventDriven = params.wt === "evt" || element.dataset.eventdriven === "true"
   const isHeaderEnabled = isMap
     ? false
     : element.dataset.header
     ? element.dataset.header === "true"
     : true;
 
-
-    console.log(params);
-    
 
   return {
     buttonText: element.dataset.buttonText
@@ -44,7 +43,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
       ? Number(element.dataset.mapplacelng)
       : 0,
     mapLocationText: element.dataset.mapplacetxt || null,
-    eventDriven: params.wt === "evt" || element.dataset.eventdriven === "true",
+    eventDriven,
     // ---- TODO: determine the use cases for the following: //
     startTime: params.start || element.dataset.starttime || null, // set the default start time of the widget (what is the format)
     endTime: params.end || element.dataset.endtime || null, // set the default end time of the widget (what is the format)
@@ -59,6 +58,8 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
       : false, // set whether or not to open the full widget url in a new window or to change the current url (example)
     currentPage: !!element.dataset.currentpage, // Get the widget key (not sure about this one)
     // template: element.dataset.template || null, // load template and stub style sheet based on iso language code (need examples)
+    labels: defaultLanguageLabels,
+    selectedMode: eventDriven ? 'EVT' : null
   };
 };
 

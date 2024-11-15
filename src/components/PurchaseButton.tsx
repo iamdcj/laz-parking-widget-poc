@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../context";
 import { constructBuyLink } from "../utils/urls";
-import { useTheme } from "@mui/material/styles";
 
 const PurchaseButton = () => {
   const {
@@ -13,15 +12,25 @@ const PurchaseButton = () => {
       widgetKey,
       modes,
       times,
-      selectedMode,
       agentId,
       salesChannelKey,
       rate,
       canPurchase = false,
-      buttonText,
+      labels,
+      selectedMode,
     },
   } = useAppContext();
-  const theme = useTheme();
+
+  // the commented out options reflect how the current widget code
+  // deal with the button labels - feels wrong to me
+  enum ButtonLabels {
+    "EVT" = labels.CONTINUE,
+    // "PST" = labels.GETRATE,
+    // "MUP" = labels.PURCHASEPASS,
+    // "FAP" = labels.PURCHASEPASS,
+    // "FEX" = labels.PURCHASEPASS,
+    // "FEP" = labels.PURCHASEPASS,
+  }
 
   return (
     <Box py={1} display="flex" justifyContent="center">
@@ -44,7 +53,7 @@ const PurchaseButton = () => {
         rel="noreferer"
         disabled={!canPurchase}
       >
-        {buttonText}
+        {ButtonLabels[selectedMode] || labels.GETRATE}
       </Button>
     </Box>
   );

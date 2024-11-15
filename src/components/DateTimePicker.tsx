@@ -7,22 +7,36 @@ import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 
-const StartEndSelector = ({ hideEnd = false }) => {
+const StartEndSelector = ({
+  hideEnd = false,
+  startLabel,
+  endLabel,
+}: {
+  hideEnd?: boolean;
+  startLabel?: string;
+  endLabel?: string;
+}) => {
   const [endStart, setEndStart] = useState(false);
   const {
     state: {
       times: { start, end },
+      labels,
     },
     dispatch,
   } = useAppContext();
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box display="grid" gridTemplateColumns={hideEnd ? "1fr" : "1fr 1fr"} gap={2} mb={2}>
+      <Box
+        display="grid"
+        gridTemplateColumns={hideEnd ? "1fr" : "1fr 1fr"}
+        gap={2}
+        mb={2}
+      >
         <DateTimePicker
           slotProps={{ textField: { size: "small" } }}
           disablePast
-          label="Arrive after"
+          label={startLabel || labels.ARRIVE}
           views={["year", "day", "hours", "minutes"]}
           skipDisabled
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
@@ -43,7 +57,7 @@ const StartEndSelector = ({ hideEnd = false }) => {
           <DateTimePicker
             slotProps={{ textField: { size: "small" } }}
             disablePast
-            label="Exit before"
+            label={endLabel || labels.DEPART}
             views={["year", "day", "hours", "minutes"]}
             timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
             minDateTime={start?.add(30, "minutes") || null}

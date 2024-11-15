@@ -18,7 +18,7 @@ const SeasonTickets = ({
   IsMUP?: boolean;
 }) => {
   const {
-    state: { rate, selectedMode, isLoading, seasonTickets },
+    state: { rate, selectedMode, isLoading, seasonTickets, labels },
     dispatch,
   } = useAppContext();
   const { retrieveSeasonTickets } = useApi();
@@ -38,12 +38,14 @@ const SeasonTickets = ({
   return (
     <>
       <FormControl fullWidth sx={{ mb: 3 }} size="small">
-        <InputLabel id="season-passes-label">Select Option</InputLabel>
+        <InputLabel id="season-passes-label">
+          {labels.CHOOSEPASSTYPE}
+        </InputLabel>
         <Select
           labelId="season-passes"
           id="season-passes"
           fullWidth
-          label="Select Option"
+          label={labels.CHOOSEPASSTYPE}
           value={rate || ""}
           disabled={seasonTickets.length === 1}
           onChange={(event) =>
@@ -73,7 +75,13 @@ const SeasonTickets = ({
           )}
         </Select>
       </FormControl>
-      {IsFAP && <StartEndSelector hideEnd />}
+      {IsFAP && (
+        <StartEndSelector
+          hideEnd
+          startLabel={labels.ARRIVALDATE}
+          endLabel={labels.DEPARTUREDATE}
+        />
+      )}
     </>
   );
 };

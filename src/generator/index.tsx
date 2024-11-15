@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { HexColorPicker, HexColorInput } from "react-colorful";
+import {  HexColorInput } from "react-colorful";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 

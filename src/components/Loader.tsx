@@ -4,9 +4,9 @@ import { useAppContext } from "../context";
 
 const Loader = () => {
   const { state } = useAppContext();
-  const { isLoading } = state;
+  const { isLoading, isInitializing } = state;
 
-  if (!isLoading) return null;
+  if (!isInitializing || !isLoading) return null;
 
   return (
     <Box

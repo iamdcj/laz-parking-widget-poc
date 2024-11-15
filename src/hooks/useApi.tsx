@@ -247,7 +247,57 @@ const useApi = () => {
     }
   }, []);
 
+  const retrieveLanguages = useCallback(async () => {
+    dispatch({ type: Actions.LOADING, payload: true });
+
+    try {
+      const languagesRes = await fetch(
+        `https://grs-external.lazparking.com/api/system/languages`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+          },
+        }
+      );
+
+      if (!languagesRes.ok) {
+        throw new Error("Unable to retrieve languages");
+      }
+
+      let languages = await languagesRes.json();
+
+      languages = languages.split(",");
+
+      const translationsRes = await fetch(
+        "https://grs-external.lazparking.com/api/system/translations",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify({
+            ISOLanguageCode: languages[0],
+            eDataLocationId: locationIds,
+          }),
+        }
+      );
+
+      if (!translationsRes.ok) {
+        throw new Error("Unable to retrieve languages");
+      }
+
+      let translations = await translationsRes.json();
+
+      dispatch({ type: Actions.SET_LABELS, payload: translations });
+      dispatch({ type: Actions.INITIALIZING, payload: false });
+    } catch (error) {
+      dispatch({ type: Actions.LOADING, payload: false });
+    }
+  }, [locationIds]);
+
   return {
+    retrieveLanguages,
     retrieveEvents,
     retrieveLocations,
     retrieveTimeIncrements,

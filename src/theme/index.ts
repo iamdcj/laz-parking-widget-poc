@@ -6,8 +6,6 @@ export const useThemeConfig = () => {
     state: { theme },
   } = useAppContext();
 
-  debugger
-
   return createTheme({
     cssVariables: false,
     typography: {

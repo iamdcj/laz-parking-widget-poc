@@ -12,7 +12,7 @@ import LazMap from "./Map";
 
 const LocationPicker = () => {
   const {
-    state: { locations, selectedLocation },
+    state: { locations, selectedLocation, labels },
     dispatch,
   } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,7 @@ const LocationPicker = () => {
 
   return (
     <FormControl fullWidth size="small" sx={{ mb: 3 }}>
-      <InputLabel id="location-label">Location</InputLabel>
+      <InputLabel id="location-label">{labels.SELECTLOCATION}</InputLabel>
       <Select
         labelId="location"
         id="location"

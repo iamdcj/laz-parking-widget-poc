@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import VariantSwitch from "./components/VariantSwitch";
 import { AppProvider } from "./context";
@@ -22,7 +22,11 @@ const Main = () => {
 
   return (
     <ThemeProvider theme={widgetTheme}>
-      <Box display="grid" gridTemplateColumns="400px 400px" justifyContent="center">
+      <Box
+        display="grid"
+        gridTemplateColumns="400px 400px"
+        justifyContent="center"
+      >
         <VariantSwitch />
         <Generator />
       </Box>

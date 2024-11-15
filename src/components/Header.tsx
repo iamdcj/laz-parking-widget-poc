@@ -6,9 +6,16 @@ import { useAppContext } from "../context";
 
 const Header = () => {
   const {
-    state: { headerText, logo },
+    state: { headerText, logo, labels },
   } = useAppContext();
   const theme = useTheme();
+
+
+// for menu
+// labels.CANCELRESERVATION_URL
+// labels.MANAGEMYBOOKING
+// labels.MANAGEMYBOOKING_URL
+// labels.EDITRESERVATION_URL
 
   return (
     <Box
@@ -37,13 +44,10 @@ const Header = () => {
             alt="Client Logo"
             style={{ height: 30, width: "auto" }}
           />
-        ) : headerText ? (
-          <Typography component="p" color={theme.palette.primary.contrastText}>
-            {headerText}
-          </Typography>
-        ) : (
-          <Icons type="logo" width={45} />
-        )}
+        ) : <Typography component="p" color={theme.palette.primary.contrastText}>
+            {headerText || labels.RESERVEPARKING}
+          </Typography>}
+        
       </Box>
     </Box>
   );

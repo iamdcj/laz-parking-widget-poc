@@ -34,6 +34,7 @@ export interface AppDefaults {
   eventDriven: boolean;
   evid: string;
   hideEventDateTime: boolean;
+  labels: Record<string, string>
   locationIds: string;
   apiKey: string;
   mapLocationLat: number;
@@ -55,6 +56,7 @@ export interface Settings extends AppDefaults {
   language: "EN" | "FR";
   theme: null | JSON;
   buttonText: string;
+  selectedMode: string | null
 }
 
 export interface InitialState extends AppDefaults {
@@ -64,6 +66,7 @@ export interface InitialState extends AppDefaults {
   events: null | string[];
   focusedLocation: null | string;
   isLoading: boolean;
+  isInitializing: boolean;
   locations: null | string[];
   modes: string[] | null;
   rate: null | string;

@@ -15,6 +15,8 @@ const EventPicker = memo(
         selectedLocation,
         selectedEvent,
         isLoading,
+        eventdriven,
+        labels
       },
       dispatch,
     } = useAppContext();
@@ -85,7 +87,7 @@ const EventPicker = memo(
             };
           }
         )}
-        renderInput={(params) => <TextField {...params} label="Select Event" />}
+        renderInput={(params) => <TextField {...params} label={eventdriven ? labels.SHOWEVENT : labels.CHOOSEEVENT} />}
       />
     );
   }
