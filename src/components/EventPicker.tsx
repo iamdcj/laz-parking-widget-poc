@@ -16,16 +16,18 @@ const EventPicker = memo(
         selectedEvent,
         isLoading,
         eventdriven,
-        labels
+        labels,
+        selectedMode,
       },
       dispatch,
     } = useAppContext();
+    const isEnabled = selectedMode === "EVT";
 
     useEffect(() => {
-      if (!refetchEvents || !selectedLocation) return;
+      if (!isEnabled || !refetchEvents || !selectedLocation) return;
 
       retrieveEvents(selectedLocation);
-    }, [selectedLocation]);
+    }, [selectedLocation, isEnabled]);
 
     const handleOnEventChange = (
       event: SyntheticEvent<Element, Event>,
@@ -38,20 +40,13 @@ const EventPicker = memo(
       }
     };
 
-    if (isLoading || !events) {
-      return null;
-    }
-
-    if (!isLoading && events && events.length < 1) {
-      return <ErrorNotice error="Unable to events data" />;
-    }
-    
     return (
       <Autocomplete
         size="small"
         disablePortal
+        fullWidth
         onChange={handleOnEventChange}
-        disabled={events.length === 1}
+        disabled={events.length <= 1}
         renderOption={(props, option) => (
           <li {...props} key={option.id}>
             {option.label}
@@ -87,7 +82,12 @@ const EventPicker = memo(
             };
           }
         )}
-        renderInput={(params) => <TextField {...params} label={eventdriven ? labels.SHOWEVENT : labels.CHOOSEEVENT} />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={eventdriven ? labels.SHOWEVENT : labels.CHOOSEEVENT}
+          />
+        )}
       />
     );
   }

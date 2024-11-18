@@ -1,18 +1,12 @@
 import {
   Box,
   Button,
-  IconButton,
   Link,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Menu,
   MenuItem,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import Icons from "./Icons";
+import React from "react";
 import { useTheme } from "@mui/material/styles";
 import { useAppContext } from "../context";
 import MenuIcon from "@mui/icons-material/Menu";

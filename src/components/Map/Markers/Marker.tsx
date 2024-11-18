@@ -59,9 +59,6 @@ const MapMarker = memo(
           key={`map-marker-${id || label}`}
           clickable={!isPlace}
           onClick={() => {
-            debugger;
-            console.log(isPlace);
-
             if (isPlace) {
               return;
             }

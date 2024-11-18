@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useApi from "../hooks/useApi";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import ErrorNotice from "./ErrorNotice";
@@ -23,29 +23,25 @@ const SeasonTickets = ({
     dispatch,
   } = useAppContext();
   const { retrieveSeasonTickets } = useApi();
-  const isEnabled = ["TMD", "EVT", "PST", "MUP", "FAP", "FEX", "FEP"].includes(
-    selectedMode
-  );
+  const isEnabled = ["MUP", "FAP", "FEX", "FEP"].includes(selectedMode);
 
   useEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
+
     retrieveSeasonTickets({ IsFEP, IsFAP, IsMPS, IsMUP });
   }, [selectedMode]);
-
-  if (isLoading || !seasonTickets) {
-    return null;
-  }
-
-  if (!isLoading && seasonTickets && seasonTickets.length < 1) {
-    return <ErrorNotice error="Unable to retrieve pass data" />;
-  }
 
   enum Labels {
     FEP = labels.CHOOSEFIXEDEXPIRY || labels.CHOOSEFIXEDEXPIRYTICKET,
     FAP = labels.CHOOSEFIXEDACCESS || labels.CHOOSEFIXEDACCESSTICKET,
   }
 
+  const withData = seasonTickets && seasonTickets.length > 0;
+
   return (
-    <>
+    <Box width="100%">
       <FormControl fullWidth sx={{ mb: 3 }} size="small">
         <InputLabel id="season-passes-label">
           {Labels[selectedMode] || labels.CHOOSEPASSTYPE}
@@ -56,42 +52,45 @@ const SeasonTickets = ({
           fullWidth
           label={Labels[selectedMode] || labels.CHOOSEPASSTYPE}
           value={rate || ""}
-          disabled={!isEnabled || seasonTickets.length === 1}
+          disabled={!withData || !isEnabled || seasonTickets.length === 1}
           onChange={(event) =>
             dispatch({ type: Actions.SET_RATE, payload: event.target.value })
           }
         >
-          {seasonTickets.map(
-            ({
-              Id,
-              RateName,
-              RateDetailName,
-              RateId,
-            }: {
-              Id: string;
-              RateName: string;
-              RateDetailName: string;
-              RateId: string;
-            }) => {
-              const value = Id || RateId;
+          {withData &&
+            seasonTickets.map(
+              ({
+                Id,
+                RateName,
+                RateDetailName,
+                RateId,
+              }: {
+                Id: string;
+                RateName: string;
+                RateDetailName: string;
+                RateId: string;
+              }) => {
+                const value = Id || RateId;
 
-              return (
-                <MenuItem key={value} value={value}>
-                  {RateName || RateDetailName}
-                </MenuItem>
-              );
-            }
-          )}
+                return (
+                  <MenuItem key={value} value={value}>
+                    {RateName || RateDetailName}
+                  </MenuItem>
+                );
+              }
+            )}
         </Select>
       </FormControl>
       {IsFAP && (
-        <StartEndSelector
-          hideEnd
-          startLabel={labels.ARRIVALDATE}
-          endLabel={labels.DEPARTUREDATE}
-        />
+        <Box>
+          <StartEndSelector
+            hideEnd
+            startLabel={labels.ARRIVALDATE}
+            endLabel={labels.DEPARTUREDATE}
+          />
+        </Box>
       )}
-    </>
+    </Box>
   );
 };
 

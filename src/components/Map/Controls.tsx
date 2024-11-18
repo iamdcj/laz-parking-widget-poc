@@ -3,25 +3,39 @@ import { Box, Button } from "@mui/material";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
+import { useTheme } from "@mui/material/styles";
 
 const MapControls = ({ recenter }: { recenter: () => void }) => {
   const {
     state: { locations, mapZoom, variant },
     dispatch,
   } = useAppContext();
-
-  const isMap = variant === 'map'
-  
+  const theme = useTheme();
+  const isMap = variant === "map";
 
   return (
-    <>
+    <Box
+      sx={{
+        position: "absolute",
+        padding: 1,
+        top: 0,
+        right: 0,
+        zIndex: 1,
+        color: "#fff",
+        display: "flex",
+        flexDirection: "column",
+        height: `calc(100% - 12px)`,
+        justifyContent: "end",
+      }}
+    >
       {locations?.length > 1 && (
         <Button
           variant="contained"
           aria-label="delete"
           onClick={recenter}
           sx={{
-            color: "#fff",
+            backgroundColor: "#fff",
+            color: "#25272C",
             minWidth: "auto",
             width: 30,
             height: 30,
@@ -40,6 +54,8 @@ const MapControls = ({ recenter }: { recenter: () => void }) => {
           }
           sx={{
             minWidth: "auto",
+            backgroundColor: "#fff",
+            color: "#25272C",
             width: 30,
             height: 30,
             padding: 0,
@@ -56,6 +72,8 @@ const MapControls = ({ recenter }: { recenter: () => void }) => {
           }
           sx={{
             minWidth: "auto",
+            backgroundColor: "#fff",
+            color: "#25272C",
             width: 30,
             height: 30,
             padding: 0,
@@ -65,7 +83,7 @@ const MapControls = ({ recenter }: { recenter: () => void }) => {
           -
         </Button>
       </Box>
-    </>
+    </Box>
   );
 };
 

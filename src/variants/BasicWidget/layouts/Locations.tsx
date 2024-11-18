@@ -10,13 +10,7 @@ import ModePicker, { Components } from "../../../components/ModePicker";
 
 const LocationsLayout = () => {
   const {
-    state: {
-      locations,
-      selectedLocation,
-      modes,
-      modesOverride,
-      selectedMode,
-    },
+    state: { locations, selectedLocation, modes, modesOverride, selectedMode },
     dispatch,
   } = useAppContext();
 
@@ -45,10 +39,7 @@ const LocationsLayout = () => {
       {modes && modes.length === 1 ? (
         <Box>{Components[modes[0] as Modes]}</Box>
       ) : (
-        selectedLocation && (
-
-            <ModePicker />
-        )
+        selectedLocation && <ModePicker />
       )}
       <Box py={1} display="flex" justifyContent="center">
         <PurchaseButton />

@@ -149,7 +149,7 @@ export const appReducer = (
         },
       };
     case Actions.SET_LOCATIONS:
-      let locations = payload;
+      let locations = payload || state.locations;
 
       if (state.mapLocationLat && state.mapLocationLng) {
         locations = [
@@ -180,7 +180,7 @@ export const appReducer = (
       return {
         ...state,
         modes,
-        selectedMode: modes.length === 1 ? modes[0] : state.selectedMode,
+        selectedMode: modes?.length === 1 ? modes[0] : state.selectedMode,
         selectedLocation: payload,
         canPurchase: state.eventDriven ? true : state.canPurchase,
       };

@@ -11,34 +11,25 @@ const DurationSelector = () => {
       timeIncrements,
       selectedDuration,
       selectedLocation,
-      isLoading,
       labels,
-      selectedMode
+      selectedMode,
     },
     dispatch,
   } = useAppContext();
-  const isDisabled = selectedMode !== "PST"
+  const isDisabled = selectedMode !== "PST";
   const { retrieveTimeIncrements } = useApi();
 
   useEffect(() => {
     retrieveTimeIncrements();
   }, [selectedLocation]);
 
-  if (isLoading || !timeIncrements) {
-    return null;
-  }
-
-  if (!isLoading && timeIncrements && timeIncrements.length < 1) {
-    return <ErrorNotice error="Unable to retrieve time increments" />;
-  }
-
-  console.log(timeIncrements);
+  const withData = timeIncrements && timeIncrements.length > 0;
 
   return (
     <FormControl fullWidth size="small">
       <InputLabel id="duration-label">{labels.CHOOSEPRESET}</InputLabel>
       <Select
-            disabled={isDisabled}
+        disabled={isDisabled || !withData}
         labelId="duration"
         id="duration"
         fullWidth
@@ -48,13 +39,14 @@ const DurationSelector = () => {
           dispatch({ type: Actions.SET_DURATION, payload: event.target.value })
         }
       >
-        {timeIncrements.map(
-          ({ Duration, Display }: { Duration: string; Display: string }) => (
-            <MenuItem key={Duration} value={Duration}>
-              {Duration === "00M" ? labels.PARKRIGHTNOW : Display}
-            </MenuItem>
-          )
-        )}
+        {withData &&
+          timeIncrements.map(
+            ({ Duration, Display }: { Duration: string; Display: string }) => (
+              <MenuItem key={Duration} value={Duration}>
+                {Duration === "00M" ? labels.PARKRIGHTNOW : Display}
+              </MenuItem>
+            )
+          )}
       </Select>
     </FormControl>
   );

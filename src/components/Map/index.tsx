@@ -64,22 +64,7 @@ const LazMap = ({
           {mapLocationText}
         </Typography>
       )}
-      <Box
-        sx={{
-          position: "absolute",
-          padding: 1,
-          top: 0,
-          right: 0,
-          zIndex: 1,
-          color: "#fff",
-          display: "flex",
-          flexDirection: "column",
-          height: `calc(100% - 24px)`,
-          justifyContent: "end",
-        }}
-      >
-        <MapControls recenter={recenter} />
-      </Box>
+      <MapControls recenter={recenter} />
       {locations?.length > 0 && <MapMarkers />}
     </Map>
   );

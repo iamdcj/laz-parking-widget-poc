@@ -34,6 +34,8 @@ const ModePicker = () => {
     dispatch,
   } = useAppContext();
 
+  console.log(modes, selectedMode);
+
   return (
     <FormControl>
       <RadioGroup
