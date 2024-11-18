@@ -31,6 +31,9 @@ const LocationPicker = () => {
     setIsOpen(false);
   }, [selectedLocation]);
 
+
+  const filteredLocations = locations.filter(({ isPlace }: { isPlace: boolean}) => !isPlace);
+
   return (
     <FormControl fullWidth size="small" sx={{ mb: 3 }}>
       <InputLabel id="location-label">{labels.SELECTLOCATION}</InputLabel>
@@ -53,7 +56,7 @@ const LocationPicker = () => {
         >
           <LazMap height={184} />
         </Box>
-        {locations.map(({ id, label }: { id: string; label: string }) => (
+        {filteredLocations.map(({ id, label }: { id: string; label: string }) => (
           <MenuItem
             key={`${id}-${label}`}
             value={id}

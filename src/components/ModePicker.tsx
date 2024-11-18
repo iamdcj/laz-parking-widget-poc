@@ -11,7 +11,6 @@ import { Modes } from "../../types";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { useTheme } from "@mui/material/styles";
-import LazMap from "./Map";
 import SeasonTickets from "./SeasonTickets";
 import DateTimePicker from "./DateTimePicker";
 import EventPicker from "./EventPicker";
@@ -33,8 +32,6 @@ const ModePicker = () => {
     state: { modes, selectedMode = "" },
     dispatch,
   } = useAppContext();
-
-  console.log(modes, selectedMode);
 
   return (
     <FormControl>

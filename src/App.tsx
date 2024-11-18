@@ -19,16 +19,23 @@ function App(props: Settings) {
 
 const Main = () => {
   const widgetTheme = useThemeConfig();
+  const isDevMode = process.env.NODE_ENV === "development";
+
+  const styles = isDevMode
+    ? {
+        display: "grid",
+        gridTemplateColumns: "1fr min-content",
+        justifyContent: "center",
+        alignItems: "center",
+        justifyItems: "center"
+      }
+    : {};
 
   return (
     <ThemeProvider theme={widgetTheme}>
-      <Box
-        display="grid"
-        gridTemplateColumns="400px 400px"
-        justifyContent="center"
-      >
+      <Box sx={styles}>
         <VariantSwitch />
-        <Generator />
+        {isDevMode && <Generator />}
       </Box>
     </ThemeProvider>
   );
