@@ -37,9 +37,12 @@ const LocationPicker = () => {
       <Select
         labelId="location-label"
         id="location"
+        onOpen={() => setIsOpen(true)}
+        onClose={() => setIsOpen(false)}
         value={selectedLocation || ""}
         onChange={handleOnLocationChange}
         fullWidth
+        open={isOpen}
         label={labels.SELECTLOCATION}
         disabled={locations.length === 1 && !useMap}
       >
@@ -55,7 +58,7 @@ const LocationPicker = () => {
             key={`${id}-${label}`}
             value={id}
             sx={{
-              mx: 1
+              mx: 1,
             }}
             onMouseOver={() =>
               dispatch({ type: Actions.FOCUSED_LOCATION, payload: id })

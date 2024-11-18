@@ -1,27 +1,12 @@
 import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useAppContext } from "../../../context";
-import DateTimePicker from "../../../components/DateTimePicker";
-import EventPicker from "../../../components/EventPicker";
 import LocationPicker from "../../../components/LocationPicker";
-import DurationSelector from "../../../components/DurationSelector";
 import useApi from "../../../hooks/useApi";
 import { Actions } from "../../../state";
 import { Modes } from "../../../../types";
-import ModePicker from "../../../components/ModePicker";
-import LazMap from "../../../components/Map";
-import SeasonTickets from "../../../components/SeasonTickets";
 import PurchaseButton from "../../../components/PurchaseButton";
-
-const Components = {
-  TMD: <DateTimePicker />,
-  EVT: <EventPicker />,
-  PST: <DurationSelector />,
-  FEP: <SeasonTickets IsFEP />,
-  FEX: <SeasonTickets IsFEP />,
-  FAP: <SeasonTickets IsFAP />,
-  MUP: <SeasonTickets IsMUP />,
-};
+import ModePicker, { Components } from "../../../components/ModePicker";
 
 const LocationsLayout = () => {
   const {
@@ -61,10 +46,8 @@ const LocationsLayout = () => {
         <Box>{Components[modes[0] as Modes]}</Box>
       ) : (
         selectedLocation && (
-          <Box>
+
             <ModePicker />
-            {selectedMode && <Box>{Components[selectedMode as Modes]}</Box>}
-          </Box>
         )
       )}
       <Box py={1} display="flex" justifyContent="center">

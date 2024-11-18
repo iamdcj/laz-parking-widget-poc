@@ -5,7 +5,7 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 import ErrorNotice from "./ErrorNotice";
 import StartEndSelector from "./DateTimePicker";
-import { log } from "console";
+import { Modes } from "../../types";
 
 const SeasonTickets = ({
   IsFEP = false,
@@ -23,6 +23,9 @@ const SeasonTickets = ({
     dispatch,
   } = useAppContext();
   const { retrieveSeasonTickets } = useApi();
+  const isEnabled = ["TMD", "EVT", "PST", "MUP", "FAP", "FEX", "FEP"].includes(
+    selectedMode
+  );
 
   useEffect(() => {
     retrieveSeasonTickets({ IsFEP, IsFAP, IsMPS, IsMUP });
@@ -35,7 +38,7 @@ const SeasonTickets = ({
   if (!isLoading && seasonTickets && seasonTickets.length < 1) {
     return <ErrorNotice error="Unable to retrieve pass data" />;
   }
-  
+
   enum Labels {
     FEP = labels.CHOOSEFIXEDEXPIRY || labels.CHOOSEFIXEDEXPIRYTICKET,
     FAP = labels.CHOOSEFIXEDACCESS || labels.CHOOSEFIXEDACCESSTICKET,
@@ -53,7 +56,7 @@ const SeasonTickets = ({
           fullWidth
           label={Labels[selectedMode] || labels.CHOOSEPASSTYPE}
           value={rate || ""}
-          disabled={seasonTickets.length === 1}
+          disabled={!isEnabled || seasonTickets.length === 1}
           onChange={(event) =>
             dispatch({ type: Actions.SET_RATE, payload: event.target.value })
           }

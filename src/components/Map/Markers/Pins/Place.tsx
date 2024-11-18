@@ -1,13 +1,8 @@
-import React, { memo, useMemo } from "react";
+import React from "react";
 import { useTheme } from "@mui/material/styles";
-import { Box, Typography } from "@mui/material";
-import { useAppContext } from "../../../../context";
-import Icons from "../../../Icons";
+import { Box } from "@mui/material";
 
-const PlacePin = memo(({ isActive }: { isActive: boolean }) => {
-  const {
-    state: { mapLocationText },
-  } = useAppContext();
+const PlacePin = ({ size = 32 }: { size?: number | string }) => {
   const theme = useTheme();
 
   return (
@@ -16,20 +11,17 @@ const PlacePin = memo(({ isActive }: { isActive: boolean }) => {
         display: "flex",
         alignItems: "center",
         transition: "all ease-in  200ms",
-        transform: isActive ? "scale(1.35)" : "scale(1)",
         transformOrigin: "center center",
-        pointerEvents: "all",
         borderRadius: 2,
         willChange: "transform",
         fontSize: 14,
-        color: isActive ? "#fff" : theme.palette.accent.main,
+        color: theme.palette.accent.main,
         padding: 0.5,
-        zIndex: isActive ? 10 : 2,
       }}
     >
       <svg
-        width="32"
-        height="32"
+        width={size}
+        height={size}
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -50,23 +42,8 @@ const PlacePin = memo(({ isActive }: { isActive: boolean }) => {
           stroke-linejoin="round"
         />
       </svg>
-
-      {mapLocationText && (
-        <Typography
-          color="#fff"
-          fontSize={8}
-          sx={{
-            position: "absolute",
-            top: 15,
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          {mapLocationText}
-        </Typography>
-      )}
     </Box>
   );
-});
+};
 
 export default PlacePin;

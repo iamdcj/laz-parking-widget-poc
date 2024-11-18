@@ -13,9 +13,11 @@ const DurationSelector = () => {
       selectedLocation,
       isLoading,
       labels,
+      selectedMode
     },
     dispatch,
   } = useAppContext();
+  const isDisabled = selectedMode !== "PST"
   const { retrieveTimeIncrements } = useApi();
 
   useEffect(() => {
@@ -36,6 +38,7 @@ const DurationSelector = () => {
     <FormControl fullWidth size="small">
       <InputLabel id="duration-label">{labels.CHOOSEPRESET}</InputLabel>
       <Select
+            disabled={isDisabled}
         labelId="duration"
         id="duration"
         fullWidth

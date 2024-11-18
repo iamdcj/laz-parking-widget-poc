@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import {
+  DateTimePicker,
+  DateTimePickerSlotProps,
+} from "@mui/x-date-pickers/DateTimePicker";
 import { Box } from "@mui/material";
 import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
 import { useAppContext } from "../context";
@@ -21,26 +24,32 @@ const StartEndSelector = ({
     state: {
       times: { start, end },
       labels,
+      selectedMode,
     },
     dispatch,
   } = useAppContext();
+  const isDisabled = selectedMode !== "TMD";
+
+  const slotProps = {
+    textField: { size: "small" },
+    openPickerButton: {
+      color: "primary",
+    },
+  } as DateTimePickerSlotProps<any, any>;
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box
-        display="grid"
-        gridTemplateColumns={hideEnd ? "1fr" : "1fr 1fr"}
-        gap={2}
-        mb={2}
-      >
+      <Box display="grid" gridTemplateColumns={"1fr"} gap={2} mb={2}>
         <DateTimePicker
-          slotProps={{ textField: { size: "small" } }}
-          disablePast
+          slotProps={slotProps}
           label={startLabel || labels.ARRIVE}
           views={["year", "day", "hours", "minutes"]}
+          disablePast
           skipDisabled
+          formatDensity="dense"
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
           value={start}
+          disabled={isDisabled}
           viewRenderers={{
             hours: renderDigitalClockTimeView,
             minutes: null,
@@ -55,7 +64,7 @@ const StartEndSelector = ({
         />
         {!hideEnd && (
           <DateTimePicker
-            slotProps={{ textField: { size: "small" } }}
+            slotProps={slotProps}
             disablePast
             label={endLabel || labels.DEPART}
             views={["year", "day", "hours", "minutes"]}
@@ -64,7 +73,7 @@ const StartEndSelector = ({
             skipDisabled
             value={end}
             open={endStart}
-            disabled={!start}
+            disabled={isDisabled || !start}
             onClose={() => {
               setEndStart(false);
             }}

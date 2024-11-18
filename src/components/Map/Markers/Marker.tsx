@@ -56,14 +56,19 @@ const MapMarker = memo(
     return (
       <>
         <AdvancedMarker
-          key={id}
-          onClick={() =>
-            dispatch({ type: Actions.SELECTED_LOCATION, payload: id })
-          }
-          position={{ lat, lng }}
-          style={{
-            pointerEvents: "all",
+          key={`map-marker-${id || label}`}
+          clickable={!isPlace}
+          onClick={() => {
+            debugger;
+            console.log(isPlace);
+
+            if (isPlace) {
+              return;
+            }
+
+            dispatch({ type: Actions.SELECTED_LOCATION, payload: id });
           }}
+          position={{ lat, lng }}
           zIndex={isActive ? 20 : 10}
           ref={ref}
         >

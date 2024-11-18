@@ -33,7 +33,7 @@ const MapMarkerPin = memo(
         }
       >
         {rate && <RatePin isActive={isActive} rate={rate} />}
-        {isPlace ? <PlacePin isActive={isActive} /> : <LocationPin isActive={isActive} />}
+        {isPlace ? <PlacePin /> : <LocationPin isActive={isActive} />}
       </Box>
     );
   }

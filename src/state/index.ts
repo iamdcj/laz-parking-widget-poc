@@ -67,7 +67,7 @@ export enum Actions {
   SET_ZOOM = "SET_ZOOM",
   SET_BOUNDS = "SET_BOUNDS",
   SET_OVERRIDES = "SET_OVERRIDES",
-  SET_LABELS = "SET_LABELS"
+  SET_LABELS = "SET_LABELS",
 }
 
 export const appReducer = (
@@ -140,14 +140,14 @@ export const appReducer = (
         selectedDuration: payload,
         canPurchase: true,
       };
-      case Actions.SET_LABELS:
-        return {
-          ...state,
-          labels: {
-            ...state.labels,
-            ...payload
-          }
-        };
+    case Actions.SET_LABELS:
+      return {
+        ...state,
+        labels: {
+          ...state.labels,
+          ...payload,
+        },
+      };
     case Actions.SET_LOCATIONS:
       let locations = payload;
 
@@ -169,14 +169,17 @@ export const appReducer = (
         isLoading: false,
       };
     case Actions.SELECTED_LOCATION:
-      const modes = state.modesOverride
-          ? state.modes
-          : returnModes(state.locations, payload)
+      if (!payload) {
+        return state;
+      }
 
-          debugger
+      const modes = state.modesOverride
+        ? state.modes
+        : returnModes(state.locations, payload);
+
       return {
         ...state,
-        modes, 
+        modes,
         selectedMode: modes.length === 1 ? modes[0] : state.selectedMode,
         selectedLocation: payload,
         canPurchase: state.eventDriven ? true : state.canPurchase,
@@ -225,11 +228,11 @@ export const appReducer = (
         ...state,
         bounds: payload,
       };
-      case Actions.SET_OVERRIDES:
-        return {
-          ...state,
-          ...payload,
-        };
+    case Actions.SET_OVERRIDES:
+      return {
+        ...state,
+        ...payload,
+      };
     default:
       return state;
   }
