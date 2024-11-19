@@ -116,8 +116,8 @@ const useApi = () => {
       dispatch({ type: Actions.LOADING, payload: true });
 
       let params: Record<string, string | boolean> = {
-        eDataLocationId: locationIds?.split(","),
         WidgetKey: widgetkey,
+        eDataLocationId: selectedLocation,
       };
 
       if (!IsMUP) {
@@ -139,13 +139,13 @@ const useApi = () => {
         dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });
 
         if (data.length === 1) {
-          dispatch({ type: Actions.SET_RATE, payload: data[0].Id });
+          dispatch({ type: Actions.SET_RATE, payload: data[0].RateId });
         }
       } catch (error) {
         dispatch({ type: Actions.LOADING, payload: false });
       }
     },
-    [locationIds]
+    [locationIds, selectedLocation]
   );
 
   const retrieveLocationsByBounds = useCallback(async (params: any) => {

@@ -37,7 +37,6 @@ const Header = () => {
       id="LAZ_WidgetHeader"
       sx={{
         backgroundColor: "primary.main",
-        zIndex: 3,
         borderRadius: "4px 4px 0 0",
         position: "relative",
       }}
@@ -49,7 +48,6 @@ const Header = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          mb: -0.5,
         }}
       >
         <Button

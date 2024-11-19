@@ -17,7 +17,7 @@ export const useThemeConfig = () => {
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
       ].join(","),
-      fontSize: 14,
+      fontSize: 12,
       h1: {
         fontSize: 56,
         fontWeight: 600,
@@ -73,6 +73,14 @@ export const useThemeConfig = () => {
           },
         },
       },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            background: "#fff",
+            fontSize: 12,
+          },
+        },
+      },
       MuiMenuItem: {
         styleOverrides: {
           root: {
@@ -80,6 +88,13 @@ export const useThemeConfig = () => {
           },
         },
       },
+      MuiRadio: {
+        styleOverrides: {
+          root: {
+            paddingLeft: 0
+          }
+        }
+      }
     },
   });
 };

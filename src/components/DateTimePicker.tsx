@@ -5,7 +5,7 @@ import {
   DateTimePicker,
   DateTimePickerSlotProps,
 } from "@mui/x-date-pickers/DateTimePicker";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
@@ -39,7 +39,7 @@ const StartEndSelector = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box display="grid" gridTemplateColumns={"1fr"} gap={2} mb={2}>
+      <Box width="100%">
         <DateTimePicker
           slotProps={slotProps}
           label={startLabel || labels.ARRIVE}
@@ -61,6 +61,7 @@ const StartEndSelector = ({
           onClose={() => {
             start && setEndStart(true);
           }}
+          sx={{ width: "100%" }}
         />
         {!hideEnd && (
           <DateTimePicker
@@ -86,6 +87,7 @@ const StartEndSelector = ({
             onChange={(date) => {
               dispatch({ type: Actions.SET_END_TIME, payload: date });
             }}
+            sx={{ width: "100%", mt: 1 }}
           />
         )}
       </Box>

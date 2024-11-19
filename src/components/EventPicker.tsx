@@ -1,9 +1,10 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import React, { memo, SyntheticEvent, useEffect } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import useApi from "../hooks/useApi";
-import ErrorNotice from "./ErrorNotice";
+import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
+import EventIcon from "@mui/icons-material/Event";
 
 const EventPicker = memo(
   ({ refetchEvents = true }: { refetchEvents?: boolean }) => {
@@ -45,15 +46,24 @@ const EventPicker = memo(
         size="small"
         disablePortal
         fullWidth
+        disableClearable
         onChange={handleOnEventChange}
-        disabled={events.length <= 1}
+        disabled={!isEnabled || events.length <= 1}
         renderOption={(props, option) => (
           <li {...props} key={option.id}>
-            {option.label}
+            <Box display="flex" alignItems="center" gap={1}>
+              {/* <EventIcon fontSize="large" /> */}
+              <Box>
+                <Typography display="block" fontSize={14}>
+                  {option.label.split('-')[0]}
+                </Typography>
+                <Typography fontSize={12}>
+                  {option.date && !hideEventDateTime && option.date}
+                </Typography>
+              </Box>
+            </Box>
           </li>
         )}
-        value={selectedEvent}
-        sx={{ mb: 2 }}
         options={events.map(
           ({
             EventId: id,
@@ -65,28 +75,39 @@ const EventPicker = memo(
             EventDate: string;
           }) => {
             let label = EventName;
+            let eventDate = null;
 
-            if (!hideEventDateTime) {
-              const date = new Date(EventDate);
-              const formatter = new Intl.DateTimeFormat("en-US", {
-                dateStyle: "short",
-                timeStyle: "short",
-              });
+            const date = new Date(EventDate);
+            const formatter = new Intl.DateTimeFormat("en-US", {
+              dateStyle: "short",
+              timeStyle: "short",
+            });
 
-              label = `${EventName} - ${formatter.format(date)}`;
-            }
+            eventDate = formatter.format(date);
 
             return {
               id,
-              label,
+              label: `${label} - ${eventDate}`,
+              date: eventDate,
             };
           }
         )}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label={eventdriven ? labels.SHOWEVENT : labels.CHOOSEEVENT}
-          />
+          <>
+            <TextField
+              {...params}
+              label={eventdriven ? labels.SHOWEVENT : labels.CHOOSEEVENT}
+            />
+            {selectedEvent?.date && (
+              <Typography
+                sx={{ display: "flex", alignItems: "center", mt: 1, ml: 1 }}
+                fontSize={10}
+              >
+                <QueryBuilderIcon sx={{ mr: 1 }} fontSize="small" />
+                {selectedEvent?.date}
+              </Typography>
+            )}
+          </>
         )}
       />
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Map } from "@vis.gl/react-google-maps";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { useMapSetup } from "../../variants/utils/maps";
 import { Box, Typography } from "@mui/material";
 import { useAppContext } from "../../context";
@@ -10,6 +10,27 @@ import { ColorScheme } from "@vis.gl/react-google-maps";
 import PlacePin from "./Markers/Pins/Place";
 
 const LazMap = ({
+  height = 300,
+  width = "100%",
+}: {
+  height?: string | number;
+  width?: string | number;
+}) => {
+  const {
+    state: { useMap, variant },
+  } = useAppContext();
+  const renderMap = variant === "map" || useMap;
+
+  if (!renderMap) return null;
+
+  return (
+    <APIProvider apiKey="AIzaSyDXK45jkgLDFMq5Lr33HGrK2a8qITI3Lqc">
+      <MapComponent height={height} width={width} />
+    </APIProvider>
+  );
+};
+
+const MapComponent = ({
   height = 300,
   width = "100%",
 }: {

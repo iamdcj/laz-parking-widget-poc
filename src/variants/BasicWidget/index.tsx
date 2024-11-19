@@ -24,12 +24,12 @@ const BasicWidget = () => {
   }
 
   return (
-    <Box id="WidgetFaceDiv" position="relative" width="100%" maxWidth={286}>
+    <Box id="WidgetFaceDiv" position="relative" width="100%" maxWidth={300}>
       <Loader />
       {isHeaderEnabled && <Header />}
       <Box
         position="relative"
-        p={2}
+        p={1.5}
         pt={3}
         border={`1px solid ${theme.palette.accent.light}`}
         borderRadius="0 0 4px 4px"

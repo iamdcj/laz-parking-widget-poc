@@ -21,22 +21,24 @@ const Main = () => {
   const widgetTheme = useThemeConfig();
   const isDevMode = process.env.NODE_ENV === "development";
 
-  const styles = isDevMode
-    ? {
-        display: "grid",
-        gridTemplateColumns: "1fr min-content",
-        justifyContent: "center",
-        alignItems: "center",
-        justifyItems: "center"
-      }
-    : {};
-
   return (
     <ThemeProvider theme={widgetTheme}>
-      <Box sx={styles}>
+      {isDevMode ? (
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr min-content",
+            justifyContent: "center",
+            alignItems: "center",
+            justifyItems: "center",
+          }}
+        >
+          <VariantSwitch />
+          <Generator />
+        </Box>
+      ) : (
         <VariantSwitch />
-        {isDevMode && <Generator />}
-      </Box>
+      )}
     </ThemeProvider>
   );
 };

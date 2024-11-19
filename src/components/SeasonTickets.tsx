@@ -19,19 +19,19 @@ const SeasonTickets = ({
   IsMUP?: boolean;
 }) => {
   const {
-    state: { rate, selectedMode, isLoading, seasonTickets, labels },
+    state: { rate, selectedMode, selectedLocation, seasonTickets, labels },
     dispatch,
   } = useAppContext();
   const { retrieveSeasonTickets } = useApi();
   const isEnabled = ["MUP", "FAP", "FEX", "FEP"].includes(selectedMode);
 
   useEffect(() => {
-    if (!isEnabled) {
+    if (!isEnabled || !selectedLocation) {
       return;
     }
 
     retrieveSeasonTickets({ IsFEP, IsFAP, IsMPS, IsMUP });
-  }, [selectedMode]);
+  }, [selectedMode, selectedLocation]);
 
   enum Labels {
     FEP = labels.CHOOSEFIXEDEXPIRY || labels.CHOOSEFIXEDEXPIRYTICKET,
@@ -42,7 +42,7 @@ const SeasonTickets = ({
 
   return (
     <Box width="100%">
-      <FormControl fullWidth sx={{ mb: 3 }} size="small">
+      <FormControl fullWidth size="small">
         <InputLabel id="season-passes-label">
           {Labels[selectedMode] || labels.CHOOSEPASSTYPE}
         </InputLabel>
@@ -72,6 +72,10 @@ const SeasonTickets = ({
               }) => {
                 const value = Id || RateId;
 
+                console.log(RateName || RateDetailName)
+                console.log(value)
+                
+
                 return (
                   <MenuItem key={value} value={value}>
                     {RateName || RateDetailName}
@@ -82,7 +86,7 @@ const SeasonTickets = ({
         </Select>
       </FormControl>
       {IsFAP && (
-        <Box>
+        <Box sx={{ mt: 3 }}>
           <StartEndSelector
             hideEnd
             startLabel={labels.ARRIVALDATE}

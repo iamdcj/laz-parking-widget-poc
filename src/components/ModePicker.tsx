@@ -15,6 +15,8 @@ import SeasonTickets from "./SeasonTickets";
 import DateTimePicker from "./DateTimePicker";
 import EventPicker from "./EventPicker";
 import DurationSelector from "./DurationSelector";
+import { alpha } from "@mui/material/styles";
+import { Label } from "@mui/icons-material";
 
 export const Components = {
   TMD: <DateTimePicker />,
@@ -29,18 +31,29 @@ export const Components = {
 const ModePicker = () => {
   const theme = useTheme();
   const {
-    state: { modes, selectedMode = "" },
+    state: { modes, selectedMode = "", labels },
     dispatch,
   } = useAppContext();
 
+  enum ModeTitles {
+    TMD = labels.TIMEDTITLE,
+    EVT = labels.EVENTTITLE,
+    PST = labels.TIMEDTITLE,
+    FEP = labels.PASSESTITLE,
+    FEX = labels.PASSESTITLE,
+    FAP = labels.PASSESTITLE,
+    MUP = labels.PASSESTITLE,
+  }
+
   return (
-    <FormControl>
+    <FormControl sx={{ width: "100%" }}>
       <RadioGroup
         sx={{
           display: "flex",
           flexDirection: "row",
           rowGap: 1,
           mb: 3,
+          width: "100%",
         }}
         name="modes"
         value={selectedMode}
@@ -55,21 +68,47 @@ const ModePicker = () => {
           modes.length > 0 &&
           modes.map((mode: Modes, index: number) => (
             <>
-              <Box display="flex" width="100%">
-                <Radio
-                  key={mode}
-                  id={mode}
-                  value={mode}
-                  sx={{
-                    py: 0,
-                    color: theme.palette.primary.main,
-                    "&.Mui-checked": {
-                      color: theme.palette.primary.main,
-                    },
+              <Box
+                width="100%"
+                p={1}
+                borderRadius={2}
+                sx={{
+                  backgroundColor:
+                    mode === selectedMode
+                      ? alpha(theme.palette.primary.light, 0.03)
+                      : "none",
+                }}
+              >
+                <Box
+                  width="100%"
+                  display="flex"
+                  mb={2}
+                  onClick={() => {
+                    dispatch({
+                      type: Actions.SELECTED_MODE,
+                      payload: mode,
+                    });
                   }}
-                />
+                  sx={{ cursor: "pointer" }}
+                >
+                  <Radio
+                    key={mode}
+                    id={mode}
+                    value={mode}
+                    sx={{
+                      py: 0,
+                      color: theme.palette.primary.main,
+                      "&.Mui-checked": {
+                        color: theme.palette.primary.main,
+                      },
+                    }}
+                  />
+                  <Typography fontWeight={600}>{ModeTitles[mode]}</Typography>
+                </Box>
+
                 {Components[mode as Modes]}
               </Box>
+
               {index + 1 !== modes.length && (
                 <Typography
                   display="block"

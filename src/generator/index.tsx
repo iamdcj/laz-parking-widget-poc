@@ -30,8 +30,6 @@ const Generator = () => {
     dispatch,
   } = useAppContext();
 
-  console.log(appTheme.palette.primary.main);
-
   return (
     <Paper>
       <Box
