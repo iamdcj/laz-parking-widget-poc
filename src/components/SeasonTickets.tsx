@@ -6,6 +6,7 @@ import { Actions } from "../state";
 import ErrorNotice from "./ErrorNotice";
 import StartEndSelector from "./DateTimePicker";
 import { Modes } from "../../types";
+import { log } from "console";
 
 const SeasonTickets = ({
   IsFEP = false,
@@ -24,6 +25,7 @@ const SeasonTickets = ({
   } = useAppContext();
   const { retrieveSeasonTickets } = useApi();
   const isEnabled = ["MUP", "FAP", "FEX", "FEP"].includes(selectedMode);
+  const withData = seasonTickets && seasonTickets.length > 0;
 
   useEffect(() => {
     if (!isEnabled || !selectedLocation) {
@@ -38,10 +40,8 @@ const SeasonTickets = ({
     FAP = labels.CHOOSEFIXEDACCESS || labels.CHOOSEFIXEDACCESSTICKET,
   }
 
-  const withData = seasonTickets && seasonTickets.length > 0;
-
   return (
-    <Box width="100%">
+    <Box width="100%" mb={2}>
       <FormControl fullWidth size="small">
         <InputLabel id="season-passes-label">
           {Labels[selectedMode] || labels.CHOOSEPASSTYPE}

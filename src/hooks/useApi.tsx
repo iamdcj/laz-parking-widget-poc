@@ -139,7 +139,8 @@ const useApi = () => {
         dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });
 
         if (data.length === 1) {
-          dispatch({ type: Actions.SET_RATE, payload: data[0].RateId });
+          const pass = data[0];
+          dispatch({ type: Actions.SET_RATE, payload: pass.RateId || pass.Id });
         }
       } catch (error) {
         dispatch({ type: Actions.LOADING, payload: false });

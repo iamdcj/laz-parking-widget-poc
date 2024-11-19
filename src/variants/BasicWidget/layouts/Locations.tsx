@@ -34,17 +34,12 @@ const LocationsLayout = () => {
   }, [selectedLocation, retrieveLocations]);
 
   return (
-    <Box>
+    <>
       {locations?.length > 0 && <LocationPicker />}
-      {modes && modes.length === 1 ? (
-        <Box>{Components[modes[0] as Modes]}</Box>
-      ) : (
-        selectedLocation && <ModePicker />
-      )}
-      <Box py={1} display="flex" justifyContent="center">
-        <PurchaseButton />
-      </Box>
-    </Box>
+      {modes && modes.length === 1
+        ? Components[modes[0] as Modes]
+        : selectedLocation && <ModePicker />}
+    </>
   );
 };
 

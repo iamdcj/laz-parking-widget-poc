@@ -33,11 +33,10 @@ const EventsLayout = () => {
   }, [selectedEvent?.id]);
 
   return (
-    <Box>
+    <>
       {events?.length > 0 && <EventPicker refetchEvents={false} />}
       {locations?.length > 0 && <LocationPicker />}
-      <PurchaseButton />
-    </Box>
+    </>
   );
 };
 

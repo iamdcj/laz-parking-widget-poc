@@ -98,7 +98,7 @@ const EventPicker = memo(
               {...params}
               label={eventdriven ? labels.SHOWEVENT : labels.CHOOSEEVENT}
             />
-            {selectedEvent?.date && (
+            {/* {selectedEvent?.date && (
               <Typography
                 sx={{ display: "flex", alignItems: "center", mt: 1, ml: 1 }}
                 fontSize={10}
@@ -106,7 +106,7 @@ const EventPicker = memo(
                 <QueryBuilderIcon sx={{ mr: 1 }} fontSize="small" />
                 {selectedEvent?.date}
               </Typography>
-            )}
+            )} */}
           </>
         )}
       />

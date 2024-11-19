@@ -7,12 +7,13 @@ import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Loader from "../../components/Loader";
 import useApi from "../../hooks/useApi";
+import PurchaseButton from "../../components/PurchaseButton";
 
 const BasicWidget = () => {
   const theme = useTheme();
   const { retrieveLanguages } = useApi();
   const {
-    state: { eventDriven, isHeaderEnabled, isInitializing },
+    state: { eventDriven, isInitializing },
   } = useAppContext();
 
   useEffect(() => {
@@ -26,10 +27,10 @@ const BasicWidget = () => {
   return (
     <Box id="WidgetFaceDiv" position="relative" width="100%" maxWidth={300}>
       <Loader />
-      {isHeaderEnabled && <Header />}
+      <Header />
       <Box
         position="relative"
-        p={1.5}
+        p={1}
         pt={3}
         border={`1px solid ${theme.palette.accent.light}`}
         borderRadius="0 0 4px 4px"
@@ -37,6 +38,7 @@ const BasicWidget = () => {
         zIndex={1}
       >
         {eventDriven ? <EventsLayout /> : <LocationsLayout />}
+        <PurchaseButton />
       </Box>
     </Box>
   );

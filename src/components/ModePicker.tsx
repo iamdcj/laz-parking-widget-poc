@@ -133,13 +133,13 @@ const ModePicker = () => {
                     component="span"
                     sx={{
                       background: "#fff",
-                      px: 2,
+                      p: 2,
                       display: "inline-block",
                       zIndex: 2,
                       position: "relative",
                     }}
                   >
-                    or
+                    {labels.OR}
                   </Box>
                 </Typography>
               )}

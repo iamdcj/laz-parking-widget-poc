@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Link,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Link, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import { useAppContext } from "../context";
@@ -13,6 +6,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { ChevronRight } from "@mui/icons-material";
 
 const Header = () => {
+  const {
+    state: { headerText, logo, labels, isHeaderEnabled },
+  } = useAppContext();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -21,9 +17,7 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const {
-    state: { headerText, logo, labels },
-  } = useAppContext();
+
   const theme = useTheme();
 
   // for menu
@@ -36,7 +30,7 @@ const Header = () => {
     <Box
       id="LAZ_WidgetHeader"
       sx={{
-        backgroundColor: "primary.main",
+        backgroundColor: isHeaderEnabled ? "primary.main" : "none",
         borderRadius: "4px 4px 0 0",
         position: "relative",
       }}
@@ -63,7 +57,7 @@ const Header = () => {
             minWidth: "auto",
           }}
         >
-          <MenuIcon color="inherit" />
+          <MenuIcon sx={{ color: !isHeaderEnabled ? theme.palette.primary.main : "#fff" }} />
         </Button>
         <Menu
           id="basic-menu"
@@ -126,21 +120,24 @@ const Header = () => {
             </MenuItem>
           )}
         </Menu>
-
-        {logo ? (
-          <img
-            src={logo}
-            alt="Client Logo"
-            style={{ height: 30, width: "auto" }}
-          />
-        ) : (
-          <Typography
-            component="p"
-            fontWeight={600}
-            color={theme.palette.primary.contrastText}
-          >
-            {headerText || labels.RESERVEPARKING}
-          </Typography>
+        {isHeaderEnabled && (
+          <Box>
+            {logo ? (
+              <img
+                src={logo}
+                alt="Client Logo"
+                style={{ height: 30, width: "auto" }}
+              />
+            ) : (
+              <Typography
+                component="p"
+                fontWeight={600}
+                color={theme.palette.primary.contrastText}
+              >
+                {headerText || labels.RESERVEPARKING}
+              </Typography>
+            )}
+          </Box>
         )}
       </Box>
     </Box>
