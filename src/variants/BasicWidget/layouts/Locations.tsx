@@ -33,6 +33,10 @@ const LocationsLayout = () => {
     }
   }, [selectedLocation, retrieveLocations]);
 
+
+  console.log(selectedMode);
+  
+
   return (
     <Box display="grid" rowGap={2} mb={2}>
       {locations?.length > 0 && <LocationPicker />}

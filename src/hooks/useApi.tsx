@@ -47,7 +47,7 @@ const useApi = () => {
 
     try {
       const data = await fetchData("time_increments", {
-        eDataLocationId: selectedLocation,
+        eDataLocationId: selectedLocation.id,
       });
 
       dispatch({ type: Actions.SET_TIME_INCREMENTS, payload: data });

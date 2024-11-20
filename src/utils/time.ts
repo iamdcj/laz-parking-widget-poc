@@ -5,7 +5,7 @@ export const returnTimes = (
     start: string | Dayjs | null;
     end: string | Dayjs | null;
   },
-  duration: string
+  duration: string,
 ) => {
   if (duration) {
     const now = new Date();

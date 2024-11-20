@@ -43,75 +43,65 @@ const LocationPicker = ({ marginBottom = 1 }) => {
 
   return (
     <FormControl fullWidth size="small" sx={{ mb: marginBottom }}>
-      <Box>
-        <Box
-          component="button"
-          onClick={handleClick}
-          sx={{
-            width: "100%",
-            padding: 0,
-            background: "none",
-            outline: "none",
-            border: "none",
-          }}
-        >
-          <Select
-            id="location"
-            fullWidth
-            label={labels.SELECTLOCATION}
-            value={selectedLocation?.id || ""}
-            renderValue={() => selectedLocation?.label}
-            size="small"
+      <InputLabel id="location-label">{labels.SELECTLOCATION}</InputLabel>
+      <Select
+        labelId="location-label"
+        id="location"
+        fullWidth
+        onOpen={handleClick}
+        onClose={() => setAnchorEl(null)}
+        open={!!anchorEl}
+        label={labels.SELECTLOCATION}
+        value={selectedLocation?.id || ""}
+        renderValue={() => selectedLocation?.label}
+        size="small"
+        sx={{
+          textAlign: "left",
+        }}
+      />
+      <Popover
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={isOpen}
+      >
+        <Box width={288}>
+          <Box
             sx={{
-              pointerEvents: "none",
-              textAlign: "left"
+              padding: 1,
             }}
-          />
-        </Box>
-        <Popover
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          open={isOpen}
-        >
-          <Box width={288}>
-            <Box
-              sx={{
-                padding: 1,
-              }}
-            >
-              <LazMap height={184} />
-            </Box>
-            <Box component="ul" sx={{ maxHeight: 200, overflow: "auto" }}>
-              {filteredLocations.map(
-                ({ id, label }: { id: string; label: string }) => (
-                  <li>
-                    <Button
-                      onClick={() =>
-                        dispatch({
-                          type: Actions.SELECTED_LOCATION,
-                          payload: { id, label },
-                        })
-                      }
-                      onMouseOver={() =>
-                        dispatch({
-                          type: Actions.FOCUSED_LOCATION,
-                          payload: { id, label },
-                        })
-                      }
-                    >
-                      {label}
-                    </Button>
-                  </li>
-                )
-              )}
-            </Box>
+          >
+            <LazMap height={184} />
           </Box>
-        </Popover>
-      </Box>
+          <Box component="ul" sx={{ maxHeight: 200, overflow: "auto" }}>
+            {filteredLocations.map(
+              ({ id, label }: { id: string; label: string }) => (
+                <li>
+                  <Button
+                    onClick={() =>
+                      dispatch({
+                        type: Actions.SELECTED_LOCATION,
+                        payload: { id, label },
+                      })
+                    }
+                    onMouseOver={() =>
+                      dispatch({
+                        type: Actions.FOCUSED_LOCATION,
+                        payload: { id, label },
+                      })
+                    }
+                  >
+                    {label}
+                  </Button>
+                </li>
+              )
+            )}
+          </Box>
+        </Box>
+      </Popover>
     </FormControl>
   );
 };

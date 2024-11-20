@@ -53,31 +53,27 @@ const EventPicker = memo(
       setShowDateTime(selectedEvent?.id ? true : false);
     }, [selectedEvent?.id]);
 
-    console.log(showDateTime);
-    
-
     return (
       <Autocomplete
         sx={{
           mb: marginBottom,
           position: "relative",
+          pb: !showDateTime && selectedEvent?.id ?  5 : 0,
         }}
         size="small"
         popupIcon={<ExpandMore />}
-        disablePortal
         fullWidth
         disableClearable
         onOpen={() => setShowDateTime(false)}
-        onClose={() => setShowDateTime(true)}
+        onClose={() => selectedEvent?.id && setShowDateTime(true)}
         onChange={handleOnEventChange}
         disabled={!isEnabled || events.length <= 1}
         renderOption={(props, option) => (
           <li {...props} key={option.id}>
             <Box display="flex" alignItems="center" gap={1}>
-              {/* <EventIcon fontSize="large" /> */}
               <Box>
                 <Typography display="block" fontSize={14}>
-                  {option.label.split("-")[0]}
+                  {option.label}
                 </Typography>
                 <Typography fontSize={12}>
                   {option.date && !hideEventDateTime && option.date}
@@ -109,7 +105,7 @@ const EventPicker = memo(
 
             return {
               id,
-              label: `${label} - ${eventDate}`,
+              label: label,
               date: eventDate,
             };
           }
@@ -119,6 +115,10 @@ const EventPicker = memo(
             <TextField
               {...params}
               sx={{
+                "& .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input":
+                  {
+                    fontWeight: selectedEvent ? 600 : 400,
+                  },
                 "& .MuiOutlinedInput-root.MuiInputBase-sizeSmall": {
                   paddingBottom: showDateTime ? 5 : 1,
                 },
@@ -127,12 +127,16 @@ const EventPicker = memo(
             />
             {showDateTime && (
               <Typography
-                sx={{ display: "flex", alignItems: "center", mt: 1, ml: 1 }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  ml: .5,
+                  color: "#586171",
+                }}
                 position="absolute"
                 left={10}
                 bottom={10}
               >
-                {/* <QueryBuilderIcon sx={{ mr: 1 }} fontSize="small" /> */}
                 {selectedEvent?.date}
               </Typography>
             )}

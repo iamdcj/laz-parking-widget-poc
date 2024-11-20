@@ -44,7 +44,9 @@ export const transformDuration = (duration: string) => {
 export const cleanObject = (object: Record<string, any>) =>
   Object.fromEntries(Object.entries(object).filter(([_, value]) => value));
 
-export const returnParams = (data: UrlParams): Record<string, any> => {
+export const returnParams = (
+  data: UrlParams
+): Record<string, any> => {
   let params = cleanObject(data);
 
   if (params.duration) {
