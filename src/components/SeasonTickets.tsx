@@ -71,11 +71,7 @@ const SeasonTickets = ({
                 RateId: string;
               }) => {
                 const value = Id || RateId;
-
-                console.log(RateName || RateDetailName)
-                console.log(value)
                 
-
                 return (
                   <MenuItem key={value} value={value}>
                     {RateName || RateDetailName}

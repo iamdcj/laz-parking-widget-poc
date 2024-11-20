@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useAppContext } from "../../context";
 import EventsLayout from "./layouts/Events";
 import LocationsLayout from "./layouts/Locations";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Loader from "../../components/Loader";

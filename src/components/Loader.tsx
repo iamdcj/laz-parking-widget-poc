@@ -6,7 +6,7 @@ const Loader = () => {
   const { state } = useAppContext();
   const { isLoading, isInitializing } = state;
 
-  if (!isInitializing || !isLoading) return null;
+  if (!isInitializing && !isLoading) return null;
 
   return (
     <Box
@@ -20,10 +20,10 @@ const Loader = () => {
         top: 0,
         right: 0,
         zIndex: 13,
-        background: "rgba(255, 255, 255, .65)",
+        background: "rgba(255, 255, 255, .75)",
       }}
     >
-      <CircularProgress size={50} />
+      <CircularProgress size={42} />
     </Box>
   );
 };

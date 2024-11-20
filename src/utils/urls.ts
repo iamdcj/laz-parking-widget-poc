@@ -16,8 +16,6 @@ export const constructBuyLink = (data: LinkParams) => {
   const { times, mode, ...params } = data;
   const { start = "", end = "" } = returnTimes(times, params.duration);
 
-  console.log(mode);
-  
   const urlParams = new URLSearchParams({
     t: mode === "EVT" ? "e" : "r",
     wt: modeToWt[mode as Modes],

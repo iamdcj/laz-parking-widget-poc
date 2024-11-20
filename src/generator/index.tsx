@@ -19,13 +19,13 @@ const Generator = () => {
   const appTheme = useTheme();
   const {
     state: {
-      buttonText,
       isHeaderEnabled,
       headerText,
       useMap,
       theme,
       logo,
       hideEventDateTime,
+      isLoading
     },
     dispatch,
   } = useAppContext();
@@ -116,6 +116,23 @@ const Generator = () => {
               });
             }}
           /> */}
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isLoading}
+                onChange={(event, value) => {
+                  dispatch({
+                    type: Actions.SET_OVERRIDES,
+                    payload: {
+                      isLoading: value,
+                    },
+                  });
+                }}
+                name="isLoading"
+              />
+            }
+            label="Show Loader"
+          />
           <FormControlLabel
             control={
               <Switch
