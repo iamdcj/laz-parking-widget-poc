@@ -53,7 +53,7 @@ const Header = () => {
           sx={{
             color: "#fff",
             position: "absolute",
-            left: 0,
+            right: 0,
             minWidth: "auto",
           }}
         >
@@ -62,6 +62,14 @@ const Header = () => {
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
           open={open}
           onClose={handleClose}
           MenuListProps={{

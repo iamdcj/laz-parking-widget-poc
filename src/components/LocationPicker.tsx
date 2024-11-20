@@ -35,7 +35,7 @@ const LocationPicker = () => {
   const filteredLocations = locations.filter(({ isPlace }: { isPlace: boolean}) => !isPlace);
 
   return (
-    <FormControl fullWidth size="small" sx={{ mb: 3 }}>
+    <FormControl fullWidth size="small">
       <InputLabel id="location-label">{labels.SELECTLOCATION}</InputLabel>
       <Select
         labelId="location-label"

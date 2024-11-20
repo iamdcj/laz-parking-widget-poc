@@ -41,7 +41,7 @@ const SeasonTickets = ({
   }
 
   return (
-    <Box width="100%" mb={2}>
+    <Box width="100%">
       <FormControl fullWidth size="small">
         <InputLabel id="season-passes-label">
           {Labels[selectedMode] || labels.CHOOSEPASSTYPE}
