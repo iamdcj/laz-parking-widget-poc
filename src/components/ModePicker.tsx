@@ -67,7 +67,8 @@ const ModePicker = () => {
           <>
             <Box
               width="100%"
-              p={1}
+              px={1}
+              py={2}
               borderRadius={2}
               sx={{
                 backgroundColor:
@@ -130,13 +131,12 @@ const ModePicker = () => {
                   component="span"
                   sx={{
                     background: "#fff",
-                    p: 2,
                     display: "inline-block",
                     zIndex: 2,
                     position: "relative",
                   }}
                 >
-                  {labels.OR}
+                  {labels.OR || labels.LABELOR}
                 </Box>
               </Typography>
             )}

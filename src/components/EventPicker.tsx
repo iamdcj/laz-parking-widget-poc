@@ -5,9 +5,16 @@ import { Actions } from "../state";
 import useApi from "../hooks/useApi";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import EventIcon from "@mui/icons-material/Event";
+import { ExpandMore } from "@mui/icons-material";
 
 const EventPicker = memo(
-  ({ refetchEvents = true }: { refetchEvents?: boolean }) => {
+  ({
+    refetchEvents = true,
+    marginBottom = 0,
+  }: {
+    refetchEvents?: boolean;
+    marginBottom?: number;
+  }) => {
     const { retrieveEvents } = useApi();
     const {
       state: {
@@ -43,7 +50,9 @@ const EventPicker = memo(
 
     return (
       <Autocomplete
+        sx={{ mb: marginBottom }}
         size="small"
+        popupIcon={<ExpandMore />}
         disablePortal
         fullWidth
         disableClearable
@@ -55,7 +64,7 @@ const EventPicker = memo(
               {/* <EventIcon fontSize="large" /> */}
               <Box>
                 <Typography display="block" fontSize={14}>
-                  {option.label.split('-')[0]}
+                  {option.label.split("-")[0]}
                 </Typography>
                 <Typography fontSize={12}>
                   {option.date && !hideEventDateTime && option.date}

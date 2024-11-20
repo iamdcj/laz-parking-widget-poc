@@ -14,6 +14,8 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     ? element.dataset.header === "true"
     : true;
 
+    console.log(eventDriven);
+    
 
   return {
     buttonText: element.dataset.buttonText

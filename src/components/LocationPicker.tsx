@@ -11,7 +11,7 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 import LazMap from "./Map";
 
-const LocationPicker = () => {
+const LocationPicker = ({ marginBottom = 1 }) => {
   const {
     state: { locations, selectedLocation, labels, useMap },
     dispatch,
@@ -35,7 +35,7 @@ const LocationPicker = () => {
   const filteredLocations = locations.filter(({ isPlace }: { isPlace: boolean}) => !isPlace);
 
   return (
-    <FormControl fullWidth size="small">
+    <FormControl fullWidth size="small" sx={{ mb: marginBottom }}>
       <InputLabel id="location-label">{labels.SELECTLOCATION}</InputLabel>
       <Select
         labelId="location-label"

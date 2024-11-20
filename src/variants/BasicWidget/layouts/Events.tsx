@@ -34,8 +34,8 @@ const EventsLayout = () => {
 
   return (
     <>
-      {events?.length > 0 && <EventPicker refetchEvents={false} />}
-      {locations?.length > 0 && <LocationPicker />}
+      {events?.length > 0 && <EventPicker refetchEvents={false} marginBottom={2}/>}
+      {locations?.length > 0 && <LocationPicker marginBottom={2} />}
     </>
   );
 };

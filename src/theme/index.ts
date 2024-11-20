@@ -1,5 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import { useAppContext } from "../context";
+import { ExpandMore } from "@mui/icons-material";
 
 export const useThemeConfig = () => {
   const {
@@ -65,6 +66,11 @@ export const useThemeConfig = () => {
       },
     },
     components: {
+      MuiSelect: {
+        defaultProps: {
+          IconComponent: ExpandMore,
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
@@ -91,10 +97,10 @@ export const useThemeConfig = () => {
       MuiRadio: {
         styleOverrides: {
           root: {
-            paddingLeft: 0
-          }
-        }
-      }
+            paddingLeft: 0,
+          },
+        },
+      },
     },
   });
 };
