@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Box,
@@ -6,7 +6,9 @@ import {
   Divider,
   FormControlLabel,
   FormGroup,
+  Modal,
   Paper,
+  Snackbar,
   Switch,
   TextField,
   Typography,
@@ -15,9 +17,11 @@ import { useTheme } from "@mui/material/styles";
 import { HexColorInput } from "react-colorful";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
+import { CheckCircleOutline } from "@mui/icons-material";
 
 const Generator = () => {
   const appTheme = useTheme();
+  const [wasCopied, setWasCopied] = useState(false);
   const {
     state: {
       eventDriven,
@@ -38,41 +42,51 @@ const Generator = () => {
       modesOverride,
       clientId,
       agentId,
-
     },
     dispatch,
   } = useAppContext();
 
-  const handleGenerateSnippet = () => {
-    console.log(`
-      <div
-        id="LAZ_Widget"
-        data-header="${isHeaderEnabled}"
-        data-eventdriven="${eventDriven}"
-        data-hide-event-date="${hideEventDateTime}"
-        data-map="${useMap}"
-        data-locationid="${locationIds ? locationIds : ""}"
-        data-sc="${salesChannelKey ? salesChannelKey : ""}"
-        data-agentid="${agentId ? agentId : ""}"
-        data-clientid="${clientId ? clientId : ""}"
-        data-wk="${widgetKey ? widgetKey : ""}"
-        data-wk="${logo ? logo : ""}"
-        header-text="${headerText ? headerText : ""}"
-        data-logo-url="${logo ? logo : ""}"
-        data-mapzoom="${mapZoom ? mapZoom : ""}"
-        data-mapplacelat="${mapLocationLat ? mapLocationLat : ""}"
-        data-mapplacelng="${mapLocationLng ? mapLocationLng : ""}"
-        data-mapplacetxt="${mapLocationText ? mapLocationText : ""}"
-        data-mode-overwrite="${modesOverride ? true : ""}"
-        data-mode="${modesOverride ? modesOverride : ""}"
-        data-starttime // figure this out
-        data-endtime // figure this out
-        data-arrive // figure this out
-        data-depart // figure this out
-        data-fullwidget // figure this out
-        data-currentpage // figure this out
-      ></div>
-    `);
+  const handleGenerateSnippet = async () => {
+    const type = "text/plain";
+    const blob = new Blob(
+      [
+        `<div
+  id="LAZ_Widget"
+  data-header="${isHeaderEnabled}"
+  data-header-text="${headerText ? headerText : ""}"
+  data-eventdriven="${eventDriven}"
+  data-hide-event-date="${hideEventDateTime}"
+  data-map="${useMap}"
+  data-locationid="${locationIds ? locationIds : ""}"
+  data-sc="${salesChannelKey ? salesChannelKey : ""}"
+  data-agentid="${agentId ? agentId : ""}"
+  data-clientid="${clientId ? clientId : ""}"
+  data-wk="${widgetKey ? widgetKey : ""}"
+  data-logo-url="${logo ? logo : ""}"
+  data-mapzoom="${mapZoom ? mapZoom : ""}"
+  data-mapplacelat="${mapLocationLat ? mapLocationLat : ""}"
+  data-mapplacelng="${mapLocationLng ? mapLocationLng : ""}"
+  data-mapplacetxt="${mapLocationText ? mapLocationText : ""}"
+  data-mode-overwrite="${modesOverride ? true : ""}"
+  data-mode="${modesOverride ? modesOverride : ""}"
+  data-starttime=""
+  data-endtime=""
+  data-arrive=""
+  data-depart=""
+  data-fullwidget=""
+  data-currentpage=""
+></div>
+<script type="text/javascript" src="https://go.lazparking.com/checkout/js/app/main.js"></script>
+    `,
+      ],
+      { type }
+    );
+
+    try {
+      const data = [new ClipboardItem({ [type]: blob })];
+      await navigator.clipboard.write(data);
+      setWasCopied(true);
+    } catch (error) {}
   };
 
   return (
@@ -295,9 +309,29 @@ const Generator = () => {
             ))}
           </Box>
         </Box>
-        <Button variant="outlined" onClick={handleGenerateSnippet}>
-          Generate Snippet
+        <Button
+          variant="outlined"
+          onClick={handleGenerateSnippet}
+          sx={{ mb: 2 }}
+        >
+          Copy Snippet
         </Button>
+        <Snackbar
+          open={wasCopied}
+          autoHideDuration={3000}
+          onClose={() => setWasCopied(false)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+        >
+          <Alert
+            icon={<CheckCircleOutline fontSize="inherit" />}
+            severity="success"
+          >
+            Widget Code copied to clipboard
+          </Alert>
+        </Snackbar>
       </Box>
     </Paper>
   );
