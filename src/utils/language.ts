@@ -26,6 +26,7 @@ export const defaultLanguageLabels = {
   NOFIXEDACCESSPASSES: "No passes at this time",
   ARRIVALDATE: "My Arrival Date",
   DEPARTUREDATE: "My Departure Date",
+  PRESETTITLE: "Duration",
   TIMEDTITLE: "Hourly Parking",
   EVENTTITLE: "Event Parking",
   PASSESTITLE: "Parking Passes",

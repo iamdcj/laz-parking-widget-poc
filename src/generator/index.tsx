@@ -3,6 +3,7 @@ import {
   Alert,
   Box,
   Button,
+  Divider,
   FormControlLabel,
   FormGroup,
   Paper,
@@ -19,16 +20,60 @@ const Generator = () => {
   const appTheme = useTheme();
   const {
     state: {
-      isHeaderEnabled,
+      eventDriven,
       headerText,
-      useMap,
-      theme,
-      logo,
       hideEventDateTime,
-      isLoading
+      isHeaderEnabled,
+      isLoading,
+      locationIds,
+      logo,
+      mapLocationLat,
+      mapLocationLng,
+      mapLocationText,
+      mapZoom,
+      theme,
+      useMap,
+      widgetKey,
+      salesChannelKey,
+      modesOverride,
+      clientId,
+      agentId,
+
     },
     dispatch,
   } = useAppContext();
+
+  const handleGenerateSnippet = () => {
+    console.log(`
+      <div
+        id="LAZ_Widget"
+        data-header="${isHeaderEnabled}"
+        data-eventdriven="${eventDriven}"
+        data-hide-event-date="${hideEventDateTime}"
+        data-map="${useMap}"
+        data-locationid="${locationIds ? locationIds : ""}"
+        data-sc="${salesChannelKey ? salesChannelKey : ""}"
+        data-agentid="${agentId ? agentId : ""}"
+        data-clientid="${clientId ? clientId : ""}"
+        data-wk="${widgetKey ? widgetKey : ""}"
+        data-wk="${logo ? logo : ""}"
+        header-text="${headerText ? headerText : ""}"
+        data-logo-url="${logo ? logo : ""}"
+        data-mapzoom="${mapZoom ? mapZoom : ""}"
+        data-mapplacelat="${mapLocationLat ? mapLocationLat : ""}"
+        data-mapplacelng="${mapLocationLng ? mapLocationLng : ""}"
+        data-mapplacetxt="${mapLocationText ? mapLocationText : ""}"
+        data-mode-overwrite="${modesOverride ? true : ""}"
+        data-mode="${modesOverride ? modesOverride : ""}"
+        data-starttime // figure this out
+        data-endtime // figure this out
+        data-arrive // figure this out
+        data-depart // figure this out
+        data-fullwidget // figure this out
+        data-currentpage // figure this out
+      ></div>
+    `);
+  };
 
   return (
     <Paper>
@@ -41,6 +86,7 @@ const Generator = () => {
         width={350}
       >
         <FormGroup sx={{ mb: 2 }}>
+          <Typography fontWeight={600}>Header Settings</Typography>
           <FormControlLabel
             control={
               <Switch
@@ -61,7 +107,6 @@ const Generator = () => {
               mb: 3,
             }}
           />
-
           <TextField
             required
             id="headerText"
@@ -116,6 +161,8 @@ const Generator = () => {
               });
             }}
           /> */}
+          <Divider sx={{ mb: 4 }} />
+          <Typography fontWeight={600}>Global Settings</Typography>
           <FormControlLabel
             control={
               <Switch
@@ -168,8 +215,11 @@ const Generator = () => {
             label="Hide Event Date - Time"
           />
         </FormGroup>
+        <Divider sx={{ mb: 4 }} />
         <Box mb={4}>
-          <Typography display="block">Theming</Typography>
+          <Typography mb={2} fontWeight={600}>
+            Theming
+          </Typography>
           <Box
             display="grid"
             gridTemplateColumns="repeat(3, 33.333%)"
@@ -245,7 +295,9 @@ const Generator = () => {
             ))}
           </Box>
         </Box>
-        <Button variant="outlined">Generate Snippet</Button>
+        <Button variant="outlined" onClick={handleGenerateSnippet}>
+          Generate Snippet
+        </Button>
       </Box>
     </Paper>
   );

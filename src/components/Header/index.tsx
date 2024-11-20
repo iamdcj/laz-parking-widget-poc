@@ -9,7 +9,7 @@ const Header = () => {
     state: { headerText, logo, labels, isHeaderEnabled },
   } = useAppContext();
   const theme = useTheme();
-  
+
   return (
     <Box
       id="LAZ_WidgetHeader"
@@ -35,7 +35,7 @@ const Header = () => {
               <img
                 src={logo}
                 alt="Client Logo"
-                style={{ height: 30, width: "auto" }}
+                style={{ height: 20, width: "auto" }}
               />
             ) : (
               <Typography

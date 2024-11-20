@@ -39,7 +39,7 @@ const StartEndSelector = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box width="100%">
+      <Box width="100%" display="grid" gridTemplateColumns="1fr">
         <DateTimePicker
           slotProps={slotProps}
           label={startLabel || labels.ARRIVE}
@@ -61,7 +61,7 @@ const StartEndSelector = ({
           onClose={() => {
             start && setEndStart(true);
           }}
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", mb: 1 }}
         />
         {!hideEnd && (
           <DateTimePicker

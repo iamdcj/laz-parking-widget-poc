@@ -73,7 +73,7 @@ const NavigationMenu = () => {
         }}
       >
         {links.map(({ link, label }) => (
-          <MenuItem onClick={handleClose} sx={{ pr: 1 }}>
+          <MenuItem onClick={handleClose} sx={{ pr: 0 }}>
             <Link
               href={link}
               target="_blank"
@@ -83,6 +83,7 @@ const NavigationMenu = () => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 width: "100%",
+                textDecoration: "none"
               }}
             >
               {label} <ChevronRight />

@@ -63,6 +63,8 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
 };
 
 export const returnModes = (locations: any[], selectedLocation: string) => {
+  console.log(locations);
+  
   if (!selectedLocation) {
     return null;
   }

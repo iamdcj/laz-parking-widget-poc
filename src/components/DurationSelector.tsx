@@ -3,7 +3,6 @@ import useApi from "../hooks/useApi";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
-import ErrorNotice from "./ErrorNotice";
 
 const DurationSelector = () => {
   const {

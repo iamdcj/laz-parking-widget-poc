@@ -76,6 +76,9 @@ export const appReducer = (
 ): InitialState => {
   const { type, payload } = action;
 
+  console.log(type, payload);
+  
+
   switch (type) {
     case Actions.INITIALIZING:
       return {
@@ -149,7 +152,7 @@ export const appReducer = (
         },
       };
     case Actions.SET_LOCATIONS:
-      let locations = payload || state.locations;
+      let locations = payload || state.locations || [];
 
       if (state.mapLocationLat && state.mapLocationLng) {
         locations = [
@@ -177,6 +180,7 @@ export const appReducer = (
         ? state.modes
         : returnModes(state.locations, payload);
 
+      console.log(modes);
       return {
         ...state,
         modes,
@@ -204,7 +208,7 @@ export const appReducer = (
           ...state.times,
           end: payload,
         },
-        canPurchase: state.times.start ? true : false,
+        canPurchase: state.times?.start ? true : false,
       };
     case Actions.SET_SEASON_TICKETS:
       return {

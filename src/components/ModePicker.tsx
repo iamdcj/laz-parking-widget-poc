@@ -38,7 +38,7 @@ const ModePicker = () => {
   enum ModeTitles {
     TMD = labels.TIMEDTITLE,
     EVT = labels.EVENTTITLE,
-    PST = labels.TIMEDTITLE,
+    PST = labels.PRESETTITLE,
     FEP = labels.PASSESTITLE,
     FEX = labels.PASSESTITLE,
     FAP = labels.PASSESTITLE,
