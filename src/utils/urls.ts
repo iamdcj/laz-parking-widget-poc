@@ -17,8 +17,8 @@ export const constructBuyLink = (data: LinkParams) => {
   const { start = "", end = "" } = returnTimes(times, params.duration);
 
   const urlParams = new URLSearchParams({
-    t: params?.evid ? "e" : "r",
-    wt: params?.evid ? "evt" : modeToWt[mode as Modes],
+    t: mode === "EVT" ? "e" : "r",
+    wt: modeToWt[mode as Modes],
     isocode: "EN",
     ...returnParams({ ...params, start, end }),
   });
