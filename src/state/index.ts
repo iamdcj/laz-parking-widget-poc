@@ -76,9 +76,6 @@ export const appReducer = (
 ): InitialState => {
   const { type, payload } = action;
 
-  console.log(type, payload);
-  
-
   switch (type) {
     case Actions.INITIALIZING:
       return {
@@ -178,9 +175,8 @@ export const appReducer = (
 
       const modes = state.modesOverride
         ? state.modes
-        : returnModes(state.locations, payload);
+        : returnModes(state.locations, payload.id);
 
-      console.log(modes);
       return {
         ...state,
         modes,

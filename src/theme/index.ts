@@ -18,7 +18,7 @@ export const useThemeConfig = () => {
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
       ].join(","),
-      fontSize: 12,
+      fontSize: 14,
       h1: {
         fontSize: 56,
         fontWeight: 600,
@@ -83,7 +83,7 @@ export const useThemeConfig = () => {
         styleOverrides: {
           root: {
             background: "#fff",
-            fontSize: 12,
+            fontSize: 14,
           },
         },
       },

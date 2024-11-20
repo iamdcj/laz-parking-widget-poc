@@ -1,5 +1,5 @@
 import { Autocomplete, Box, TextField, Typography } from "@mui/material";
-import React, { memo, SyntheticEvent, useEffect } from "react";
+import React, { memo, SyntheticEvent, useEffect, useState } from "react";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
 import useApi from "../hooks/useApi";
@@ -16,6 +16,7 @@ const EventPicker = memo(
     marginBottom?: number;
   }) => {
     const { retrieveEvents } = useApi();
+    const [showDateTime, setShowDateTime] = useState(false);
     const {
       state: {
         events,
@@ -48,14 +49,26 @@ const EventPicker = memo(
       }
     };
 
+    useEffect(() => {
+      setShowDateTime(selectedEvent?.id ? true : false);
+    }, [selectedEvent?.id]);
+
+    console.log(showDateTime);
+    
+
     return (
       <Autocomplete
-        sx={{ mb: marginBottom }}
+        sx={{
+          mb: marginBottom,
+          position: "relative",
+        }}
         size="small"
         popupIcon={<ExpandMore />}
         disablePortal
         fullWidth
         disableClearable
+        onOpen={() => setShowDateTime(false)}
+        onClose={() => setShowDateTime(true)}
         onChange={handleOnEventChange}
         disabled={!isEnabled || events.length <= 1}
         renderOption={(props, option) => (
@@ -105,17 +118,24 @@ const EventPicker = memo(
           <>
             <TextField
               {...params}
+              sx={{
+                "& .MuiOutlinedInput-root.MuiInputBase-sizeSmall": {
+                  paddingBottom: showDateTime ? 5 : 1,
+                },
+              }}
               label={eventdriven ? labels.SHOWEVENT : labels.CHOOSEEVENT}
             />
-            {/* {selectedEvent?.date && (
+            {showDateTime && (
               <Typography
                 sx={{ display: "flex", alignItems: "center", mt: 1, ml: 1 }}
-                fontSize={10}
+                position="absolute"
+                left={10}
+                bottom={10}
               >
-                <QueryBuilderIcon sx={{ mr: 1 }} fontSize="small" />
+                {/* <QueryBuilderIcon sx={{ mr: 1 }} fontSize="small" /> */}
                 {selectedEvent?.date}
               </Typography>
-            )} */}
+            )}
           </>
         )}
       />

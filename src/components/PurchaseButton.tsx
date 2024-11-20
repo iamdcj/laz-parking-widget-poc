@@ -36,7 +36,7 @@ const PurchaseButton = () => {
     <Button
       href={constructBuyLink({
         duration: selectedDuration,
-        l: selectedLocation,
+        l: selectedLocation?.id,
         evid: selectedEvent?.id,
         wk: widgetKey,
         mode: modes && modes.length === 1 ? modes[0] : selectedMode,

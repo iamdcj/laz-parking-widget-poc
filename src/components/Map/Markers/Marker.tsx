@@ -68,6 +68,7 @@ const MapMarker = memo(
           position={{ lat, lng }}
           zIndex={isActive ? 20 : 10}
           ref={ref}
+          style={{ cursor: isPlace ? "default" : "pointer" }}
         >
           <MapMarkerPin isActive={isActive} id={id} isPlace={isPlace} />
         </AdvancedMarker>
