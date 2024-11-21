@@ -1,0 +1,35 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": "3",
+        "targets": {
+          "browsers": ["last 5 versions", "ie >= 9"]
+        }
+      }
+    ],
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ],
+  "plugins": [
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@mui/material",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "core"
+    ],
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@mui/icons-material",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "icons"
+    ]
+  ]
+}
