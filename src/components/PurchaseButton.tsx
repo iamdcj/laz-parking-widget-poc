@@ -15,9 +15,9 @@ const PurchaseButton = () => {
       agentId,
       salesChannelKey,
       rate,
-      canPurchase = false,
       labels,
       selectedMode,
+      canPurchase
     },
   } = useAppContext();
 
@@ -31,6 +31,7 @@ const PurchaseButton = () => {
     // "FEX" = labels.PURCHASEPASS,
     // "FEP" = labels.PURCHASEPASS,
   }
+
 
   return (
     <Button
