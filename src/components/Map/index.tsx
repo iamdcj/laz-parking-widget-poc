@@ -24,7 +24,7 @@ const LazMap = ({
   if (!renderMap) return null;
 
   return (
-    <APIProvider apiKey="AIzaSyDXK45jkgLDFMq5Lr33HGrK2a8qITI3Lqc">
+    <APIProvider apiKey="">
       <MapComponent height={height} width={width} />
     </APIProvider>
   );
