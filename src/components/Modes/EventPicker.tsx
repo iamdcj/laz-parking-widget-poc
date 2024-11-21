@@ -3,7 +3,7 @@ import React, { memo, SyntheticEvent, useEffect, useState } from "react";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
 import useApi from "../../hooks/useApi";
-import { ExpandMore } from "@mui/icons-material";
+import { CalendarMonth, ExpandMore } from "@mui/icons-material";
 import ModeHeader from "./components/ModeHeader";
 
 const EventPicker = memo(
@@ -73,11 +73,32 @@ const EventPicker = memo(
             <li {...props} key={option.id}>
               <Box display="flex" alignItems="center" gap={1}>
                 <Box>
-                  <Typography display="block" fontSize={14}>
+                  <Box width={50} textAlign="center">
+                    <Typography
+                      sx={{ backgroundColor: "#07254A" }}
+                      borderRadius="4px 4px 0 0"
+                      color="#fff"
+                      fontSize={10}
+                    >
+                      {option.displayDate.year}
+                    </Typography>
+                    <Box border="1px solid #07254A" borderRadius="0 0 4px 4px">
+                      <Typography fontSize={12} mb={0} lineHeight={1}>
+                        {option.displayDate.month}
+                      </Typography>
+                      <Typography fontSize={16} fontWeight={600}>
+                        {option.displayDate.day}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box>
+                  <Typography display="block" fontSize={14} lineHeight={1}>
                     {option.label}
                   </Typography>
                   <Typography fontSize={12}>
-                    {option.date && !hideEventDateTime && option.date}
+                    {option.displayDate.hour}:{option.displayDate.minute}
+                    {option.displayDate.dayPeriod}
                   </Typography>
                 </Box>
               </Box>
@@ -94,19 +115,32 @@ const EventPicker = memo(
               EventDate: string;
             }) => {
               let label = EventName;
-              let eventDate = null;
 
               const date = new Date(EventDate);
               const formatter = new Intl.DateTimeFormat("en-US", {
-                dateStyle: "short",
-                timeStyle: "short",
+                year: "numeric",
+                month: "short",
+                day: "2-digit",
+                hour: "numeric",
+                minute: "numeric",
               });
 
-              eventDate = formatter.format(date);
+              const eventDate = formatter.format();
+              const [month, day, year, hour, minute, dayPeriod] = formatter
+                .formatToParts(date)
+                .filter(({ type }) => type !== "literal");
 
               return {
                 id,
                 label: label,
+                displayDate: {
+                  month: month.value,
+                  day: day.value,
+                  year: year.value,
+                  hour: hour.value,
+                  minute: minute.value,
+                  dayPeriod: dayPeriod.value,
+                },
                 date: eventDate,
               };
             }
