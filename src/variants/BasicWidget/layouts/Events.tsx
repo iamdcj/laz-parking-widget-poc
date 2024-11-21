@@ -9,12 +9,7 @@ import PurchaseButton from "../../../components/PurchaseButton";
 
 const EventsLayout = () => {
   const {
-    state: {
-      locations,
-      selectedEvent,
-      locationIds,
-      events,
-    },
+    state: { locations, selectedEvent, locationIds, events },
     dispatch,
   } = useAppContext();
 
@@ -34,8 +29,12 @@ const EventsLayout = () => {
 
   return (
     <>
-      {events?.length > 0 && <EventPicker refetchEvents={false} marginBottom={2}/>}
-      {locations?.length > 0 && <LocationPicker marginBottom={2} />}
+      {events?.length > 0 && (
+        <EventPicker refetchEvents={false} marginBottom={2} />
+      )}
+      {locations?.length > 0 && (
+        <LocationPicker isDisabled={!selectedEvent} marginBottom={2} />
+      )}
     </>
   );
 };

@@ -16,7 +16,7 @@ import { Actions } from "../state";
 import LazMap from "./Map";
 import { useTheme } from "@mui/material/styles";
 
-const LocationPicker = ({ marginBottom = 1 }) => {
+const LocationPicker = ({ marginBottom = 1, isDisabled = false }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -48,6 +48,7 @@ const LocationPicker = ({ marginBottom = 1 }) => {
     <FormControl fullWidth size="small" sx={{ mb: marginBottom }}>
       <InputLabel id="location-label">{labels.SELECTLOCATION}</InputLabel>
       <Select
+        disabled={isDisabled}
         labelId="location-label"
         id="location"
         fullWidth
@@ -92,6 +93,7 @@ const LocationPicker = ({ marginBottom = 1 }) => {
                         ? theme.palette.primary.main
                         : "inherit",
                       color: isSelected ? "#fff" : "inherit",
+                      whiteSpace: "normal",
                       textAlign: "left ",
                       "&:hover": {
                         backgroundColor: isSelected
