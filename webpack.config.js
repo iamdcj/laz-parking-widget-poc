@@ -2,8 +2,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   entry: path.join(__dirname, "src", "index.tsx"),
@@ -13,8 +11,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
-    }),
-    new BundleAnalyzerPlugin(),
+    })
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".js"],

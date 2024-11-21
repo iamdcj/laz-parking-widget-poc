@@ -1,11 +1,10 @@
 {
-  "name": "parking-widgets",
-  "version": "0.0.0",
+  "name": "laz-parking-widget-poc",
+  "version": "0.1.0",
   "homepage": "https://iamdcj.github.io/laz-parking-widget-poc",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist --nojekyll",
-    "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "typecheck": "tsc --noEmit",
     "test": "jest "
