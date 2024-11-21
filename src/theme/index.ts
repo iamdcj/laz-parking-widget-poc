@@ -21,20 +21,41 @@ export const useThemeConfig = () => {
       }
     : {
         primary: {
-          light: "#0E85EB", // 500
-          main: "#015EB8", // 600
-          dark: "#0251A4", // 700
+          light: "#37A1FA",
+          main: "#015EB8",
+          dark: "#0251A4",
+          contrastText: "#fff",
         },
         secondary: {
-          light: "#0E85EB", // 500
-          main: "#015EB8", // 600
-          dark: "#0251A4", // 700
+          main: "#5BFAD7",
+          light: "#CAFFEE",
+          dark: "#00D4AF",
         },
         accent: {
-          light: "#0E85EB", // 500
-          main: "#015EB8", // 600
-          dark: "#0251A4", // 700
-        }
+          main: "#AAB2F7",
+          light: "#E2E6FD",
+          dark: "#706BE9",
+        },
+        error: {
+          main: "#FC2B2B",
+          light: "#E2E6FD",
+          dark: "#706BE9",
+        },
+        success: {
+          main: "#179C54",
+          light: "#CAFFEE",
+          dark: "#155232",
+        },
+        warning: {
+          main: "#FDB122",
+          light: "#FFEFC6",
+          dark: "#792E0E",
+        },
+        info: {
+          main: "#596170",
+          light: "#8c94a4",
+          dark: "#25272c",
+        },
       };
 
   return createTheme({

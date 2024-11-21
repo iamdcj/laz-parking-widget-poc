@@ -7,14 +7,6 @@ const LocationPin = memo(
   ({ isActive, isFocused }: { isActive: boolean; isFocused: boolean }) => {
     const theme = useTheme();
 
-    const lightBlue = theme.palette.primary.main[300]
-
-    
-    console.log( theme.palette.primary);
-    console.log( theme.palette.primary.light);
-    
-    
-
     return (
       <Box
         sx={{
@@ -40,10 +32,10 @@ const LocationPin = memo(
               isActive
                 ? theme.palette.primary.main
                 : isFocused
-                ? lightBlue
+                ? theme.palette.primary.light
                 : "#fff"
             }
-            stroke={isActive ? theme.palette.primary.main : lightBlue}
+            stroke={isActive ? theme.palette.primary.main : theme.palette.primary.light}
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"

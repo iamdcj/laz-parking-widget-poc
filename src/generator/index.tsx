@@ -23,10 +23,8 @@ const Generator = () => {
   const appTheme = useTheme();
   const [wasCopied, setWasCopied] = useState(false);
 
-  console.log('rgb(124 192 253)');
+  console.log("rgb(124 192 253)");
   console.log(appTheme.palette.primary);
-  
-  
 
   const {
     state: {
@@ -146,7 +144,7 @@ const Generator = () => {
             disabled={!isHeaderEnabled}
             helperText="Max. 25 Characters"
           />
-          <TextField
+          {/* <TextField
             required
             id="logoUrl"
             type="url"
@@ -164,7 +162,7 @@ const Generator = () => {
               });
             }}
             disabled={!isHeaderEnabled}
-          />
+          /> */}
           {/* <TextField
             required
             id="buttonText"
@@ -236,7 +234,7 @@ const Generator = () => {
           />
         </FormGroup>
         <Divider sx={{ mb: 4 }} />
-        <Box mb={4}>
+        {/* <Box mb={4}>
           <Typography mb={2} fontWeight={600}>
             Theming
           </Typography>
@@ -314,7 +312,7 @@ const Generator = () => {
               </Box>
             ))}
           </Box>
-        </Box>
+        </Box> */}
         <Button
           variant="outlined"
           onClick={handleGenerateSnippet}

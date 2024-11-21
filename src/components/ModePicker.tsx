@@ -16,7 +16,6 @@ import DateTimePicker from "./DateTimePicker";
 import EventPicker from "./EventPicker";
 import DurationSelector from "./DurationSelector";
 import { alpha } from "@mui/material/styles";
-import { Label } from "@mui/icons-material";
 
 export const Components = {
   TMD: <DateTimePicker />,
@@ -73,7 +72,7 @@ const ModePicker = () => {
               sx={{
                 backgroundColor:
                   mode === selectedMode
-                    ? alpha(theme.palette.primary.main, 0.0619999)
+                    ? alpha(theme.palette.primary.light, 0.0619999)
                     : "none",
               }}
             >
