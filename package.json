@@ -2,7 +2,7 @@
   "name": "parking-widgets",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://iamdcj.github.io/laz-parking-widget-poc/",
+  "homepage": "https://iamdcj.github.io/laz-parking-widget-poc",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
