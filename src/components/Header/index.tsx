@@ -14,7 +14,7 @@ const Header = () => {
     <Box
       id="LAZ_WidgetHeader"
       sx={{
-        backgroundColor: isHeaderEnabled ? "primary.main" : "none",
+        backgroundColor: isHeaderEnabled ? "primary.dark" : "none",
         borderRadius: "4px 4px 0 0",
         position: "relative",
       }}

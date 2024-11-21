@@ -7,6 +7,36 @@ export const useThemeConfig = () => {
     state: { theme },
   } = useAppContext();
 
+  const palette = theme
+    ? {
+        primary: {
+          main: theme?.primary,
+        },
+        secondary: {
+          main: theme?.secondary,
+        },
+        accent: {
+          main: theme?.accent,
+        },
+      }
+    : {
+        primary: {
+          light: "#0E85EB", // 500
+          main: "#015EB8", // 600
+          dark: "#0251A4", // 700
+        },
+        secondary: {
+          light: "#0E85EB", // 500
+          main: "#015EB8", // 600
+          dark: "#0251A4", // 700
+        },
+        accent: {
+          light: "#0E85EB", // 500
+          main: "#015EB8", // 600
+          dark: "#0251A4", // 700
+        }
+      };
+
   return createTheme({
     cssVariables: false,
     typography: {
@@ -54,17 +84,7 @@ export const useThemeConfig = () => {
       },
     },
     spacing: 6,
-    palette: {
-      primary: {
-        main: theme?.primary || "#005EB8",
-      },
-      secondary: {
-        main: theme?.secondary || "#5BFAD7",
-      },
-      accent: {
-        main: theme?.accent || "#AAB2F7",
-      },
-    },
+    palette,
     components: {
       MuiSelect: {
         defaultProps: {

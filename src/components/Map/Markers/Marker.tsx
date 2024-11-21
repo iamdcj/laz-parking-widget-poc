@@ -40,8 +40,8 @@ const MapMarker = memo(
     } = useAppContext();
     const [markerRef, marker] = useAdvancedMarkerRef();
     const isActive = useMemo(() => {
-      return id === focusedLocation || id === selectedLocation;
-    }, [focusedLocation, selectedLocation]);
+      return (id === id) === selectedLocation?.id;
+    }, [selectedLocation?.id]);
 
     const isMap = variant === "map";
 
@@ -63,14 +63,17 @@ const MapMarker = memo(
               return;
             }
 
-            dispatch({ type: Actions.SELECTED_LOCATION, payload: id });
+            dispatch({
+              type: Actions.SELECTED_LOCATION,
+              payload: { label, id },
+            });
           }}
           position={{ lat, lng }}
           zIndex={isActive ? 20 : 10}
           ref={ref}
           style={{ cursor: isPlace ? "default" : "pointer" }}
         >
-          <MapMarkerPin isActive={isActive} id={id} isPlace={isPlace} />
+          <MapMarkerPin id={id} isPlace={isPlace} />
         </AdvancedMarker>
         {isMap && !isPlace && (
           <MarkerInfoWindow

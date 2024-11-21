@@ -22,6 +22,12 @@ import { CheckCircleOutline } from "@mui/icons-material";
 const Generator = () => {
   const appTheme = useTheme();
   const [wasCopied, setWasCopied] = useState(false);
+
+  console.log('rgb(124 192 253)');
+  console.log(appTheme.palette.primary);
+  
+  
+
   const {
     state: {
       eventDriven,

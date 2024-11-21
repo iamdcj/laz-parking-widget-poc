@@ -6,7 +6,8 @@
     "predeploy": "npm run buildEditor",
     "deploy": "gh-pages -d dist --nojekyll",
     "build": "webpack --mode production",
-    "buildEditor": "webpack --mode development",
+    "buildEditor": "webpack --mode development",    
+    "start": "webpack serve --mode development --open",
     "typecheck": "tsc --noEmit",
     "test": "jest "
   },
