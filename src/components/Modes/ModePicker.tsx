@@ -7,9 +7,9 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { Modes } from "../../types";
-import { useAppContext } from "../context";
-import { Actions } from "../state";
+import { Modes } from "../../../types";
+import { useAppContext } from "../../context";
+import { Actions } from "../../state";
 import { useTheme } from "@mui/material/styles";
 import SeasonTickets from "./SeasonTickets";
 import DateTimePicker from "./DateTimePicker";
@@ -33,16 +33,6 @@ const ModePicker = () => {
     state: { modes, selectedMode = "", labels },
     dispatch,
   } = useAppContext();
-
-  enum ModeTitles {
-    TMD = labels.TIMEDTITLE,
-    EVT = labels.EVENTTITLE,
-    PST = labels.PRESETTITLE,
-    FEP = labels.PASSESTITLE,
-    FEX = labels.PASSESTITLE,
-    FAP = labels.PASSESTITLE,
-    MUP = labels.PASSESTITLE,
-  }
 
   return (
     <RadioGroup
@@ -76,33 +66,6 @@ const ModePicker = () => {
                     : "none",
               }}
             >
-              <Box
-                width="100%"
-                display="flex"
-                mb={2}
-                onClick={() => {
-                  dispatch({
-                    type: Actions.SELECTED_MODE,
-                    payload: mode,
-                  });
-                }}
-                sx={{ cursor: "pointer" }}
-              >
-                <Radio
-                  key={mode}
-                  id={mode}
-                  value={mode}
-                  sx={{
-                    py: 0,
-                    color: theme.palette.primary.main,
-                    "&.Mui-checked": {
-                      color: theme.palette.primary.main,
-                    },
-                  }}
-                />
-                <Typography fontWeight={600}>{ModeTitles[mode]}</Typography>
-              </Box>
-
               {Components[mode as Modes]}
             </Box>
 

@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import useApi from "../hooks/useApi";
+import useApi from "../../hooks/useApi";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useAppContext } from "../context";
-import { Actions } from "../state";
-import ErrorNotice from "./ErrorNotice";
+import { useAppContext } from "../../context";
+import { Actions } from "../../state";
+import ErrorNotice from "../ErrorNotice";
 import StartEndSelector from "./DateTimePicker";
-import { Modes } from "../../types";
+import { Modes } from "../../../types";
 import { log } from "console";
+import ModeHeader from "./components/ModeHeader";
 
 const SeasonTickets = ({
   IsFEP = false,
@@ -42,6 +43,7 @@ const SeasonTickets = ({
 
   return (
     <Box width="100%">
+      <ModeHeader mode={selectedMode} title={labels.PASSESTITLE} />
       <FormControl fullWidth size="small">
         <InputLabel id="season-passes-label">
           {Labels[selectedMode] || labels.CHOOSEPASSTYPE}
@@ -71,7 +73,7 @@ const SeasonTickets = ({
                 RateId: string;
               }) => {
                 const value = Id || RateId;
-                
+
                 return (
                   <MenuItem key={value} value={value}>
                     {RateName || RateDetailName}

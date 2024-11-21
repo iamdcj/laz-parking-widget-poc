@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useAppContext } from "../../../context";
 import { Actions } from "../../../state";
-import EventPicker from "../../../components/EventPicker";
-import LocationPicker from "../../../components/LocationPicker";
+import EventPicker from "../../../components/Modes/EventPicker";
+import LocationPicker from "../../../components/Modes/LocationPicker";
 import useApi from "../../../hooks/useApi";
 import PurchaseButton from "../../../components/PurchaseButton";
 

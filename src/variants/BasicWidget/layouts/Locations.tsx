@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useAppContext } from "../../../context";
-import LocationPicker from "../../../components/LocationPicker";
+import LocationPicker from "../../../components/Modes/LocationPicker";
 import useApi from "../../../hooks/useApi";
 import { Actions } from "../../../state";
 import { Modes } from "../../../../types";
 import PurchaseButton from "../../../components/PurchaseButton";
-import ModePicker, { Components } from "../../../components/ModePicker";
+import ModePicker, { Components } from "../../../components/Modes/ModePicker";
 
 const LocationsLayout = () => {
   const {
