@@ -2,6 +2,7 @@
   "name": "parking-widgets",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://iamdcj.github.io/laz-parking-widget-poc",
   "scripts": {
     "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
@@ -40,6 +41,7 @@
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.36.1",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "gh-pages": "^6.2.0",
     "html-webpack-plugin": "^5.6.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
