@@ -5,7 +5,7 @@
   "homepage": "https://iamdcj.github.io/laz-parking-widget-poc",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build --nojekyll",
+    "deploy": "gh-pages -d dist --nojekyll",
     "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "typecheck": "tsc --noEmit",
