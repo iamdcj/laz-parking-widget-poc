@@ -65,7 +65,6 @@ const EventPicker = memo(
           popupIcon={<ExpandMore />}
           fullWidth
           disableClearable
-          open={true}
           onOpen={() => setShowDateTime(false)}
           onClose={() => selectedEvent?.id && setShowDateTime(true)}
           onChange={handleOnEventChange}
