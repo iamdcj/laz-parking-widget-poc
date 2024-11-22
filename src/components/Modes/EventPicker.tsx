@@ -65,13 +65,14 @@ const EventPicker = memo(
           popupIcon={<ExpandMore />}
           fullWidth
           disableClearable
+          open={true}
           onOpen={() => setShowDateTime(false)}
           onClose={() => selectedEvent?.id && setShowDateTime(true)}
           onChange={handleOnEventChange}
           disabled={!isEnabled || events.length <= 1}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
-              <Box display="flex" alignItems="center" gap={1}>
+              <Box display="flex" alignItems="start" gap={1}>
                 <Box>
                   <Box width={50} textAlign="center">
                     <Typography
@@ -82,11 +83,20 @@ const EventPicker = memo(
                     >
                       {option.displayDate.year}
                     </Typography>
-                    <Box border="1px solid #07254A" borderRadius="0 0 4px 4px">
-                      <Typography fontSize={12} mb={0} lineHeight={1}>
+                    <Box
+                      border="1px solid #07254A"
+                      padding={0.5}
+                      borderRadius="0 0 4px 4px"
+                    >
+                      <Typography
+                        fontSize={12}
+                        mb={0}
+                        lineHeight={1}
+                        textTransform="uppercase"
+                      >
                         {option.displayDate.month}
                       </Typography>
-                      <Typography fontSize={16} fontWeight={600}>
+                      <Typography fontSize={16} fontWeight={600} lineHeight={1}>
                         {option.displayDate.day}
                       </Typography>
                     </Box>
