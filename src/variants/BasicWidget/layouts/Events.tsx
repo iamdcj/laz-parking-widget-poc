@@ -33,7 +33,10 @@ const EventsLayout = () => {
         <EventPicker refetchEvents={false} marginBottom={2} />
       )}
       {locations?.length > 0 && (
-        <LocationPicker isDisabled={!selectedEvent} marginBottom={2} />
+        <LocationPicker
+          isDisabled={!selectedEvent ? true : false}
+          marginBottom={2}
+        />
       )}
     </>
   );

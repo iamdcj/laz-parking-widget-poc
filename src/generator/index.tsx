@@ -23,29 +23,26 @@ const Generator = () => {
   const appTheme = useTheme();
   const [wasCopied, setWasCopied] = useState(false);
 
-  console.log("rgb(124 192 253)");
-  console.log(appTheme.palette.primary);
-
   const {
     state: {
-      eventDriven,
-      headerText,
-      hideEventDateTime,
-      isHeaderEnabled,
-      isLoading,
-      locationIds,
-      logo,
-      mapLocationLat,
-      mapLocationLng,
-      mapLocationText,
-      mapZoom,
-      theme,
-      useMap,
-      widgetKey,
-      salesChannelKey,
-      modesOverride,
-      clientId,
-      agentId,
+      eventDriven = "",
+      headerText = "",
+      hideEventDateTime = "",
+      isHeaderEnabled = "",
+      isLoading = "",
+      locationIds = "",
+      logo = "",
+      mapLocationLat = "",
+      mapLocationLng = "",
+      mapLocationText = "",
+      mapZoom = "",
+      theme = "",
+      useMap = "",
+      widgetKey = "",
+      salesChannelKey = "",
+      modesOverride = "",
+      clientId = "",
+      agentId = "",
     },
     dispatch,
   } = useAppContext();
@@ -131,7 +128,7 @@ const Generator = () => {
             label="Header Text"
             placeholder="e.g. Reserve Parking"
             sx={{ mb: 2 }}
-            value={headerText}
+            value={headerText || ""}
             inputProps={{ maxLength: 25 }}
             onChange={(event) => {
               dispatch({

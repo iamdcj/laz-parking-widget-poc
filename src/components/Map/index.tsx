@@ -23,11 +23,7 @@ const LazMap = ({
 
   if (!renderMap) return null;
 
-  return (
-    <APIProvider apiKey="">
-      <MapComponent height={height} width={width} />
-    </APIProvider>
-  );
+  return <MapComponent height={height} width={width} />;
 };
 
 const MapComponent = ({
@@ -68,7 +64,7 @@ const MapComponent = ({
       zoom={mapZoom}
     >
       {mapLocationText && (
-        <Typography
+        <Box
           sx={{
             display: "flex",
             position: "absolute",
@@ -83,7 +79,7 @@ const MapComponent = ({
         >
           <PlacePin size={12} />
           {mapLocationText}
-        </Typography>
+        </Box>
       )}
       <MapControls recenter={recenter} />
       {locations?.length > 0 && <MapMarkers />}

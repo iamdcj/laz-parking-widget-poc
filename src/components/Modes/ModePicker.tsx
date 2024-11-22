@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Box,
   FormControl,
@@ -18,13 +18,13 @@ import DurationSelector from "./DurationSelector";
 import { alpha } from "@mui/material/styles";
 
 export const Components = {
-  TMD: <DateTimePicker />,
-  EVT: <EventPicker />,
-  PST: <DurationSelector />,
-  FEP: <SeasonTickets IsFEP />,
-  FEX: <SeasonTickets IsFEP />,
-  FAP: <SeasonTickets IsFAP />,
-  MUP: <SeasonTickets IsMUP />,
+  TMD: React.lazy(() => import("./DateTimePicker")),
+  EVT: React.lazy(() => import("./EventPicker")),
+  PST: React.lazy(() => import("./DurationSelector")),
+  FEP: React.lazy(() => import("./SeasonTickets")),
+  FEX: React.lazy(() => import("./SeasonTickets")),
+  FAP: React.lazy(() => import("./SeasonTickets")),
+  MUP: React.lazy(() => import("./SeasonTickets")),
 };
 
 const ModePicker = () => {
@@ -52,58 +52,62 @@ const ModePicker = () => {
     >
       {modes &&
         modes.length > 0 &&
-        modes.map((mode: Modes, index: number) => (
-          <>
-            <Box
-              width="100%"
-              px={1}
-              py={2}
-              borderRadius={2}
-              sx={{
-                backgroundColor:
-                  mode === selectedMode
-                    ? alpha(theme.palette.primary.light, 0.0619999)
-                    : "none",
-              }}
-            >
-              {Components[mode as Modes]}
-            </Box>
+        modes.map((mode: Modes, index: number) => {
+          const Component = Components[mode as Modes];
 
-            {index + 1 !== modes.length && (
-              <Typography
-                display="block"
-                textAlign="center"
-                position="relative"
+          return (
+            <Fragment key={`${mode}-mode-selector`}>
+              <Box
+                key={`${mode}-mode-selector`}
+                width="100%"
+                px={1}
+                py={2}
+                borderRadius={2}
                 sx={{
-                  width: "100%",
-                  "&:after": {
-                    content: "''",
-                    width: "100%",
-                    height: "1px",
-                    background: "#D7DAE0",
-                    display: "block",
-                    position: "absolute",
-                    left: 0,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                  },
+                  backgroundColor:
+                    mode === selectedMode
+                      ? alpha(theme.palette.primary.light, 0.0619999)
+                      : "none",
                 }}
               >
-                <Box
-                  component="span"
+                <Component />
+              </Box>
+              {index + 1 !== modes.length && (
+                <Typography
+                  display="block"
+                  textAlign="center"
+                  position="relative"
                   sx={{
-                    background: "#fff",
-                    display: "inline-block",
-                    zIndex: 2,
-                    position: "relative",
+                    width: "100%",
+                    "&:after": {
+                      content: "''",
+                      width: "100%",
+                      height: "1px",
+                      background: "#D7DAE0",
+                      display: "block",
+                      position: "absolute",
+                      left: 0,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                    },
                   }}
                 >
-                  {labels.OR || labels.LABELOR}
-                </Box>
-              </Typography>
-            )}
-          </>
-        ))}
+                  <Box
+                    component="span"
+                    sx={{
+                      background: "#fff",
+                      display: "inline-block",
+                      zIndex: 2,
+                      position: "relative",
+                    }}
+                  >
+                    {labels.OR || labels.LABELOR}
+                  </Box>
+                </Typography>
+              )}
+            </Fragment>
+          );
+        })}
     </RadioGroup>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useAppContext } from "../../context";
 import EventsLayout from "./layouts/Events";
 import LocationsLayout from "./layouts/Locations";
@@ -37,7 +37,9 @@ const BasicWidget = () => {
       <Loader />
       <Header />
       <Box position="relative" p={1} pt={3} zIndex={1}>
-        {eventDriven ? <EventsLayout /> : <LocationsLayout />}
+        <Suspense fallback={<Loader />}>
+          {eventDriven ? <EventsLayout /> : <LocationsLayout />}
+        </Suspense>
         <PurchaseButton />
       </Box>
     </Paper>

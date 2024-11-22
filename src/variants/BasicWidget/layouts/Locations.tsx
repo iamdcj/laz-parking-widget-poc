@@ -33,16 +33,16 @@ const LocationsLayout = () => {
     }
   }, [selectedLocation, retrieveLocations]);
 
-
-  console.log(selectedMode);
-  
+  const Component = Components[modes?.[0] as Modes];
 
   return (
     <Box display="grid" rowGap={2} mb={2}>
       {locations?.length > 0 && <LocationPicker />}
-      {modes && modes.length === 1
-        ? Components[modes[0] as Modes]
-        : selectedLocation && <ModePicker />}
+      {modes && modes.length === 1 ? (
+        <Component />
+      ) : (
+        selectedLocation && <ModePicker />
+      )}
     </Box>
   );
 };
