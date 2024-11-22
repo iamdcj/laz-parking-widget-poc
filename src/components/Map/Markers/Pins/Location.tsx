@@ -4,7 +4,15 @@ import { Box } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 
 const LocationPin = memo(
-  ({ isActive, isFocused }: { isActive: boolean; isFocused: boolean }) => {
+  ({
+    isActive,
+    isFocused,
+    size = 32,
+  }: {
+    isActive: boolean;
+    isFocused: boolean;
+    size?: number;
+  }) => {
     const theme = useTheme();
 
     return (
@@ -20,8 +28,8 @@ const LocationPin = memo(
         }}
       >
         <svg
-          width="32"
-          height="32"
+          width={size}
+          height={size}
           viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +43,11 @@ const LocationPin = memo(
                 ? theme.palette.primary.light
                 : "#fff"
             }
-            stroke={isActive ? theme.palette.primary.main : theme.palette.primary.light}
+            stroke={
+              isActive
+                ? theme.palette.primary.main
+                : theme.palette.primary.light
+            }
             strokeWidth="1"
             strokeLinecap="round"
             strokeLinejoin="round"

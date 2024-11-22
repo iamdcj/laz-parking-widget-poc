@@ -9,7 +9,7 @@ import LocationPin from "./Pins/Location";
 const MapMarkerPin = memo(
   ({ id, isPlace, rate }: { id: string; isPlace: boolean; rate?: string }) => {
     const {
-      state: { selectedLocation, focusedLocation },
+      state: { selectedLocation, focusedLocation, variant },
       dispatch,
     } = useAppContext();
 
@@ -20,6 +20,8 @@ const MapMarkerPin = memo(
     const isFocused = useMemo(() => {
       return id === focusedLocation?.id;
     }, [focusedLocation?.id]);
+
+    const size = variant === "map" ? 60 : 30;
 
     return (
       <Box
@@ -35,9 +37,9 @@ const MapMarkerPin = memo(
       >
         {rate && <RatePin isActive={isActive} rate={rate} />}
         {isPlace ? (
-          <PlacePin />
+          <PlacePin size={size} />
         ) : (
-          <LocationPin isActive={isActive} isFocused={isFocused} />
+          <LocationPin size={size} isActive={isActive} isFocused={isFocused} />
         )}
       </Box>
     );

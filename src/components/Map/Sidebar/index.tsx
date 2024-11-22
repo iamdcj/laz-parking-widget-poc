@@ -104,8 +104,8 @@ const MapSidebar = ({
                 state: string;
                 zipCode: string;
               }) => {
-                const isActive =
-                  id === focusedLocation || id === selectedLocation;
+                const isActive = id === selectedLocation?.id;
+                const isFocused = id === focusedLocation?.id;
                 const image = imageUrl
                   ? `https://xpark.lazparking.com/${imageUrl}`
                   : "https://go.lazparking.com/static/media/default_bg.9175f9eefa59a42c0776.png";
@@ -116,10 +116,15 @@ const MapSidebar = ({
                     sx={{
                       border: "1px solid lightgrey",
                       my: 1.5,
-                      backgroundColor: isActive && "primary.light",
+                      backgroundColor:
+                        (isActive && "primary.dark") ||
+                        (isFocused && "primary.light"),
                     }}
                     onMouseEnter={() =>
-                      dispatch({ type: Actions.FOCUSED_LOCATION, payload: id })
+                      dispatch({
+                        type: Actions.FOCUSED_LOCATION,
+                        payload: { id },
+                      })
                     }
                     ref={(node) => {
                       const map = getMap();
