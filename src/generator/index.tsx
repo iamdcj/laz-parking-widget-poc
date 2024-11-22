@@ -108,7 +108,7 @@ const Generator = () => {
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label">Variant</FormLabel>
           <RadioGroup
-            sx={{ display: "flex", flexDirection: "row" }}
+            sx={{ display: "flex", flexDirection: "row", pl: 1 }}
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue="female"
             name="radio-buttons-group"

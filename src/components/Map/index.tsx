@@ -16,13 +16,6 @@ const LazMap = ({
   height?: string | number;
   width?: string | number;
 }) => {
-  const {
-    state: { useMap, variant },
-  } = useAppContext();
-  const renderMap = variant === "map" || useMap;
-
-  if (!renderMap) return null;
-
   return <MapComponent height={height} width={width} />;
 };
 
@@ -37,6 +30,7 @@ const MapComponent = ({
     state: { locations, mapZoom, useMap, mapLocationText, variant },
     dispatch,
   } = useAppContext();
+  const isMap = variant === "map";
   const renderMap = variant === "map" || useMap;
 
   const [center, recenter] = useMapSetup(renderMap);
@@ -59,6 +53,8 @@ const MapComponent = ({
         });
       }}
       onZoomChanged={({ detail }) => {
+        console.log(detail);
+        
         dispatch({ type: Actions.SET_ZOOM, payload: detail.zoom });
       }}
       zoom={mapZoom}
@@ -68,9 +64,12 @@ const MapComponent = ({
           sx={{
             display: "flex",
             position: "absolute",
-            padding: 0.5,
+            px: 2,
+            py: 1,
+            pl: 1,
             top: 5,
-            left: 5,
+            left: isMap ? "auto" : 5,
+            right: isMap ? 20 : "auto",
             zIndex: 1,
             background: "#fff",
             fontSize: 12,
@@ -78,7 +77,7 @@ const MapComponent = ({
           }}
         >
           <PlacePin size={12} />
-          {mapLocationText}
+          <Typography>{mapLocationText}</Typography>
         </Box>
       )}
       <MapControls recenter={recenter} />
