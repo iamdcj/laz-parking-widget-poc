@@ -134,7 +134,7 @@ const EventPicker = memo(
                 minute: "numeric",
               });
 
-              const eventDate = formatter.format();
+              const eventDate = formatter.format(date);
               const [month, day, year, hour, minute, dayPeriod] = formatter
                 .formatToParts(date)
                 .filter(({ type }) => type !== "literal");
