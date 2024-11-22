@@ -2,36 +2,35 @@ import { Box, Typography } from "@mui/material";
 import React, { memo } from "react";
 
 const EventOption = memo(({ props, option }: { props: any; option: any }) => {
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "numeric",
+  } as Intl.DateTimeFormatOptions;
 
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-      hour: "numeric",
-      minute: "numeric",
-    } as Intl.DateTimeFormatOptions;
+  const formatter = new Intl.DateTimeFormat(
+    "en-US",
+    options as Intl.DateTimeFormatOptions
+  );
 
-    const formatter = new Intl.DateTimeFormat(
-      "en-US",
-      options as Intl.DateTimeFormatOptions
-    );
+  const [month, day, year, hour, minute, dayPeriod] = formatter
+    .formatToParts(option.date)
+    .filter(({ type }) => type !== "literal");
 
-    const [month, day, year, hour, minute, dayPeriod] = formatter
-      .formatToParts(option.date)
-      .filter(({ type }) => type !== "literal");
-
-      const displayDate =  {
-        month: month.value,
-        day: day.value,
-        year: year.value,
-        hour: hour.value,
-        minute: minute.value,
-        dayPeriod: dayPeriod.value,
-      }
+  const displayDate = {
+    month: month.value,
+    day: day.value,
+    year: year.value,
+    hour: hour.value,
+    minute: minute.value,
+    dayPeriod: dayPeriod.value,
+  };
 
   return (
     <li {...props}>
-      <Box display="flex" alignItems="start" gap={1}>
+      <Box display="flex" alignItems="center" gap={1}>
         <Box>
           <Box width={50} textAlign="center">
             <Typography
@@ -62,7 +61,13 @@ const EventOption = memo(({ props, option }: { props: any; option: any }) => {
           </Box>
         </Box>
         <Box>
-          <Typography display="block" fontSize={14} fontWeight={600}>
+          <Typography
+            display="block"
+            fontSize={14}
+            fontWeight={600}
+            lineHeight={1.1}
+            mb={0.5}
+          >
             {option.label}
           </Typography>
           <Typography fontSize={12}>

@@ -4,10 +4,14 @@ import {
   Box,
   Button,
   Divider,
+  FormControl,
   FormControlLabel,
   FormGroup,
+  FormLabel,
   Modal,
   Paper,
+  Radio,
+  RadioGroup,
   Snackbar,
   Switch,
   TextField,
@@ -43,6 +47,7 @@ const Generator = () => {
       modesOverride = "",
       clientId = "",
       agentId = "",
+      variant,
     },
     dispatch,
   } = useAppContext();
@@ -100,6 +105,27 @@ const Generator = () => {
         padding={3}
         width={350}
       >
+        <FormControl>
+          <FormLabel id="demo-radio-buttons-group-label">Variant</FormLabel>
+          <RadioGroup
+            sx={{ display: "flex", flexDirection: "row" }}
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="female"
+            name="radio-buttons-group"
+            value={variant}
+            onChange={(event, value) => {
+              dispatch({
+                type: Actions.SET_OVERRIDES,
+                payload: {
+                  variant: value,
+                },
+              });
+            }}
+          >
+            <FormControlLabel value="basic" control={<Radio />} label="Basic" />
+            <FormControlLabel value="map" control={<Radio />} label="Map" />
+          </RadioGroup>
+        </FormControl>
         <FormGroup sx={{ mb: 2 }}>
           <Typography fontWeight={600}>Header Settings</Typography>
           <FormControlLabel

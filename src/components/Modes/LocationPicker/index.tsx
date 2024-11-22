@@ -17,12 +17,12 @@ const LocationPicker = memo(
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-      setIsOpen(false)
-    }, [selectedLocation?.id])
+      setIsOpen(false);
+    }, [selectedLocation?.id]);
 
     return (
       <Box>
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small" sx={{ mb: marginBottom }}>
           <InputLabel id="location-label">{labels.SELECTLOCATION}</InputLabel>
           <Select
             labelId="location-label"

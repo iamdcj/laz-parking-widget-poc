@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useAppContext } from "../context";
+import Loader from "./Loader";
 
 const Variants = {
   basic: React.lazy(() => import("../variants/BasicWidget")),
@@ -12,7 +13,11 @@ const VariantSwitch = () => {
   } = useAppContext();
   const Component = Variants[variant as "basic" | "map"];
 
-  return <Component />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <Component />
+    </Suspense>
+  );
 };
 
 export default VariantSwitch;
