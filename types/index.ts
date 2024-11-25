@@ -75,6 +75,7 @@ export interface InitialState extends AppDefaults {
   selectedEvent: { id: string; label: string } | null;
   selectedLocation: null | string;
   selectedMode: null | string;
+  showSidebar: boolean;
   times: {
     start: null;
     end: null;

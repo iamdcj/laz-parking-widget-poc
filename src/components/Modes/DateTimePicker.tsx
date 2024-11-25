@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import {
@@ -33,8 +33,14 @@ const StartEndSelector = ({
     dispatch,
   } = useAppContext();
 
+  const isDisabled = useMemo(() => selectedMode !== "TMD", [selectedMode]);
+
   useEffect(() => {
-    debugger;
+    debugger
+    if (isDisabled || start) {
+      return;
+    }
+
     dispatch({
       type: Actions.SET_START_TIME,
       payload: dayjs().add(arriveOffset, "minutes"),
@@ -43,9 +49,7 @@ const StartEndSelector = ({
       type: Actions.SET_END_TIME,
       payload: dayjs().add(departOffset, "minutes"),
     });
-  }, [arriveOffset, departOffset]);
-
-  const isDisabled = selectedMode !== "TMD";
+  }, [arriveOffset, departOffset, isDisabled]);
 
   const slotProps = {
     textField: { size: "small" },
@@ -80,7 +84,7 @@ const StartEndSelector = ({
             onClose={() => {
               start && setEndStart(true);
             }}
-            sx={{ width: "100%", mb: 1 }}
+            sx={{ width: "100%", mb: 0.5 }}
           />
           {!hideEnd && (
             <DateTimePicker
@@ -106,7 +110,7 @@ const StartEndSelector = ({
               onChange={(date) => {
                 dispatch({ type: Actions.SET_END_TIME, payload: date });
               }}
-              sx={{ width: "100%", mt: 1 }}
+              sx={{ width: "100%", mt: 0.5 }}
             />
           )}
         </Box>

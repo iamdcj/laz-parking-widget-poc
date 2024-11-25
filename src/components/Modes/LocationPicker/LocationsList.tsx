@@ -1,5 +1,5 @@
 import { Box, MenuItem, MenuList } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import { useAppContext } from "../../../context";
 import { Actions } from "../../../state";
 import LazMap from "../../Map";
@@ -13,9 +13,9 @@ const LocationsList = () => {
     dispatch,
   } = useAppContext();
 
-  const filteredLocations = locations.filter(
+  const filteredLocations = useMemo(() => locations.filter(
     ({ isPlace }: { isPlace: boolean }) => !isPlace
-  );
+  ), [locations])
   
   return (
     <Box width={288}>

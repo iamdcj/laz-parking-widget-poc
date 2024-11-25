@@ -21,7 +21,7 @@ function App(props: Settings) {
 const Main = () => {
   const { retrieveLanguages } = useApi();
   const {
-    state: { isInitializing },
+    state: { isInitializing, showSidebar },
   } = useAppContext();
 
   const widgetTheme = useThemeConfig();
@@ -40,10 +40,14 @@ const Main = () => {
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "1fr min-content",
+            gridTemplateColumns: showSidebar ? "1fr min-content" : "1fr",
             justifyContent: "center",
             alignItems: "center",
             justifyItems: "center",
+            position: "relative",
+            overflow: "hidden",
+            height: "100vh",
+            width: "100vw",
           }}
         >
           <VariantSwitch />

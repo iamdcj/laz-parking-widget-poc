@@ -20,9 +20,6 @@ const LocationPicker = memo(
       setIsOpen(false);
     }, [selectedLocation?.id]);
 
-    console.log(isOpen);
-    
-
     return (
       <Box>
         <FormControl fullWidth size="small" sx={{ mb: marginBottom }}>

@@ -4,11 +4,12 @@ import {
   Box,
   Button,
   Divider,
+  Drawer,
   FormControl,
   FormControlLabel,
   FormGroup,
   FormLabel,
-  Modal,
+  IconButton,
   Paper,
   Radio,
   RadioGroup,
@@ -18,10 +19,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { HexColorInput } from "react-colorful";
 import { useAppContext } from "../context";
 import { Actions } from "../state";
-import { CheckCircleOutline } from "@mui/icons-material";
+import {
+  CheckCircleOutline,
+  ChevronRight,
+  DragHandle,
+  DragIndicator,
+} from "@mui/icons-material";
 
 const Generator = () => {
   const appTheme = useTheme();
@@ -29,7 +34,9 @@ const Generator = () => {
 
   const {
     state: {
+      agentId = "",
       arriveOffset = 0,
+      clientId = "",
       departOffset = 0,
       eventDriven = "",
       headerText = "",
@@ -42,14 +49,13 @@ const Generator = () => {
       mapLocationLng = "",
       mapLocationText = "",
       mapZoom = "",
-      theme = "",
-      useMap = "",
-      widgetKey = "",
-      salesChannelKey = "",
+      modes,
       modesOverride = "",
-      clientId = "",
-      agentId = "",
+      salesChannelKey = "",
+      showSidebar,
+      useMap = "",
       variant,
+      widgetKey = "",
     },
     dispatch,
   } = useAppContext();
@@ -58,7 +64,8 @@ const Generator = () => {
     const type = "text/plain";
     const blob = new Blob(
       [
-        `<div
+        `
+  <div
   id="LAZ_Widget"
   data-header="${isHeaderEnabled}"
   data-header-text="${headerText ? headerText : ""}"
@@ -77,13 +84,14 @@ const Generator = () => {
   data-mapplacetxt="${mapLocationText ? mapLocationText : ""}"
   data-mode-overwrite="${modesOverride ? true : ""}"
   data-mode="${modesOverride ? modesOverride : ""}"
+  data-arrive="${arriveOffset ? arriveOffset : ""}"
+  data-depart="${departOffset ? departOffset : ""}"
   data-starttime=""
   data-endtime=""
-  data-arrive=""
-  data-depart=""
   data-fullwidget=""
   data-currentpage=""
-></div>
+ >
+</div>
 <script type="text/javascript" src="https://go.lazparking.com/checkout/js/app/main.js"></script>
     `,
       ],
@@ -97,8 +105,41 @@ const Generator = () => {
     } catch (error) {}
   };
 
+  const timedModeAvailable = modes?.includes("TMD");
+
   return (
-    <Paper>
+    <Paper
+      sx={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        transform: showSidebar ? "translateX(0)" : "translateX(100%)",
+        transition: "transform 200ms ease-in",
+      }}
+    >
+      <IconButton
+        onClick={() =>
+          dispatch({
+            type: Actions.SET_OVERRIDES,
+            payload: {
+              showSidebar: !showSidebar,
+            },
+          })
+        }
+        sx={{
+          position: "absolute",
+          left: -20,
+          top: "50%",
+          transform: "translateY(-50%)",
+          width: 20,
+          background: "#fff",
+          boxShadow: "inherit",
+          borderRadius: "2px 0 0 2px",
+          zIndex: -1,
+        }}
+      >
+        <DragIndicator />
+      </IconButton>
       <Box
         px={5}
         display="flex"
@@ -106,9 +147,15 @@ const Generator = () => {
         height="100vh"
         padding={3}
         width={350}
+        overflow="auto"
       >
         <FormControl>
-          <FormLabel id="demo-radio-buttons-group-label">Variant</FormLabel>
+          <FormLabel
+            id="demo-radio-buttons-group-label"
+            sx={{ fontWeight: 600, mb: 2 }}
+          >
+            Variant
+          </FormLabel>
           <RadioGroup
             sx={{ display: "flex", flexDirection: "row", pl: 1 }}
             aria-labelledby="demo-radio-buttons-group-label"
@@ -128,6 +175,7 @@ const Generator = () => {
             <FormControlLabel value="map" control={<Radio />} label="Map" />
           </RadioGroup>
         </FormControl>
+        <Divider sx={{ my: 4 }} />
         <FormGroup sx={{ mb: 2 }}>
           <Typography fontWeight={600}>Header Settings</Typography>
           <FormControlLabel
@@ -223,23 +271,25 @@ const Generator = () => {
             }
             label="Show Loader"
           />
-          <FormControlLabel
-            control={
-              <Switch
-                checked={useMap}
-                onChange={(event, value) => {
-                  dispatch({
-                    type: Actions.SET_OVERRIDES,
-                    payload: {
-                      useMap: value,
-                    },
-                  });
-                }}
-                name="showMap"
-              />
-            }
-            label="Show Map"
-          />
+          {variant !== "map" && (
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={useMap}
+                  onChange={(event, value) => {
+                    dispatch({
+                      type: Actions.SET_OVERRIDES,
+                      payload: {
+                        useMap: value,
+                      },
+                    });
+                  }}
+                  name="showMap"
+                />
+              }
+              label="Show Map"
+            />
+          )}
           <FormControlLabel
             control={
               <Switch
@@ -259,49 +309,49 @@ const Generator = () => {
           />
         </FormGroup>
         <Divider sx={{ mb: 4 }} />
-        <FormGroup sx={{ mb: 2 }}>
-          <Typography fontWeight={600} mb={2}>
-            Timepicker Settings
-          </Typography>
-          <TextField
-            required
-            id="arriveOffset"
-            label="Arrival Time offset (minutes)"
-            placeholder="e.g. 30"
-            sx={{ mb: 2 }}
-            value={arriveOffset}
-            type="number"
-            onChange={(event) => {
-              dispatch({
-                type: Actions.SET_OVERRIDES,
-                payload: {
-                  arriveOffset: Number(event.target.value),
-                },
-              });
-            }}
-            disabled={!isHeaderEnabled}
-            helperText="Offsets the starting time of the datepicker by X amount of minutes"
-          />
-          <TextField
-            required
-            id="arriveOffset"
-            label="Depart Time offset (minutes)"
-            placeholder="e.g. 30"
-            sx={{ mb: 2 }}
-            value={departOffset}
-            type="number"
-            onChange={(event) => {
-              dispatch({
-                type: Actions.SET_OVERRIDES,
-                payload: {
-                  departOffset: Number(event.target.value),
-                },
-              });
-            }}
-            disabled={!isHeaderEnabled}
-            helperText="Offsets the departure time of the datepicker by X amount of minutes"
-          />
-        </FormGroup>
+        {timedModeAvailable && (
+          <FormGroup sx={{ mb: 2 }}>
+            <Typography fontWeight={600} mb={2}>
+              Timepicker Settings
+            </Typography>
+            <TextField
+              required
+              id="arriveOffset"
+              label="Arrival Time offset (minutes)"
+              placeholder="e.g. 30"
+              sx={{ mb: 2 }}
+              value={arriveOffset}
+              type="number"
+              onChange={(event) => {
+                dispatch({
+                  type: Actions.SET_OVERRIDES,
+                  payload: {
+                    arriveOffset: Number(event.target.value),
+                  },
+                });
+              }}
+              helperText="Offsets the starting time of the datepicker by X amount of minutes"
+            />
+            <TextField
+              required
+              id="arriveOffset"
+              label="Depart Time offset (minutes)"
+              placeholder="e.g. 30"
+              sx={{ mb: 2 }}
+              value={departOffset}
+              type="number"
+              onChange={(event) => {
+                dispatch({
+                  type: Actions.SET_OVERRIDES,
+                  payload: {
+                    departOffset: Number(event.target.value),
+                  },
+                });
+              }}
+              helperText="Offsets the departure time of the datepicker by X amount of minutes"
+            />
+          </FormGroup>
+        )}
         {/* <Box mb={4}>
           <Typography mb={2} fontWeight={600}>
             Theming

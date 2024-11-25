@@ -35,6 +35,7 @@ export const initialState: InitialState = {
   selectedEvent: null,
   selectedLocation: null,
   selectedMode: null,
+  showSidebar: true,
   startTime: null,
   timeIncrements: null,
   useFullWidget: false,

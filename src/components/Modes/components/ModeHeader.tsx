@@ -15,6 +15,7 @@ const ModeHeader = ({ title, mode }: { title: string; mode: string }) => {
     <Box
       width="100%"
       display="flex"
+      alignItems="center"
       mb={1.5}
       onClick={() => {
         dispatch({
@@ -29,7 +30,7 @@ const ModeHeader = ({ title, mode }: { title: string; mode: string }) => {
           id="TMD"
           value={mode}
           sx={{
-            py: 0,
+            mr: 1,
             color: theme.palette.primary.main,
             "&.Mui-checked": {
               color: theme.palette.primary.main,
@@ -37,7 +38,9 @@ const ModeHeader = ({ title, mode }: { title: string; mode: string }) => {
           }}
         />
       )}
-      <Typography fontWeight={600}>{title}</Typography>
+      <Typography fontWeight={600} lineHeight={1}>
+        {title}
+      </Typography>
     </Box>
   );
 };

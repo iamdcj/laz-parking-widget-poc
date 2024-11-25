@@ -138,7 +138,7 @@ export const useThemeConfig = () => {
       MuiRadio: {
         styleOverrides: {
           root: {
-            paddingLeft: 0,
+            padding: 0,
           },
         },
       },

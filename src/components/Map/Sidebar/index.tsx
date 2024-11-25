@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import {
   Box,
   Card,
@@ -23,7 +23,7 @@ const MapSidebar = ({
 }) => {
   const locationsRef = useRef(null);
   const {
-    state: { locations, focusedLocation, selectedLocation },
+    state: { locations, focusedLocation, selectedLocation, isHeaderEnabled },
     dispatch,
   } = useAppContext();
 
@@ -57,6 +57,11 @@ const MapSidebar = ({
     scrollToLocation(selectedLocation);
   }, [selectedLocation]);
 
+  const filteredLocations = useMemo(
+    () => locations.filter(({ isPlace }: { isPlace: boolean }) => !isPlace),
+    [locations]
+  );
+
   return (
     <Paper
       component="aside"
@@ -70,13 +75,15 @@ const MapSidebar = ({
         zIndex: 2,
       }}
     >
-      {locations?.length > 0 && (
+      {filteredLocations?.length > 0 && (
         <>
-          <MapSidebarHeader
-            setView={setView}
-            view={view}
-            count={locations.length}
-          />
+          {isHeaderEnabled && (
+            <MapSidebarHeader
+              setView={setView}
+              view={view}
+              count={filteredLocations.length}
+            />
+          )}
           <Box
             sx={{
               height: isMobile ? "calc(100vh - 49px)" : "100%",
@@ -86,7 +93,7 @@ const MapSidebar = ({
               pb: 10,
             }}
           >
-            {locations.map(
+            {filteredLocations.map(
               ({
                 label,
                 id,
