@@ -48,10 +48,10 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     endTime: params.end || element.dataset.endtime || null, // set the default end time of the widget (what is the format)
     arriveOffset: element.dataset.arrive
       ? Number(element.dataset.arrive)
-      : null, // offset in minutes (need use case)
+      : 30, // offset in minutes (need use case)
     departOffset: element.dataset.depart
       ? Number(element.dataset.depart)
-      : null, // offset in minutes (need use case)
+      : 120, // offset in minutes (need use case)
     useFullWidget: element.dataset.fullwidget
       ? element.dataset.fullwidget === "true"
       : false, // set whether or not to open the full widget url in a new window or to change the current url (example)

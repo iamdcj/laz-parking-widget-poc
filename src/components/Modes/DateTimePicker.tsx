@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import {
@@ -10,6 +10,7 @@ import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
 import ModeHeader from "./components/ModeHeader";
+import dayjs from "dayjs";
 
 const StartEndSelector = ({
   hideEnd = false,
@@ -24,11 +25,26 @@ const StartEndSelector = ({
   const {
     state: {
       times: { start, end },
+      arriveOffset,
+      departOffset,
       labels,
       selectedMode,
     },
     dispatch,
   } = useAppContext();
+
+  useEffect(() => {
+    debugger;
+    dispatch({
+      type: Actions.SET_START_TIME,
+      payload: dayjs().add(arriveOffset, "minutes"),
+    });
+    dispatch({
+      type: Actions.SET_END_TIME,
+      payload: dayjs().add(departOffset, "minutes"),
+    });
+  }, [arriveOffset, departOffset]);
+
   const isDisabled = selectedMode !== "TMD";
 
   const slotProps = {

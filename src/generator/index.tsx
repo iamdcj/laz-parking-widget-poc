@@ -29,6 +29,8 @@ const Generator = () => {
 
   const {
     state: {
+      arriveOffset = 0,
+      departOffset = 0,
       eventDriven = "",
       headerText = "",
       hideEventDateTime = "",
@@ -257,6 +259,49 @@ const Generator = () => {
           />
         </FormGroup>
         <Divider sx={{ mb: 4 }} />
+        <FormGroup sx={{ mb: 2 }}>
+          <Typography fontWeight={600} mb={2}>
+            Timepicker Settings
+          </Typography>
+          <TextField
+            required
+            id="arriveOffset"
+            label="Arrival Time offset (minutes)"
+            placeholder="e.g. 30"
+            sx={{ mb: 2 }}
+            value={arriveOffset}
+            type="number"
+            onChange={(event) => {
+              dispatch({
+                type: Actions.SET_OVERRIDES,
+                payload: {
+                  arriveOffset: Number(event.target.value),
+                },
+              });
+            }}
+            disabled={!isHeaderEnabled}
+            helperText="Offsets the starting time of the datepicker by X amount of minutes"
+          />
+          <TextField
+            required
+            id="arriveOffset"
+            label="Depart Time offset (minutes)"
+            placeholder="e.g. 30"
+            sx={{ mb: 2 }}
+            value={departOffset}
+            type="number"
+            onChange={(event) => {
+              dispatch({
+                type: Actions.SET_OVERRIDES,
+                payload: {
+                  departOffset: Number(event.target.value),
+                },
+              });
+            }}
+            disabled={!isHeaderEnabled}
+            helperText="Offsets the departure time of the datepicker by X amount of minutes"
+          />
+        </FormGroup>
         {/* <Box mb={4}>
           <Typography mb={2} fontWeight={600}>
             Theming
@@ -336,6 +381,7 @@ const Generator = () => {
             ))}
           </Box>
         </Box> */}
+
         <Button
           variant="outlined"
           onClick={handleGenerateSnippet}
