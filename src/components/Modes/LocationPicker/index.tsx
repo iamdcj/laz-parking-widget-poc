@@ -20,6 +20,9 @@ const LocationPicker = memo(
       setIsOpen(false);
     }, [selectedLocation?.id]);
 
+    console.log(isOpen);
+    
+
     return (
       <Box>
         <FormControl fullWidth size="small" sx={{ mb: marginBottom }}>
@@ -32,7 +35,8 @@ const LocationPicker = memo(
             value={selectedLocation?.id || ""}
             renderValue={() => selectedLocation?.label}
             size="small"
-            onClick={() => setIsOpen(!isOpen)}
+            onOpen={() => setIsOpen(true)}
+            onClose={() => setIsOpen(false)}
             open={isOpen}
             sx={{
               textAlign: "left",

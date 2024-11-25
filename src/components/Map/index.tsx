@@ -32,9 +32,6 @@ const MapComponent = ({
   } = useAppContext();
   const isMap = variant === "map";
   const renderMap = variant === "map" || useMap;
-
-  console.log(process.env.REACT_APP_MAPS_API_KEY);
-  
   const [center, recenter] = useMapSetup(renderMap);
 
   if (!renderMap) return null;
@@ -55,8 +52,6 @@ const MapComponent = ({
         });
       }}
       onZoomChanged={({ detail }) => {
-        console.log(detail);
-        
         dispatch({ type: Actions.SET_ZOOM, payload: detail.zoom });
       }}
       zoom={mapZoom}

@@ -17,10 +17,6 @@ const LocationsList = () => {
     ({ isPlace }: { isPlace: boolean }) => !isPlace
   );
   
-  
-  console.log(process.env.REACT_APP_MAPS_API_KEY);
-  
-
   return (
     <Box width={288}>
       <APIProvider apiKey={process.env.REACT_APP_MAPS_API_KEY}>

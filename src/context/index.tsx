@@ -21,7 +21,6 @@ function useAppContext(): any {
   return context;
 }
 
-console.log(process.env.REACT_APP_MAPS_API_KEY);
 function AppProvider({
   value,
   children,
