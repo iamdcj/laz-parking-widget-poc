@@ -72,11 +72,11 @@ const MapSidebar = ({
     >
       {locations?.length > 0 && (
         <>
-          {/* <MapSidebarHeader
+          <MapSidebarHeader
             setView={setView}
             view={view}
             count={locations.length}
-          /> */}
+          />
           <Box
             sx={{
               height: isMobile ? "calc(100vh - 49px)" : "100%",
@@ -160,15 +160,27 @@ const MapSidebar = ({
                         flexDirection="column"
                         justifyContent="space-between"
                         alignItems="end"
+                        sx={{
+                          color: isActive ? "#fff" : "text.secondary",
+                        }}
                       >
-                        <Typography variant="h6">{label}</Typography>
-                        <Typography
-                          sx={{ color: "text.secondary", fontSize: 14, mb: 2 }}
-                        >
-                          {address}
-                          <br />
-                          {city}, {state}, {zipCode}
+                        <Typography variant="h6" sx={{ color: "inherit" }}>
+                          {label}
                         </Typography>
+                        {address && (
+                          <Typography
+                            sx={{
+                              color: "inherit",
+                              fontSize: 14,
+                              mb: 2,
+                            }}
+                          >
+                            {address}
+                            <br />
+                            {city}, {state}, {zipCode}
+                          </Typography>
+                        )}
+
                         <PayButtons id={id} />
                       </Box>
                     </CardContent>

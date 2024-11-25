@@ -13,14 +13,14 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     : element.dataset.header
     ? element.dataset.header === "true"
     : true;
-
+    
   return {
     buttonText: element.dataset.buttonText
       ? element.dataset.buttonText
       : "Get Rates",
     theme: element.dataset.theme ? JSON.parse(element.dataset.theme) : null,
     variant: isMap ? "map" : "basic",
-    apiKey: element.dataset.key || null,
+    apiKey: element.dataset.key,
     modesOverride: modes ? modes?.split("/") : null,
     useMap: element.dataset.map ? element.dataset.map === "true" : false,
     isHeaderEnabled,

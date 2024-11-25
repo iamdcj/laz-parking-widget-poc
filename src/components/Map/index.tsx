@@ -33,6 +33,8 @@ const MapComponent = ({
   const isMap = variant === "map";
   const renderMap = variant === "map" || useMap;
 
+  console.log(process.env.REACT_APP_MAPS_API_KEY);
+  
   const [center, recenter] = useMapSetup(renderMap);
 
   if (!renderMap) return null;

@@ -9,17 +9,21 @@ import { APIProvider } from "@vis.gl/react-google-maps";
 const LocationsList = () => {
   const theme = useTheme();
   const {
-    state: { locations, selectedLocation },
+    state: { locations, selectedLocation, apiKey },
     dispatch,
   } = useAppContext();
 
   const filteredLocations = locations.filter(
     ({ isPlace }: { isPlace: boolean }) => !isPlace
   );
+  
+  
+  console.log(process.env.REACT_APP_MAPS_API_KEY);
+  
 
   return (
     <Box width={288}>
-      <APIProvider apiKey="">
+      <APIProvider apiKey={process.env.REACT_APP_MAPS_API_KEY}>
         <LazMap height={184} />
       </APIProvider>
       <MenuList sx={{ maxHeight: 200, overflow: "auto" }}>

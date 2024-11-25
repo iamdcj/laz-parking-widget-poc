@@ -25,7 +25,7 @@ const MapWidget = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <APIProvider apiKey="">
+    <APIProvider apiKey={process.env.REACT_APP_MAPS_API_KEY}>
       <Box height="100%" width="100%" position="relative">
         <Loader />
         {isMobile ? (
