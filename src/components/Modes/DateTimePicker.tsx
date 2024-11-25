@@ -36,8 +36,7 @@ const StartEndSelector = ({
   const isDisabled = useMemo(() => selectedMode !== "TMD", [selectedMode]);
 
   useEffect(() => {
-    debugger
-    if (isDisabled || start) {
+    if (isDisabled) {
       return;
     }
 

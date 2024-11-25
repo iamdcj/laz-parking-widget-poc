@@ -94,8 +94,6 @@ export const appReducer = (
         modes: payload,
       };
     case Actions.SELECTED_MODE:
-      debugger
-
       return {
         ...state,
         rate: null,
