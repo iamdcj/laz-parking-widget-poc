@@ -6,7 +6,6 @@ export const initialState: InitialState = {
   apiKey: null,
   arriveOffset: null,
   bounds: null,
-  canPurchase: false,
   clientId: null,
   currentPage: null,
   departOffset: null,
@@ -96,14 +95,6 @@ export const appReducer = (
     case Actions.SELECTED_MODE:
       return {
         ...state,
-        rate: null,
-        selectedDuration: null,
-        times: {
-          end: null,
-          start: null,
-        },
-        seasonTickets: null,
-        canPurchase: false,
         selectedMode: payload,
       };
     case Actions.LOADING:
@@ -127,7 +118,6 @@ export const appReducer = (
       return {
         ...state,
         selectedEvent: payload,
-        canPurchase: payload && state.selectedLocation ? true : false,
       };
     case Actions.SET_TIME_INCREMENTS:
       return {
@@ -139,7 +129,6 @@ export const appReducer = (
       return {
         ...state,
         selectedDuration: payload,
-        canPurchase: true,
       };
     case Actions.SET_LABELS:
       return {
@@ -183,8 +172,6 @@ export const appReducer = (
         modes,
         selectedMode: modes?.length === 1 ? modes[0] : state.selectedMode,
         selectedLocation: payload,
-        selectedDuration: null,
-        canPurchase: state.eventDriven ? true : state.canPurchase,
       };
     case Actions.FOCUSED_LOCATION:
       return {
@@ -206,7 +193,6 @@ export const appReducer = (
           ...state.times,
           end: payload,
         },
-        canPurchase: state.times?.start ? true : false,
       };
     case Actions.SET_SEASON_TICKETS:
       return {
@@ -218,7 +204,6 @@ export const appReducer = (
       return {
         ...state,
         rate: payload,
-        canPurchase: true,
       };
     case Actions.SET_ZOOM:
       return {
@@ -231,8 +216,6 @@ export const appReducer = (
         bounds: payload,
       };
     case Actions.SET_OVERRIDES:
-
-
       return {
         ...state,
         ...payload,

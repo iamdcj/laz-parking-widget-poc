@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../context";
 import { constructBuyLink } from "../utils/urls";
+import { ModesTable } from "../../types";
 
 const PurchaseButton = () => {
   const {
@@ -17,7 +18,6 @@ const PurchaseButton = () => {
       rate,
       labels,
       selectedMode,
-      canPurchase
     },
   } = useAppContext();
 
@@ -32,6 +32,23 @@ const PurchaseButton = () => {
     // "FEP" = labels.PURCHASEPASS,
   }
 
+  const canPurchase = () => {
+    switch (selectedMode) {
+      case ModesTable.TMD:
+        return selectedLocation && times.start && times.end;
+      case ModesTable.EVT:
+        return selectedEvent && selectedLocation;
+      case ModesTable.PST:
+        return selectedLocation && selectedDuration;
+      case ModesTable.MUP:
+      case ModesTable.FEP:
+      case ModesTable.FAP:
+      case ModesTable.FEX:
+        return selectedLocation && rate;
+      default:
+        return false;
+    }
+  };
 
   return (
     <Button
@@ -51,7 +68,7 @@ const PurchaseButton = () => {
       target="_blank"
       rel="noreferer"
       fullWidth
-      disabled={!canPurchase}
+      disabled={!canPurchase()}
     >
       {ButtonLabels[selectedMode] || labels.GETRATE}
     </Button>

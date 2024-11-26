@@ -2,6 +2,16 @@ import { Dayjs } from "dayjs";
 
 export type Modes = "TMD" | "EVT" | "PST" | "MUP" | "FAP" | "FEX" | "FEP";
 
+export enum ModesTable {
+  TMD = "TMD",
+  EVT = "EVT",
+  PST = "PST",
+  MUP = "MUP",
+  FAP = "FAP",
+  FEX = "FEX",
+  FEP = "FEP",
+}
+
 export type Component = Record<string, () => React.JSX.Element | null>;
 
 export type Location = {
@@ -34,7 +44,7 @@ export interface AppDefaults {
   eventDriven: boolean;
   evid: string;
   hideEventDateTime: boolean;
-  labels: Record<string, string>
+  labels: Record<string, string>;
   locationIds: string;
   apiKey: string;
   mapLocationLat: number;
@@ -56,12 +66,11 @@ export interface Settings extends AppDefaults {
   language: "EN" | "FR";
   theme: null | JSON;
   buttonText: string;
-  selectedMode: string | null
+  selectedMode: string | null;
 }
 
 export interface InitialState extends AppDefaults {
   bounds: any | null;
-  canPurchase: boolean;
   duration: null | string;
   events: null | string[];
   focusedLocation: null | string;
