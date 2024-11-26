@@ -10,7 +10,6 @@ import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
 import ModeHeader from "./components/ModeHeader";
-import dayjs from "dayjs";
 
 const StartEndSelector = ({
   hideEnd = false,
@@ -25,8 +24,6 @@ const StartEndSelector = ({
   const {
     state: {
       times: { start, end },
-      arriveOffset,
-      departOffset,
       labels,
       selectedMode,
     },
@@ -35,20 +32,6 @@ const StartEndSelector = ({
 
   const isDisabled = useMemo(() => selectedMode !== "TMD", [selectedMode]);
 
-  useEffect(() => {
-    if (isDisabled) {
-      return;
-    }
-
-    dispatch({
-      type: Actions.SET_START_TIME,
-      payload: dayjs().add(arriveOffset, "minutes"),
-    });
-    dispatch({
-      type: Actions.SET_END_TIME,
-      payload: dayjs().add(departOffset, "minutes"),
-    });
-  }, [arriveOffset, departOffset, isDisabled]);
 
   const slotProps = {
     textField: { size: "small" },
@@ -56,6 +39,11 @@ const StartEndSelector = ({
       color: "primary",
     },
   } as DateTimePickerSlotProps<any, any>;
+
+
+console.log(start);
+console.log(end);
+
 
   return (
     <Box>

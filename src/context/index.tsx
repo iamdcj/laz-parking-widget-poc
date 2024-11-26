@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { appReducer, initialState } from "../state";
 import { AppDefaults, InitialState } from "../../types";
+import { returnOverrideState } from "./_utils";
 
 const AppContext = createContext<{
   state: InitialState;
@@ -30,7 +31,7 @@ function AppProvider({
 }) {
   const [state, dispatch] = useReducer(appReducer, {
     ...initialState,
-    ...value,
+    ...returnOverrideState(value),
   });
 
   return (
