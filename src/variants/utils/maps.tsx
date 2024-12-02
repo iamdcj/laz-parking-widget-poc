@@ -78,3 +78,110 @@ export const useMapSetup = (useLocations = false) => {
 
   return [center, fitMapBoundsUsingLocations];
 };
+
+// ResetMap: function () {
+//   if (lazGoMap.map == null) return;
+//   lazGoMap.map.setCenter(LAZWidget.UI.GetMapBounds().getCenter());
+//   lazGoMap.map.setZoom(parseInt(lazGoMap.zoom));
+// },
+// GetMapBounds: function () {
+//   var bound = new google.maps.LatLngBounds();
+
+//   for (i = 0; i < lazGoLocations.length; i++) {
+//     bound.extend(
+//       new google.maps.LatLng(
+//         lazGoLocations[i].Latitude,
+//         lazGoLocations[i].Longitude
+//       )
+//     );
+//   }
+
+//   if (lazGoMap.placeLat !== 0 && lazGoMap.placeLng !== 0)
+//     bound.extend(
+//       new google.maps.LatLng(lazGoMap.placeLat, lazGoMap.placeLng)
+//     );
+
+//   return bound;
+// },
+
+// BuildMap: function () {
+//   if (lazGoMap.map !== null) {
+//     var _marker = $.grep(lazGoMap.markers, function (m) {
+//       return m.id == parseInt(WidgetValues.SelectedLID);
+//     });
+//     if (_marker.length !== 0)
+//       _marker[0].setIcon(
+//         "//grs.lazparking.com/facilityfinder/images/laz_icon_rollover.png"
+//       );
+//     return;
+//   }
+//   if (WidgetSettings.LocationIDs.length > 1) {
+//     lazGoMap.zoom = LAZWidget.UI.ZoomLevel();
+//   }
+//   lazGoMap.map = new google.maps.Map($("#lazGoMapDiv").get(0), {
+//     center: LAZWidget.UI.GetMapBounds().getCenter(),
+//     zoom: parseInt(lazGoMap.zoom),
+//     zoomControl: true,
+//   });
+
+//   if (lazGoMap.placeLat !== 0 && lazGoMap.placeLng !== 0) {
+//     var marker = new google.maps.Marker({
+//       position: new google.maps.LatLng(
+//         lazGoMap.placeLat,
+//         lazGoMap.placeLng
+//       ),
+//       map: lazGoMap.map,
+//       title: lazGoMap.placeTxt,
+//     });
+//   }
+
+//   var _imageBase = "//grs.lazparking.com/facilityfinder/images/laz_icon";
+//   for (i = 0; i < lazGoLocations.length; i++) {
+//     var _loc = lazGoLocations[i];
+
+//     var marker = new google.maps.Marker({
+//       position: new google.maps.LatLng(
+//         lazGoLocations[i].Latitude,
+//         lazGoLocations[i].Longitude
+//       ),
+//       map: lazGoMap.map,
+//       title: lazGoLocations[i].Name,
+//       icon:
+//         WidgetValues.SelectedLID == _loc.ID
+//           ? _imageBase + "_rollover.png"
+//           : _imageBase + ".png",
+//       id: lazGoLocations[i].ID,
+//       index: i,
+//     });
+//     marker.addListener("mouseover", function () {
+//       LAZWidget.UI.NormalizeMarkerIcons();
+//       $("#LAZ_Locations_Select .active-result").removeClass(
+//         "highlighted"
+//       );
+//       var _index = this.index;
+//       if (lazGoLocations.length > 1) _index = _index + 1;
+//       $($("#LAZ_Locations_Select .active-result")[_index]).addClass(
+//         "highlighted"
+//       );
+//       lazGoMap.markers[this.index].setIcon(
+//         "//grs.lazparking.com/facilityfinder/images/laz_icon_rollover.png"
+//       );
+//     });
+//     marker.addListener("mouseout", function () {
+//       $("#LAZ_Locations_Select .active-result").removeClass(
+//         "highlighted"
+//       );
+//       var _index = this.index;
+//       if (lazGoLocations.length > 1) _index = _index + 1;
+//       LAZWidget.UI.NormalizeMarkerIcons(this.index);
+//     });
+//     marker.addListener("click", function (e) {
+//       window.event.preventDefault();
+//       $("#park-location").val(this.id);
+//       $("#park-location").trigger("chosen:updated");
+//       $("#park-location").trigger("change");
+//       $("#park-location").trigger("chosen:close");
+//     });
+//     lazGoMap.markers.push(marker);
+//   }
+// },

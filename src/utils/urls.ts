@@ -1,6 +1,5 @@
-import { Dayjs } from "dayjs";
-import { returnTimes } from "./time";
-import { LinkParams, Modes } from "../../types";
+import { returnTimeFromDuration, transformDuration } from "./time";
+import { Modes, ModesTable } from "../../types";
 
 enum modeToWt {
   "PST" = "tmd",
@@ -12,65 +11,89 @@ enum modeToWt {
   "FEX" = "fex",
 }
 
-export const constructBuyLink = (data: LinkParams) => {
-  const { times, mode, ...params } = data;
-  const { start = "", end = "" } = returnTimes(times, params.duration);
+export const constructBuyLink = (data: any) => {
+  const { mode, wk, l, aid, sc, ...state } = data;
 
   const urlParams = new URLSearchParams({
     t: mode === "EVT" ? "e" : "r",
     wt: modeToWt[mode as Modes],
     isocode: "EN",
-    ...returnParams({ ...params, start, end }),
+    wk,
+    l,
+    ...(aid && { aid }),
+    ...(sc && { sc }),
+    ...returnParams(state, mode),
   });
 
   return `https://go.lazparking.com/buynow?${urlParams}`;
 };
 
-interface UrlParams extends LinkParams {
-  start: string | Dayjs | Date;
-  end: string | Dayjs | Date;
-}
-
-export const transformDuration = (duration: string) => {
-  const cleanDuration = duration?.replace(/[MH]/g, "");
-
-  if (duration.includes("H")) {
-    return (Number(cleanDuration) * 60).toString();
-  } else {
-    return cleanDuration;
-  }
-};
-
 export const cleanObject = (object: Record<string, any>) =>
   Object.fromEntries(Object.entries(object).filter(([_, value]) => value));
 
-export const returnParams = (
-  data: UrlParams
-): Record<string, any> => {
+export const returnParams = (data: any, mode: string): Record<string, any> => {
   let params = cleanObject(data);
 
-  if (params.duration) {
-    params = {
-      ...params,
-      duration: transformDuration(params.duration),
-    };
-  }
+  switch (mode) {
+    case ModesTable.TMD:
+      let start = null;
+      let end = null;
 
-  if (params.start) {
-    params = {
-      ...params,
-      start: params.start.toString(),
-    };
-  }
+      if (params.times.start) {
+        start = params.times.start.toString();
+      }
 
-  if (params.end) {
-    params = {
-      ...params,
-      end: params.end.toString(),
-    };
-  }
+      if (params.times.end) {
+        end = params.times.end.toString();
+      }
 
-  return params;
+      return {
+        start,
+        end,
+      };
+    case ModesTable.PST:
+      if (!params?.duration) return;
+
+      const { duration, times } = returnTimeFromDuration(
+        transformDuration(params.duration)
+      );
+
+      return {
+        duration,
+        start: times.start,
+        end: times.end,
+      };
+    case ModesTable.EVT:
+      return {
+        evid: params.selectedEvent,
+      };
+    case ModesTable.MUP:
+    case ModesTable.FEP:
+    case ModesTable.FEX:
+      return {
+        rid: params.pass?.Id,
+      };
+    case ModesTable.FAP: {
+      if (!params.pass) {
+        return params;
+      }
+
+      const { duration, times } = returnTimeFromDuration(
+        params.pass.Duration,
+        params.times.start
+      );
+
+      return {
+        start: times.start,
+        end: times.end,
+        duration,
+        rid: params.pass.Id,
+        fst: params.pass.IsFixedStartTime,
+      };
+    }
+    default:
+      return params;
+  }
 };
 
 export const getUrlParam = (): Record<string, string> => {

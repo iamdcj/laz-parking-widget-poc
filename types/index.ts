@@ -78,7 +78,7 @@ export interface InitialState extends AppDefaults {
   isInitializing: boolean;
   locations: null | string[];
   modes: string[] | null;
-  rate: null | string;
+  selectedPass: null | Record<string, string>;
   seasonTickets: null | any[];
   selectedDuration: null | string;
   selectedEvent: { id: string; label: string } | null;

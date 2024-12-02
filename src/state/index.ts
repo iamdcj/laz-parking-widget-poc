@@ -27,7 +27,7 @@ export const initialState: InitialState = {
   mapZoom: null,
   modes: null,
   modesOverride: null,
-  rate: null,
+  selectedPass: null,
   salesChannelKey: null,
   seasonTickets: null,
   selectedDuration: null,
@@ -60,7 +60,7 @@ export enum Actions {
   SET_EVENTS = "SET_EVENTS",
   SET_LOCATIONS = "SET_LOCATIONS",
   SET_MODES = "SET_MODES",
-  SET_RATE = "SET_RATE",
+  SET_PASS = "SET_PASS",
   SET_SEASON_TICKETS = "SET_SEASON_TICKETS",
   SET_START_TIME = "SET_START_TIME",
   SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
@@ -91,6 +91,7 @@ export const appReducer = (
       return {
         ...state,
         modes: payload,
+        selectedMode: payload[0],
       };
     case Actions.SELECTED_MODE:
       return {
@@ -170,7 +171,7 @@ export const appReducer = (
       return {
         ...state,
         modes,
-        selectedMode: modes?.length === 1 ? modes[0] : state.selectedMode,
+        selectedMode: state.selectedMode || modes?.[0],
         selectedLocation: payload,
       };
     case Actions.FOCUSED_LOCATION:
@@ -200,10 +201,10 @@ export const appReducer = (
         isLoading: false,
         seasonTickets: payload,
       };
-    case Actions.SET_RATE:
+    case Actions.SET_PASS:
       return {
         ...state,
-        rate: payload,
+        selectedPass: payload,
       };
     case Actions.SET_ZOOM:
       return {

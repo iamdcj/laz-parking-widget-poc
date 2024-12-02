@@ -3,7 +3,8 @@ import { useAppContext } from "../context";
 import { Actions } from "../state";
 import { fetchData } from "../utils/api";
 import { cleanObject } from "../utils/urls";
-import { Location } from "../../types";
+import { Location, ModesTable } from "../../types";
+import dayjs from "dayjs";
 
 const useApi = () => {
   const {
@@ -14,8 +15,11 @@ const useApi = () => {
       eventDriven: eventdriven,
       widgetKey: widgetkey = "",
       selectedLocation,
+      selectedMode,
+      modeOverwrite,
+      modes,
       agentId,
-      bounds,
+      labels,
       salesChannelKey = "",
       apiKey: key,
     },
@@ -50,7 +54,18 @@ const useApi = () => {
         eDataLocationId: selectedLocation.id,
       });
 
-      dispatch({ type: Actions.SET_TIME_INCREMENTS, payload: data });
+      debugger;
+
+      dispatch({
+        type: Actions.SET_TIME_INCREMENTS,
+        payload: [
+          {
+            Display: labels.PARKRIGHTNOW,
+            Duration: "00M",
+          },
+          ...data,
+        ],
+      });
     } catch (error) {
       dispatch({ type: Actions.LOADING, payload: false });
     }
@@ -81,10 +96,19 @@ const useApi = () => {
             RateID,
             Latitude,
             Longitude,
+            Status,
+            TimeZoneDate,
+            City,
+            TimeZone,
           }: Location) => ({
             locationId: LocationId,
+            city: City?.trim(),
+            currentDate: dayjs(),
+            status: Status,
             id: ID,
-            modes: DefaultWidgetType,
+            modes: modeOverwrite ? modes : DefaultWidgetType,
+            timeZoneDate: TimeZoneDate,
+            timeZone: TimeZone,
             label: Name,
             rid: RateID,
             lat: Latitude,
@@ -94,60 +118,48 @@ const useApi = () => {
       });
 
       if (data.length === 1) {
-        dispatch({ type: Actions.SELECTED_LOCATION, payload: data[0].ID });
+        dispatch({ type: Actions.SELECTED_LOCATION, payload: data });
       }
     } catch (error) {
       dispatch({ type: Actions.LOADING, payload: false });
     }
   }, [selectedEvent?.id, locationIds]);
 
-  const retrieveSeasonTickets = useCallback(
-    async ({
-      IsMPS = false,
-      IsFEP = false,
-      IsFAP = false,
-      IsMUP = false,
-    }: {
-      IsMUP?: boolean;
-      IsMPS?: boolean;
-      IsFEP?: boolean;
-      IsFAP?: boolean;
-    }) => {
-      dispatch({ type: Actions.LOADING, payload: true });
+  const retrieveSeasonTickets = useCallback(async () => {
+    dispatch({ type: Actions.LOADING, payload: true });
+    const IsMUP = selectedMode === ModesTable.MUP;
 
-      let params: Record<string, string | boolean> = {
-        WidgetKey: widgetkey,
-        eDataLocationId: selectedLocation,
+    let params: Record<string, string | boolean> = {
+      WidgetKey: widgetkey,
+      eDataLocationId: selectedLocation.id,
+    };
+
+    if (!IsMUP) {
+      params = {
+        ...params,
+        IsMPS: selectedMode === ModesTable.MUP,
+        IsFEP: selectedMode === ModesTable.FEP,
+        IsFAP: selectedMode === ModesTable.FAP,
+        AgentId: agentId,
       };
+    }
 
-      if (!IsMUP) {
-        params = {
-          ...params,
-          IsMPS,
-          IsFEP,
-          IsFAP,
-          AgentId: agentId,
-        };
+    try {
+      const data = await fetchData(
+        IsMUP ? "passes" : "seasontickets",
+        cleanObject(params)
+      );
+
+      dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });
+
+      if (data.length === 1) {
+        const pass = data[0];
+        dispatch({ type: Actions.SET_PASS, payload: pass.RateId || pass.Id });
       }
-
-      try {
-        const data = await fetchData(
-          IsMUP ? "passes" : "seasontickets",
-          cleanObject(params)
-        );
-
-        dispatch({ type: Actions.SET_SEASON_TICKETS, payload: data });
-
-        if (data.length === 1) {
-          const pass = data[0];
-          dispatch({ type: Actions.SET_RATE, payload: pass.RateId || pass.Id });
-        }
-      } catch (error) {
-        dispatch({ type: Actions.LOADING, payload: false });
-      }
-    },
-    [locationIds, selectedLocation]
-  );
+    } catch (error) {
+      dispatch({ type: Actions.LOADING, payload: false });
+    }
+  }, [locationIds, selectedLocation]);
 
   const retrieveLocationsByBounds = useCallback(async (params: any) => {
     dispatch({ type: Actions.LOADING, payload: true });

@@ -7,13 +7,16 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
   const modeOverwrite = !!element.dataset.modeOverwrite;
   const modes = modeOverwrite ? element.dataset.mode : params.wt;
   const isMap = element.dataset.variant === "map";
-  const eventDriven = params.wt === "evt" || element.dataset.eventdriven === "true"
+  const eventDriven =
+    params.wt === "evt" || element.dataset.eventdriven === "true";
   const isHeaderEnabled = isMap
     ? false
     : element.dataset.header
     ? element.dataset.header === "true"
     : true;
-    
+  const arriveOffset = Number(element.dataset.arrive);
+  const departOffset = Number(element.dataset.depart);
+
   return {
     buttonText: element.dataset.buttonText
       ? element.dataset.buttonText
@@ -43,22 +46,16 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
       : 0,
     mapLocationText: element.dataset.mapplacetxt || null,
     eventDriven,
-    // ---- TODO: determine the use cases for the following: //
-    startTime: params.start || element.dataset.starttime || null, // set the default start time of the widget (what is the format)
-    endTime: params.end || element.dataset.endtime || null, // set the default end time of the widget (what is the format)
-    arriveOffset: element.dataset.arrive
-      ? Number(element.dataset.arrive)
-      : 30, // offset in minutes (need use case)
-    departOffset: element.dataset.depart
-      ? Number(element.dataset.depart)
-      : 120, // offset in minutes (need use case)
+    startTime: params.start || element.dataset.starttime || null,
+    endTime: params.end || element.dataset.endtime || null,
+    arriveOffset: arriveOffset > 29 ? arriveOffset : 30,
+    departOffset: departOffset > 59 ? departOffset : 60,
     useFullWidget: element.dataset.fullwidget
       ? element.dataset.fullwidget === "true"
-      : false, // set whether or not to open the full widget url in a new window or to change the current url (example)
-    currentPage: !!element.dataset.currentpage, // Get the widget key (not sure about this one)
-    // template: element.dataset.template || null, // load template and stub style sheet based on iso language code (need examples)
+      : false,
+    currentPage: !!element.dataset.currentpage || false,
     labels: defaultLanguageLabels,
-    selectedMode: eventDriven ? 'EVT' : null
+    selectedMode: eventDriven ? "EVT" : null,
   };
 };
 
@@ -78,4 +75,8 @@ export const returnModes = (locations: any[], selectedLocation: string) => {
   const modes = location?.modes?.split("|");
 
   return modes;
+};
+
+export const settings = {
+  ServicePath: "https://grs-external.lazparking.com/api/",
 };
