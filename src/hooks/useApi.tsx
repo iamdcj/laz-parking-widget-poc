@@ -85,40 +85,42 @@ const useApi = () => {
         })
       );
 
+      const locations = data.map(
+        ({
+          DefaultWidgetType,
+          ID,
+          LocationId,
+          Name,
+          RateID,
+          Latitude,
+          Longitude,
+          Status,
+          TimeZoneDate,
+          City,
+          TimeZone,
+        }: Location) => ({
+          locationId: LocationId,
+          city: City?.trim(),
+          currentDate: dayjs(),
+          status: Status,
+          id: ID,
+          modes: modeOverwrite ? modes : DefaultWidgetType,
+          timeZoneDate: TimeZoneDate,
+          timeZone: TimeZone,
+          label: Name,
+          rid: RateID,
+          lat: Latitude,
+          lng: Longitude,
+        })
+      );
+
       dispatch({
         type: Actions.SET_LOCATIONS,
-        payload: data.map(
-          ({
-            DefaultWidgetType,
-            ID,
-            LocationId,
-            Name,
-            RateID,
-            Latitude,
-            Longitude,
-            Status,
-            TimeZoneDate,
-            City,
-            TimeZone,
-          }: Location) => ({
-            locationId: LocationId,
-            city: City?.trim(),
-            currentDate: dayjs(),
-            status: Status,
-            id: ID,
-            modes: modeOverwrite ? modes : DefaultWidgetType,
-            timeZoneDate: TimeZoneDate,
-            timeZone: TimeZone,
-            label: Name,
-            rid: RateID,
-            lat: Latitude,
-            lng: Longitude,
-          })
-        ),
+        payload: locations,
       });
 
       if (data.length === 1) {
-        dispatch({ type: Actions.SELECTED_LOCATION, payload: data });
+        dispatch({ type: Actions.SELECTED_LOCATION, payload: locations[0] });
       }
     } catch (error) {
       dispatch({ type: Actions.LOADING, payload: false });

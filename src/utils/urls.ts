@@ -109,3 +109,27 @@ export const getUrlParam = (): Record<string, string> => {
 
   return urlParams;
 };
+
+export const openWindow = (url: string, currentPage: boolean) => {
+  const width = 800;
+  const height = 600;
+  const left = screen.width / 2 - width / 2;
+  const top = screen.height / 2 - height / 2;
+  const features =
+    currentPage === false
+      ? `width=${width},
+      height=${height},
+      top=${top},
+      left=${left},
+      toolbar=no,
+      location=no,
+      status=no,
+      menubar=no,
+      scrollbars=yes,
+      resizable=no,
+      modal=yes,
+      alwaysRaised=yes`
+      : "";
+
+  window.open(url, "lazparking", features);
+};

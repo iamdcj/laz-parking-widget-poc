@@ -26,38 +26,36 @@ const DurationSelector = () => {
   const withData = timeIncrements && timeIncrements.length > 0;
 
   return (
-      <FormControl fullWidth size="small">
-        <InputLabel id="duration-label">{labels.CHOOSEPRESET}</InputLabel>
-        <Select
-          disabled={isDisabled || !withData}
-          labelId="duration"
-          id="duration"
-          fullWidth
-          label={labels.CHOOSEPRESET}
-          value={selectedDuration || ""}
-          onChange={(event) =>
-            dispatch({
-              type: Actions.SET_DURATION,
-              payload: event.target.value,
-            })
-          }
-        >
-          {withData &&
-            timeIncrements.map(
-              ({
-                Duration,
-                Display,
-              }: {
-                Duration: string;
-                Display: string;
-              }) => (
+    <FormControl fullWidth size="small">
+      <InputLabel id="duration-label">{labels.CHOOSEPRESET}</InputLabel>
+      <Select
+        disabled={isDisabled || !withData}
+        labelId="duration"
+        id="duration"
+        fullWidth
+        label={labels.CHOOSEPRESET}
+        value={selectedDuration || ""}
+        onChange={(event) =>
+          dispatch({
+            type: Actions.SET_DURATION,
+            payload: event.target.value,
+          })
+        }
+      >
+        {withData &&
+          timeIncrements.map(
+            ({ Duration, Display }: { Duration: string; Display: string }) => {
+              const parkNow = Duration === "00M";
+
+              return (
                 <MenuItem key={Duration} value={Duration}>
-                  {Duration === "00M" ? labels.PARKRIGHTNOW : Display}
+                  {parkNow ? labels.PARKRIGHTNOW : Display}
                 </MenuItem>
-              )
-            )}
-        </Select>
-      </FormControl>
+              );
+            }
+          )}
+      </Select>
+    </FormControl>
   );
 };
 

@@ -11,10 +11,6 @@ import { Modes } from "../../../types";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
 import { useTheme } from "@mui/material/styles";
-import SeasonTickets from "./SeasonTickets";
-import DateTimePicker from "./DateTimePicker";
-import EventPicker from "./EventPicker";
-import DurationSelector from "./DurationSelector";
 import ModeHeader from "./components/ModeHeader";
 import { alpha } from "@mui/material/styles";
 

@@ -24,7 +24,7 @@ export const returnInitialConfig = (element: HTMLElement): Settings => {
     theme: element.dataset.theme ? JSON.parse(element.dataset.theme) : null,
     variant: isMap ? "map" : "basic",
     apiKey: element.dataset.key,
-    modesOverride: modes ? modes?.split("/") : null,
+    modesOverride: modes ? modes?.split("|") : null,
     useMap: element.dataset.map ? element.dataset.map === "true" : false,
     isHeaderEnabled,
     widgetKey: params.wk || element.dataset.wk,

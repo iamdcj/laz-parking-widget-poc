@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../context";
-import { constructBuyLink } from "../utils/urls";
+import { constructBuyLink, openWindow } from "../utils/urls";
 import { ModesTable } from "../../types";
 
 const PurchaseButton = () => {
@@ -17,18 +17,18 @@ const PurchaseButton = () => {
       salesChannelKey,
       labels,
       selectedMode,
+      useFullWidget,
+      currentPage,
     },
   } = useAppContext();
 
-  // the commented out options reflect how the current widget code
-  // deal with the button labels - feels wrong to me
   enum ButtonLabels {
     "EVT" = labels.CONTINUE,
-    // "PST" = labels.GETRATE,
-    // "MUP" = labels.PURCHASEPASS,
-    // "FAP" = labels.PURCHASEPASS,
-    // "FEX" = labels.PURCHASEPASS,
-    // "FEP" = labels.PURCHASEPASS,
+    "PST" = labels.GETRATE,
+    "MUP" = labels.PURCHASEPASS,
+    "FAP" = labels.PURCHASEPASS,
+    "FEX" = labels.PURCHASEPASS,
+    "FEP" = labels.PURCHASEPASS,
   }
 
   const canPurchase = () => {
@@ -62,7 +62,11 @@ const PurchaseButton = () => {
       sc: salesChannelKey,
     });
 
-    location.assign(url);
+    if (!useFullWidget) {
+      openWindow(url, currentPage);
+    } else {
+      location.href = url;
+    }
   }, [
     selectedMode,
     selectedDuration,
