@@ -3,27 +3,22 @@ import useApi from "../../hooks/useApi";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
-import ErrorNotice from "../ErrorNotice";
 import StartEndSelector from "./DateTimePicker";
-import { Modes } from "../../../types";
-import { log } from "console";
+import { ModesTable } from "../../../types";
 import ModeHeader from "./components/ModeHeader";
 
-const SeasonTickets = ({
-  IsFEP = false,
-  IsFAP = false,
-  IsMPS = false,
-  IsMUP = false,
-}: {
-  IsFEP?: boolean;
-  IsFAP?: boolean;
-  IsMPS?: boolean;
-  IsMUP?: boolean;
-}) => {
+const SeasonTickets = () => {
   const {
-    state: { rate, selectedMode, selectedLocation, seasonTickets, labels },
+    state: {
+      selectedPass,
+      selectedMode,
+      selectedLocation,
+      seasonTickets,
+      labels,
+    },
     dispatch,
   } = useAppContext();
+  const isFAP = selectedMode === ModesTable.FAP;
   const { retrieveSeasonTickets } = useApi();
   const isEnabled = ["MUP", "FAP", "FEX", "FEP"].includes(selectedMode);
   const withData = seasonTickets && seasonTickets.length > 0;
@@ -33,7 +28,7 @@ const SeasonTickets = ({
       return;
     }
 
-    retrieveSeasonTickets({ IsFEP, IsFAP, IsMPS, IsMUP });
+    retrieveSeasonTickets();
   }, [selectedMode, selectedLocation]);
 
   enum Labels {
@@ -41,9 +36,10 @@ const SeasonTickets = ({
     FAP = labels.CHOOSEFIXEDACCESS || labels.CHOOSEFIXEDACCESSTICKET,
   }
 
-  return (
-    <Box width="100%">
-      <ModeHeader mode={selectedMode} title={labels.PASSESTITLE} />
+  const showTimePicker = isFAP && selectedPass && !selectedPass.FixedStartTime;
+
+  return withData ? (
+    <>
       <FormControl fullWidth size="small">
         <InputLabel id="season-passes-label">
           {Labels[selectedMode] || labels.CHOOSEPASSTYPE}
@@ -53,24 +49,34 @@ const SeasonTickets = ({
           id="season-passes"
           fullWidth
           label={Labels[selectedMode] || labels.CHOOSEPASSTYPE}
-          value={rate || ""}
+          value={selectedPass?.Id || ""}
           disabled={!withData || !isEnabled || seasonTickets.length === 1}
-          onChange={(event) =>
-            dispatch({ type: Actions.SET_RATE, payload: event.target.value })
-          }
+          onChange={(event) => {
+            const pass = seasonTickets.find(
+              ({ Id }: { Id: string }) => Id === event.target.value
+            );
+
+            dispatch({ type: Actions.SET_PASS, payload: pass });
+          }}
         >
           {withData &&
             seasonTickets.map(
               ({
-                Id,
                 RateName,
                 RateDetailName,
+                Id,
                 RateId,
+                Duration,
+                StartTime,
+                EndTime,
               }: {
-                Id: string;
                 RateName: string;
                 RateDetailName: string;
+                Id: string;
                 RateId: string;
+                Duration: string;
+                StartTime: string;
+                EndTime: string;
               }) => {
                 const value = Id || RateId;
 
@@ -83,7 +89,7 @@ const SeasonTickets = ({
             )}
         </Select>
       </FormControl>
-      {IsFAP && (
+      {showTimePicker && (
         <Box sx={{ mt: 3 }}>
           <StartEndSelector
             hideEnd
@@ -92,8 +98,8 @@ const SeasonTickets = ({
           />
         </Box>
       )}
-    </Box>
-  );
+    </>
+  ) : null;
 };
 
 export default SeasonTickets;

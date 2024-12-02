@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../context";
 import { constructBuyLink } from "../utils/urls";
@@ -11,11 +11,10 @@ const PurchaseButton = () => {
       selectedLocation,
       selectedDuration,
       widgetKey,
-      modes,
+      selectedPass,
       times,
       agentId,
       salesChannelKey,
-      rate,
       labels,
       selectedMode,
     },
@@ -44,29 +43,40 @@ const PurchaseButton = () => {
       case ModesTable.FEP:
       case ModesTable.FAP:
       case ModesTable.FEX:
-        return selectedLocation && rate;
+        return selectedLocation && selectedPass;
       default:
         return false;
     }
   };
 
+  const handleNavigation = useCallback(() => {
+    const url = constructBuyLink({
+      duration: selectedDuration,
+      l: selectedLocation?.id,
+      evid: selectedEvent?.id,
+      mode: selectedMode,
+      pass: selectedPass,
+      times,
+      wk: widgetKey,
+      aid: agentId,
+      sc: salesChannelKey,
+    });
+
+    location.assign(url);
+  }, [
+    selectedMode,
+    selectedDuration,
+    selectedLocation,
+    selectedPass,
+    selectedEvent,
+    times,
+  ]);
+
   return (
     <Button
-      href={constructBuyLink({
-        duration: selectedDuration,
-        l: selectedLocation?.id,
-        evid: selectedEvent?.id,
-        wk: widgetKey,
-        mode: modes && modes.length === 1 ? modes[0] : selectedMode,
-        times,
-        aid: agentId,
-        sc: salesChannelKey,
-        rid: rate,
-      })}
+      onClick={handleNavigation}
       variant="contained"
       color="primary"
-      target="_blank"
-      rel="noreferer"
       fullWidth
       disabled={!canPurchase()}
     >

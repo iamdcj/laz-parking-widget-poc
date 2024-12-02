@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import {
   Box,
   FormControl,
@@ -15,6 +15,7 @@ import SeasonTickets from "./SeasonTickets";
 import DateTimePicker from "./DateTimePicker";
 import EventPicker from "./EventPicker";
 import DurationSelector from "./DurationSelector";
+import ModeHeader from "./components/ModeHeader";
 import { alpha } from "@mui/material/styles";
 
 export const Components = {
@@ -58,7 +59,6 @@ const ModePicker = () => {
           return (
             <Fragment key={`${mode}-mode-selector`}>
               <Box
-                key={`${mode}-mode-selector`}
                 width="100%"
                 px={1}
                 py={2}
@@ -70,7 +70,8 @@ const ModePicker = () => {
                       : "none",
                 }}
               >
-                <Component />
+                <ModeHeader mode={mode} />
+                {selectedMode === mode && <Component />}
               </Box>
               {index + 1 !== modes.length && (
                 <Typography

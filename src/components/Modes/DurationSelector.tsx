@@ -26,8 +26,6 @@ const DurationSelector = () => {
   const withData = timeIncrements && timeIncrements.length > 0;
 
   return (
-    <Box>
-      <ModeHeader mode="PST" title={labels.PRESETTITLE} />
       <FormControl fullWidth size="small">
         <InputLabel id="duration-label">{labels.CHOOSEPRESET}</InputLabel>
         <Select
@@ -60,7 +58,6 @@ const DurationSelector = () => {
             )}
         </Select>
       </FormControl>
-    </Box>
   );
 };
 

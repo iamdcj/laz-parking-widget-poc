@@ -3,14 +3,25 @@ import React from "react";
 import { useAppContext } from "../../../context";
 import { Actions } from "../../../state";
 import { useTheme } from "@mui/material/styles";
+import { Modes } from "../../../../types";
 
-const ModeHeader = ({ title, mode }: { title: string; mode: string }) => {
+const ModeHeader = ({ mode }: { mode: string }) => {
   const theme = useTheme();
   const {
-    state: { modes },
+    state: { modes, labels },
     dispatch,
   } = useAppContext();
 
+  enum LabelsFromMode {
+    "TMD" = labels.TIMEDTITLE,
+    "EVT" = labels.EVENTTITLE,
+    "PST" = labels.PRESETTITLE,
+    "MUP" = labels.PASSESTITLE,
+    "FAP" = labels.PASSESTITLE,
+    "FEX" = labels.PASSESTITLE,
+    "FEP" = labels.PASSESTITLE,
+  }
+  
   return (
     <Box
       width="100%"
@@ -27,7 +38,7 @@ const ModeHeader = ({ title, mode }: { title: string; mode: string }) => {
     >
       {modes && modes.length > 1 && (
         <Radio
-          id="TMD"
+          id="widget-mode"
           value={mode}
           sx={{
             mr: 1,
@@ -39,7 +50,7 @@ const ModeHeader = ({ title, mode }: { title: string; mode: string }) => {
         />
       )}
       <Typography fontWeight={600} lineHeight={1}>
-        {title}
+        {LabelsFromMode[mode as Modes]}
       </Typography>
     </Box>
   );

@@ -36,7 +36,7 @@ const EventPicker = memo(
     useEffect(() => {
       if (!isEnabled || !refetchEvents || !selectedLocation) return;
 
-      retrieveEvents(selectedLocation);
+      retrieveEvents(selectedLocation.id);
     }, [selectedLocation, isEnabled]);
 
     const handleOnEventChange = (
@@ -54,52 +54,49 @@ const EventPicker = memo(
       setShowDateTime(selectedEvent?.id ? true : false);
     }, [selectedEvent?.id]);
 
-    return (
-      <Box>
-        <ModeHeader mode="EVT" title={labels.EVENTTITLE} />
-        <Autocomplete
-          sx={{
-            mb: marginBottom,
-            position: "relative",
-            pb: !showDateTime && selectedEvent?.id ? 5 : 0,
-          }}
-          size="small"
-          popupIcon={<ExpandMore />}
-          fullWidth
-          disableClearable
-          onOpen={() => setShowDateTime(false)}
-          onClose={() => selectedEvent?.id && setShowDateTime(true)}
-          onChange={handleOnEventChange}
-          disabled={!isEnabled || events.length <= 1}
-          renderOption={(props, option) => (
-            <EventOption props={props} option={option} />
-          )}
-          options={events.map(
-            ({
-              EventId: id,
-              EventName,
-              EventDate,
-            }: {
-              EventId: string;
-              EventName: string;
-              EventDate: string;
-            }) => {
-              let label = EventName;
-              const date = new Date(EventDate);
+    return isEnabled ? (
+      <Autocomplete
+        sx={{
+          mb: marginBottom,
+          position: "relative",
+          pb: !showDateTime && selectedEvent?.id ? 5 : 0,
+        }}
+        size="small"
+        popupIcon={<ExpandMore />}
+        fullWidth
+        disableClearable
+        onOpen={() => setShowDateTime(false)}
+        onClose={() => selectedEvent?.id && setShowDateTime(true)}
+        onChange={handleOnEventChange}
+        disabled={!isEnabled || events.length <= 1}
+        renderOption={(props, option) => (
+          <EventOption props={props} option={option} />
+        )}
+        options={events.map(
+          ({
+            EventId: id,
+            EventName,
+            EventDate,
+          }: {
+            EventId: string;
+            EventName: string;
+            EventDate: string;
+          }) => {
+            let label = EventName;
+            const date = new Date(EventDate);
 
-              return {
-                id,
-                label: label,
-                date,
-              };
-            }
-          )}
-          renderInput={(params) => (
-            <EventField showDateTime={showDateTime} params={params} />
-          )}
-        />
-      </Box>
-    );
+            return {
+              id,
+              label: label,
+              date,
+            };
+          }
+        )}
+        renderInput={(params) => (
+          <EventField showDateTime={showDateTime} params={params} />
+        )}
+      />
+    ) : null;
   }
 );
 

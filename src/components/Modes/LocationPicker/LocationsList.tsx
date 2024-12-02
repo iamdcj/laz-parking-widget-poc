@@ -5,6 +5,7 @@ import { Actions } from "../../../state";
 import LazMap from "../../Map";
 import { useTheme } from "@mui/material/styles";
 import { APIProvider } from "@vis.gl/react-google-maps";
+import { Dayjs } from "dayjs";
 
 const LocationsList = () => {
   const theme = useTheme();
@@ -13,10 +14,11 @@ const LocationsList = () => {
     dispatch,
   } = useAppContext();
 
-  const filteredLocations = useMemo(() => locations.filter(
-    ({ isPlace }: { isPlace: boolean }) => !isPlace
-  ), [locations])
-  
+  const filteredLocations = useMemo(
+    () => locations.filter(({ isPlace }: { isPlace: boolean }) => !isPlace),
+    [locations]
+  );
+
   return (
     <Box width={288}>
       <APIProvider apiKey={process.env.REACT_APP_MAPS_API_KEY}>
@@ -24,7 +26,15 @@ const LocationsList = () => {
       </APIProvider>
       <MenuList sx={{ maxHeight: 200, overflow: "auto" }}>
         {filteredLocations.map(
-          ({ id, label }: { id: string; label: string }) => {
+          ({
+            id,
+            label,
+            currentDate,
+          }: {
+            id: string;
+            label: string;
+            currentDate: Dayjs;
+          }) => {
             const isSelected = selectedLocation?.id === id;
 
             return (
@@ -47,7 +57,7 @@ const LocationsList = () => {
                 onClick={() => {
                   dispatch({
                     type: Actions.SELECTED_LOCATION,
-                    payload: { id, label },
+                    payload: { id, label, currentDate },
                   });
                 }}
                 onMouseOver={() =>

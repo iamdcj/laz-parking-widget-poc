@@ -29,7 +29,7 @@ const LocationsLayout = () => {
           type: Actions.SET_MODES,
           payload: modesOverride,
         });
-      }
+      } 
     }
   }, [selectedLocation, retrieveLocations]);
 

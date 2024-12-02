@@ -1,9 +1,10 @@
+import { transformDuration } from "./time";
 import {
   cleanObject,
   constructBuyLink,
   returnParams,
-  transformDuration,
 } from "./urls";
+
 
 describe("constructBuyLink", () => {
   it("only return the params for the data provided", () => {
@@ -52,18 +53,21 @@ describe("cleanObject", () => {
 
 describe("returnParams", () => {
   it("return an empty object if all fields are falsy", () => {
-    const UrlParams = returnParams({
-      duration: "",
-      widgetKey: null,
-      rid: null,
-      l: null,
-      evid: null,
-      wk: null,
-      aid: null,
-      sc: null,
-      start: null,
-      end: null,
-    });
+    const UrlParams = returnParams(
+      {
+        duration: "",
+        widgetKey: null,
+        rid: null,
+        l: null,
+        evid: null,
+        wk: null,
+        aid: null,
+        sc: null,
+        start: null,
+        end: null,
+      },
+      null
+    );
 
     expect(UrlParams).toEqual({});
   });
@@ -72,10 +76,13 @@ describe("returnParams", () => {
     const start = new Date("1987-05-13T09:00:00Z");
     const end = new Date("1987-05-13T12:00:00Z");
 
-    const UrlParams = returnParams({
-      start,
-      end,
-    });
+    const UrlParams = returnParams(
+      {
+        start,
+        end,
+      },
+      "TMD"
+    );
 
     expect(UrlParams).toEqual({
       start: "Wed May 13 1987 05:00:00 GMT-0400 (Eastern Daylight Time)",
