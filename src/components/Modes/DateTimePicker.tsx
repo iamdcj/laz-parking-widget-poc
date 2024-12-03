@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import {
@@ -9,7 +9,13 @@ import { Box } from "@mui/material";
 import { renderDigitalClockTimeView } from "@mui/x-date-pickers";
 import { useAppContext } from "../../context";
 import { Actions } from "../../state";
-import ModeHeader from "./components/ModeHeader";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { returnDate } from "../../utils/time";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const StartEndSelector = ({
   hideEnd = false,
@@ -24,8 +30,8 @@ const StartEndSelector = ({
   const {
     state: {
       times: { start, end },
+      timezone,
       labels,
-      selectedMode,
     },
     dispatch,
   } = useAppContext();
@@ -41,6 +47,7 @@ const StartEndSelector = ({
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box width="100%" display="grid" gridTemplateColumns="1fr">
         <DateTimePicker
+          timezone={timezone}
           slotProps={slotProps}
           label={startLabel || labels.ARRIVE}
           views={["year", "day", "hours", "minutes"]}
@@ -48,15 +55,18 @@ const StartEndSelector = ({
           skipDisabled
           formatDensity="dense"
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
-          value={start}
+          value={returnDate(start, timezone)}
           viewRenderers={{
             hours: renderDigitalClockTimeView,
             minutes: null,
             seconds: null,
           }}
-          onChange={(date) =>
-            dispatch({ type: Actions.SET_START_TIME, payload: date })
-          }
+          onChange={(date, other) => {
+            dispatch({
+              type: Actions.SET_START_TIME,
+              payload: returnDate(date, timezone),
+            });
+          }}
           onClose={() => {
             start && setEndStart(true);
           }}
@@ -65,13 +75,14 @@ const StartEndSelector = ({
         {!hideEnd && (
           <DateTimePicker
             slotProps={slotProps}
+            timezone={timezone}
             disablePast
             label={endLabel || labels.DEPART}
             views={["year", "day", "hours", "minutes"]}
             timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
             minDateTime={start?.add(30, "minutes") || null}
             skipDisabled
-            value={end}
+            value={returnDate(end, timezone)}
             open={endStart}
             disabled={!start}
             onClose={() => {
@@ -84,7 +95,7 @@ const StartEndSelector = ({
               seconds: null,
             }}
             onChange={(date) => {
-              dispatch({ type: Actions.SET_END_TIME, payload: date });
+              dispatch({ type: Actions.SET_END_TIME, payload: returnDate(date, timezone) });
             }}
             sx={{ width: "100%", mt: 0.5 }}
           />

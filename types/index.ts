@@ -90,6 +90,7 @@ export interface InitialState extends AppDefaults {
     end: null;
   };
   timeIncrements: null | any[];
+  timezone: string;
 }
 
 type DateTime = string | Dayjs | null;

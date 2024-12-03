@@ -25,7 +25,7 @@ const Main = () => {
   } = useAppContext();
 
   const widgetTheme = useThemeConfig();
-  const isDevMode = process.env.NODE_ENV === "development";
+  const isDevMode = process.env.NODE_ENV === "deveopment";
 
   useEffect(() => {
     retrieveLanguages();

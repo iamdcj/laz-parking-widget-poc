@@ -1,24 +1,26 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Box, Button } from "@mui/material";
 import { useAppContext } from "../context";
 import { constructBuyLink, openWindow } from "../utils/urls";
 import { ModesTable } from "../../types";
+import { retrieveTimeDiff } from "../utils/time";
 
 const PurchaseButton = () => {
   const {
     state: {
+      agentId,
+      currentPage,
+      labels,
+      salesChannelKey,
+      selectedDuration,
       selectedEvent,
       selectedLocation,
-      selectedDuration,
-      widgetKey,
+      selectedMode,
       selectedPass,
       times,
-      agentId,
-      salesChannelKey,
-      labels,
-      selectedMode,
+      timezone,
       useFullWidget,
-      currentPage,
+      widgetKey,
     },
   } = useAppContext();
 
@@ -60,6 +62,8 @@ const PurchaseButton = () => {
       wk: widgetKey,
       aid: agentId,
       sc: salesChannelKey,
+      timeDiff: retrieveTimeDiff(selectedLocation.currentDate),
+      timezone,
     });
 
     if (!useFullWidget) {

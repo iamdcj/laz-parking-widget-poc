@@ -1,20 +1,31 @@
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import timezone from "dayjs/plugin/timezone";
 
-const timeSettings = {
-  dateFormatLib: "ddd, mmm d, yyyy",
-  timeFormatLib: "h:MM TT",
-  dateFormat: "D, M d, yy",
-  timeFormat: "g:i A",
-}
+dayjs.extend(timezone);
+
+export const returnDate = (date: any, timezone: string) => {
+  return dayjs(date).tz(timezone);
+};
 
 export const transformDuration = (duration: string) => {
-  const cleanDuration = duration?.replace(/[MH]/g, "");
+  let value = Number(duration?.replace(/[MHD]/gi, ""));
+  let unit = duration.charAt(duration.length - 1);
 
-  if (duration?.includes("H")) {
-    return Number(cleanDuration) * 60;
-  } else {
-    return Number(cleanDuration);
+  switch (unit.toUpperCase()) {
+    case "M":
+      value = value;
+      break;
+    case "H":
+      value = value * 60;
+      unit = "M";
+      break;
+    case "D":
+      value = value * 24 * 60;
+      unit = "M";
+      break;
   }
+
+  return value;
 };
 
 export const returnTimeFromDuration = (duration: number, startDate?: Dayjs) => {
@@ -25,17 +36,23 @@ export const returnTimeFromDuration = (duration: number, startDate?: Dayjs) => {
     start = startDate;
     end = startDate.add(duration, "minutes");
   } else {
-    start = new Date();
-    end = new Date(start.setMinutes(start.getMinutes() + duration));
+    start = dayjs();
+    end = start.add(duration, "minutes");
   }
 
   return {
     duration,
     times: {
-      start: start.toISOString(),
-      end: end.toISOString(),
+      start: start,
+      end: end,
     },
   };
+};
+
+export const retrieveTimeDiff = (appStartTime: Dayjs) => {
+  const currentDate = appStartTime.toLocaleString();
+
+  return dayjs().diff(currentDate, "minutes");
 };
 
 // } else if (times?.start && !times?.end) {

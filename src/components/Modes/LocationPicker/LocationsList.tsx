@@ -30,10 +30,12 @@ const LocationsList = () => {
             id,
             label,
             currentDate,
+            timeZoneDate
           }: {
             id: string;
             label: string;
             currentDate: Dayjs;
+            timeZoneDate: Dayjs;
           }) => {
             const isSelected = selectedLocation?.id === id;
 
@@ -57,7 +59,7 @@ const LocationsList = () => {
                 onClick={() => {
                   dispatch({
                     type: Actions.SELECTED_LOCATION,
-                    payload: { id, label, currentDate },
+                    payload: { id, label, currentDate, timeZoneDate },
                   });
                 }}
                 onMouseOver={() =>

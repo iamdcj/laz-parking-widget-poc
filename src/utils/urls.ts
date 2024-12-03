@@ -18,8 +18,8 @@ export const constructBuyLink = (data: any) => {
     t: mode === "EVT" ? "e" : "r",
     wt: modeToWt[mode as Modes],
     isocode: "EN",
-    wk,
     l,
+    ...(wk && { wk }),
     ...(aid && { aid }),
     ...(sc && { sc }),
     ...returnParams(state, mode),
@@ -32,68 +32,71 @@ export const cleanObject = (object: Record<string, any>) =>
   Object.fromEntries(Object.entries(object).filter(([_, value]) => value));
 
 export const returnParams = (data: any, mode: string): Record<string, any> => {
-  let params = cleanObject(data);
+  let params = data;
 
   switch (mode) {
     case ModesTable.TMD:
       let start = null;
       let end = null;
 
-      if (params.times.start) {
-        start = params.times.start.toString();
+      if (data.times.start) {
+        start = data.times.start.add(data.timeDiff, "minutes");
       }
 
-      if (params.times.end) {
-        end = params.times.end.toString();
+      if (data.times.end) {
+        end = data.times.end.add(data.timeDiff, "minutes");
       }
 
-      return {
-        start,
-        end,
+      params = {
+        start: start.tz(start.$x.$timezone).format(),
+        end: end.tz(end.$x.$timezone).format(),
       };
+      break;
     case ModesTable.PST:
-      if (!params?.duration) return;
+      if (data?.duration) {
+        const { duration, times } = returnTimeFromDuration(
+          transformDuration(data.duration)
+        );
 
-      const { duration, times } = returnTimeFromDuration(
-        transformDuration(params.duration)
-      );
-
-      return {
-        duration,
-        start: times.start,
-        end: times.end,
-      };
-    case ModesTable.EVT:
-      return {
-        evid: params.selectedEvent,
-      };
-    case ModesTable.MUP:
-    case ModesTable.FEP:
-    case ModesTable.FEX:
-      return {
-        rid: params.pass?.Id,
-      };
-    case ModesTable.FAP: {
-      if (!params.pass) {
-        return params;
+        params = {
+          duration,
+          start: times.start.add(data.timeDiff, "minutes").toString(),
+          end: times.end.add(data.timeDiff, "minutes").toString(),
+        };
       }
-
-      const { duration, times } = returnTimeFromDuration(
-        params.pass.Duration,
-        params.times.start
-      );
-
-      return {
-        start: times.start,
-        end: times.end,
-        duration,
-        rid: params.pass.Id,
-        fst: params.pass.IsFixedStartTime,
+      break;
+    case ModesTable.EVT:
+      params = {
+        evid: data.selectedEvent,
       };
+      break;
+    case ModesTable.FEP:
+      params = {
+        rid: data.pass,
+      };
+      break;
+    case ModesTable.MUP:
+    case ModesTable.FEX:
+    case ModesTable.FAP: {
+      if (data.pass) {
+        const { duration, times } = returnTimeFromDuration(
+          data.pass.Duration,
+          data.times.start
+        );
+
+        data = {
+          start: times.start.add(data.timeDiff, "minutes").toString(),
+          end: times.end.add(data.timeDiff, "minutes").toString(),
+          duration,
+          rid: data.pass.Id,
+          fst: data.pass.IsFixedStartTime,
+        };
+      }
+      break;
     }
-    default:
-      return params;
   }
+
+  return cleanObject(params);
 };
 
 export const getUrlParam = (): Record<string, string> => {

@@ -5,7 +5,6 @@ import { useAppContext } from "../../context";
 import { Actions } from "../../state";
 import StartEndSelector from "./DateTimePicker";
 import { ModesTable } from "../../../types";
-import ModeHeader from "./components/ModeHeader";
 
 const SeasonTickets = () => {
   const {

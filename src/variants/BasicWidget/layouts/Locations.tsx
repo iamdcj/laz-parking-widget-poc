@@ -5,12 +5,11 @@ import LocationPicker from "../../../components/Modes/LocationPicker";
 import useApi from "../../../hooks/useApi";
 import { Actions } from "../../../state";
 import { Modes } from "../../../../types";
-import PurchaseButton from "../../../components/PurchaseButton";
 import ModePicker, { Components } from "../../../components/Modes/ModePicker";
 
 const LocationsLayout = () => {
   const {
-    state: { locations, selectedLocation, modes, modesOverride, selectedMode },
+    state: { locations, selectedLocation, modes, modesOverride },
     dispatch,
   } = useAppContext();
 
@@ -34,9 +33,6 @@ const LocationsLayout = () => {
   }, [selectedLocation, retrieveLocations]);
 
   const Component = Components[modes?.[0] as Modes];
-
-  console.log(selectedLocation);
-  
 
   return (
     <Box display="grid" rowGap={2} mb={2}>

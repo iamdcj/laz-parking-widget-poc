@@ -6,6 +6,23 @@ import { cleanObject } from "../utils/urls";
 import { Location, ModesTable } from "../../types";
 import dayjs from "dayjs";
 
+type APITimezones =
+  | "Eastern Standard Time"
+  | "Mountain Standard Time"
+  | "Central Time"
+  | "Pacific Standard Time"
+  | "Alaska Standard Time"
+  | "Hawaii-Aleutian Standard Time";
+
+enum FormattedTimezones {
+  "Eastern Standard Time" = "America/New_York",
+  "Mountain Standard Time" = "America/Denver",
+  "Central Time" = "America/Chicago",
+  "Pacific Standard Time" = "America/Los_Angeles",
+  "Alaska Standard Time" = "America/Anchorage",
+  "Hawaii-Aleutian Standard Time" = "Honolulu",
+}
+
 const useApi = () => {
   const {
     state: {
@@ -54,14 +71,20 @@ const useApi = () => {
         eDataLocationId: selectedLocation.id,
       });
 
-      debugger;
-
       dispatch({
         type: Actions.SET_TIME_INCREMENTS,
         payload: [
           {
             Display: labels.PARKRIGHTNOW,
             Duration: "00M",
+          },
+          {
+            Display: "7 days",
+            Duration: "07D",
+          },
+          {
+            Display: "3 Hours",
+            Duration: "03h",
           },
           ...data,
         ],
@@ -105,7 +128,7 @@ const useApi = () => {
           status: Status,
           id: ID,
           modes: modeOverwrite ? modes : DefaultWidgetType,
-          timeZoneDate: TimeZoneDate,
+          timeZoneDate: dayjs(TimeZoneDate),
           timeZone: TimeZone,
           label: Name,
           rid: RateID,
@@ -117,6 +140,11 @@ const useApi = () => {
       dispatch({
         type: Actions.SET_LOCATIONS,
         payload: locations,
+      });
+
+      dispatch({
+        type: Actions.SET_TIMEZONE,
+        payload: FormattedTimezones[locations[0].timeZone as APITimezones],
       });
 
       if (data.length === 1) {

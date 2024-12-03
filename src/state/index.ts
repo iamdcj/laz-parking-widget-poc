@@ -39,6 +39,7 @@ export const initialState: InitialState = {
   timeIncrements: null,
   useFullWidget: false,
   useMap: false,
+  timezone: "America/New_York",
   variant: "basic",
   widgetKey: null,
   times: {
@@ -49,25 +50,26 @@ export const initialState: InitialState = {
 
 export enum Actions {
   FOCUSED_LOCATION = "FOCUSED_LOCATION",
-  LOADING = "LOADING",
   INITIALIZING = "INITIALIZING",
+  LOADING = "LOADING",
   RESET_EVENTS = "RESET_EVENTS",
   SELECTED_EVENT = "SELECTED_EVENT",
   SELECTED_LOCATION = "SELECTED_LOCATION",
   SELECTED_MODE = "SELECTED_MODE",
+  SET_BOUNDS = "SET_BOUNDS",
   SET_DURATION = "SET_DURATION",
   SET_END_TIME = "SET_END_TIME",
   SET_EVENTS = "SET_EVENTS",
+  SET_LABELS = "SET_LABELS",
   SET_LOCATIONS = "SET_LOCATIONS",
   SET_MODES = "SET_MODES",
+  SET_OVERRIDES = "SET_OVERRIDES",
   SET_PASS = "SET_PASS",
   SET_SEASON_TICKETS = "SET_SEASON_TICKETS",
   SET_START_TIME = "SET_START_TIME",
   SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
+  SET_TIMEZONE = "SET_TIMEZONE",
   SET_ZOOM = "SET_ZOOM",
-  SET_BOUNDS = "SET_BOUNDS",
-  SET_OVERRIDES = "SET_OVERRIDES",
-  SET_LABELS = "SET_LABELS",
 }
 
 export const appReducer = (
@@ -220,6 +222,11 @@ export const appReducer = (
       return {
         ...state,
         ...payload,
+      };
+    case Actions.SET_TIMEZONE:
+      return {
+        ...state,
+       timezone: payload
       };
     default:
       return state;
