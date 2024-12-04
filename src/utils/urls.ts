@@ -68,20 +68,22 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
       break;
     case ModesTable.MUP:
       {
-        let start = dayjs(
-          `${dayjs(defautStartDate).format("YYYY/MM/DD")} ${
-            data.pass.StartTime
-          }`
-        );
+        let start = `${dayjs(defautStartDate).format("YYYY/MM/DD")} ${
+          data.pass.StartTime
+        }`;
+
+        let end = `${dayjs(defautStartDate).add(data.pass.Duration, "minutes").format("YYYY/MM/DD")} ${
+          data.pass.EndTime
+        }`;
 
         if (defautStartDate > start) {
           start = defautStartDate;
         }
-
+        
         params = {
           rid: data.pass.RateId,
-          start: start.utc(),
-          end: start.add(data.pass.Duration, "minutes").utc(),
+          start: dayjs(start).utc(),
+          end: dayjs(end).utc(),
         };
       }
       break;
