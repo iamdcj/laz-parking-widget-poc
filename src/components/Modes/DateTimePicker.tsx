@@ -47,14 +47,13 @@ const StartEndSelector = ({
     },
   } as DateTimePickerSlotProps<any, any>;
 
-  console.log(selectedLocation.timeZone);
-  
+  const timeZone = selectedLocation.timeZone;
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box width="100%" display="grid" gridTemplateColumns="1fr">
         <DateTimePicker
-          timezone={selectedLocation.timeZone}
+          timezone={timeZone}
           slotProps={slotProps}
           label={startLabel || labels.ARRIVE}
           views={["year", "day", "hours", "minutes"]}
@@ -69,13 +68,9 @@ const StartEndSelector = ({
             seconds: null,
           }}
           onChange={(date) => {
-            console.log(selectedLocation.timeZone);
-
-            const payload = returnDate(date, selectedLocation.timeZone);
-
             dispatch({
               type: Actions.SET_START_TIME,
-              payload,
+              payload: returnDate(date, timeZone),
             });
           }}
           onClose={() => {
@@ -86,7 +81,7 @@ const StartEndSelector = ({
         {!hideEnd && (
           <DateTimePicker
             slotProps={slotProps}
-            timezone={selectedLocation.timeZone}
+            timezone={timeZone}
             disablePast
             label={endLabel || labels.DEPART}
             views={["year", "day", "hours", "minutes"]}
@@ -108,14 +103,14 @@ const StartEndSelector = ({
             onChange={(date) => {
               dispatch({
                 type: Actions.SET_END_TIME,
-                payload: returnDate(date, selectedLocation.timeZone),
+                payload: returnDate(date, timeZone),
               });
             }}
             sx={{ width: "100%", mt: 0.5 }}
           />
         )}
         <Typography sx={{ fontSize: 10 }}>
-          * {TimezoneCodeToString[selectedLocation.timeZone as TimeZoneCodes]}
+          * {TimezoneCodeToString[timeZone as TimeZoneCodes]}
         </Typography>
       </Box>
     </LocalizationProvider>

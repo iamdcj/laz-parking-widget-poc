@@ -11,74 +11,60 @@ enum modeToWt {
   "FEP" = "fex",
   "FEX" = "fex",
 }
-
-export const constructBuyLink = (data: any) => {
-  const { mode, wk, l, aid, sc, ...state } = data;
-
-  const urlParams = new URLSearchParams({
-    t: mode === "EVT" ? "e" : "r",
-    isocode: "EN",
-    l: l.id,
-    ...(wk && { wk }),
-    ...(aid && { aid }),
-    ...(sc && { sc }),
-    ...returnParams({ ...state, location: l }, mode),
-  });
-
-  return `https://go.lazparking.com/buynow?${urlParams}`;
-};
-
-export const cleanObject = (object: Record<string, any>) =>
-  Object.fromEntries(Object.entries(object).filter(([_, value]) => value));
-
 export const returnParams = (data: any, mode: string): Record<string, any> => {
   const defautStartDate = data.location?.currentDate;
   let params = data;
 
   switch (mode) {
     case ModesTable.TMD:
-      const initialDateWithOffset = defautStartDate?.add(
-        data.timeDiff,
-        "minutes"
-      );
-
-      let start = null;
-      let end = null;
-
-      if (data.times.start) {
-        start = data.times.start;
-      }
-
-      if (data.times.end) {
-        end = data.times.end;
-      }
-
-      if (initialDateWithOffset > start) {
-        start = initialDateWithOffset;
-      }
-
-      params = {
-        start: start.utc(),
-        end: end.utc(),
-      };
-      break;
-    case ModesTable.PST:
-      if (data?.duration) {
-        const { duration, times } = returnTimeFromDuration(
-          transformDuration(data.duration)
+      {
+        const initialDateWithOffset = defautStartDate?.add(
+          data.timeDiff,
+          "minutes"
         );
 
+        let start = null;
+        let end = null;
+
+        if (data.times.start) {
+          start = data.times.start;
+        }
+
+        if (data.times.end) {
+          end = data.times.end;
+        }
+
+        if (initialDateWithOffset > start) {
+          start = initialDateWithOffset;
+        }
+
         params = {
-          duration,
-          start: times.start.add(data.timeDiff, "minutes").utc(),
-          end: times.end.add(data.timeDiff, "minutes").utc(),
+          start: start.utc(),
+          end: end.utc(),
         };
       }
       break;
+    case ModesTable.PST:
+      {
+        if (data?.duration) {
+          const { duration, times } = returnTimeFromDuration(
+            transformDuration(data.duration)
+          );
+
+          params = {
+            duration,
+            start: times.start.add(data.timeDiff, "minutes").utc(),
+            end: times.end.add(data.timeDiff, "minutes").utc(),
+          };
+        }
+      }
+      break;
     case ModesTable.EVT:
-      params = {
-        evid: data.selectedEvent,
-      };
+      {
+        params = {
+          evid: data.selectedEvent,
+        };
+      }
       break;
     case ModesTable.MUP:
       {
@@ -101,9 +87,11 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
       break;
     case ModesTable.FEX:
     case ModesTable.FEP:
-      params = {
-        rid: data.pass,
-      };
+      {
+        params = {
+          rid: data.pass,
+        };
+      }
       break;
     case ModesTable.FAP: {
       if (data.pass) {
@@ -126,6 +114,26 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
 
   return cleanObject(params);
 };
+
+export const constructBuyLink = (data: any) => {
+  const { mode, wk, l, aid, sc, ...state } = data;
+
+  const urlParams = new URLSearchParams({
+    t: mode === "EVT" ? "e" : "r",
+    isocode: "EN",
+    wt: modeToWt[mode as Modes],
+    l: l.id,
+    ...(wk && { wk }),
+    ...(aid && { aid }),
+    ...(sc && { sc }),
+    ...returnParams({ ...state, location: l }, mode),
+  });
+
+  return `https://go.lazparking.com/buynow?${urlParams}`;
+};
+
+export const cleanObject = (object: Record<string, any>) =>
+  Object.fromEntries(Object.entries(object).filter(([_, value]) => value));
 
 export const getUrlParam = (): Record<string, string> => {
   let searchParams = new URLSearchParams(window.location.search);

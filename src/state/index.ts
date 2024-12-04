@@ -161,8 +161,6 @@ export const appReducer = (
         isLoading: false,
       };
     case Actions.SELECTED_LOCATION:
-
-      debugger
       if (!payload) {
         return state;
       }
