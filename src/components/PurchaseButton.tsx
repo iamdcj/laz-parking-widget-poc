@@ -18,7 +18,6 @@ const PurchaseButton = () => {
       selectedMode,
       selectedPass,
       times,
-      timezone,
       useFullWidget,
       widgetKey,
     },
@@ -51,10 +50,10 @@ const PurchaseButton = () => {
     }
   };
 
-  const handleNavigation = useCallback(() => {
+  const handleNavigation = () => {
     const url = constructBuyLink({
       duration: selectedDuration,
-      l: selectedLocation?.id,
+      l: selectedLocation,
       evid: selectedEvent?.id,
       mode: selectedMode,
       pass: selectedPass,
@@ -63,22 +62,15 @@ const PurchaseButton = () => {
       aid: agentId,
       sc: salesChannelKey,
       timeDiff: retrieveTimeDiff(selectedLocation.currentDate),
-      timezone,
     });
+
 
     if (!useFullWidget) {
       openWindow(url, currentPage);
     } else {
       location.href = url;
     }
-  }, [
-    selectedMode,
-    selectedDuration,
-    selectedLocation,
-    selectedPass,
-    selectedEvent,
-    times,
-  ]);
+  };
 
   return (
     <Button

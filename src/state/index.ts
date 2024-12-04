@@ -68,7 +68,6 @@ export enum Actions {
   SET_SEASON_TICKETS = "SET_SEASON_TICKETS",
   SET_START_TIME = "SET_START_TIME",
   SET_TIME_INCREMENTS = "SET_TIME_INCREMENTS",
-  SET_TIMEZONE = "SET_TIMEZONE",
   SET_ZOOM = "SET_ZOOM",
 }
 
@@ -162,6 +161,8 @@ export const appReducer = (
         isLoading: false,
       };
     case Actions.SELECTED_LOCATION:
+
+      debugger
       if (!payload) {
         return state;
       }
@@ -222,11 +223,6 @@ export const appReducer = (
       return {
         ...state,
         ...payload,
-      };
-    case Actions.SET_TIMEZONE:
-      return {
-        ...state,
-       timezone: payload
       };
     default:
       return state;

@@ -26,17 +26,7 @@ const LocationsList = () => {
       </APIProvider>
       <MenuList sx={{ maxHeight: 200, overflow: "auto" }}>
         {filteredLocations.map(
-          ({
-            id,
-            label,
-            currentDate,
-            timeZoneDate
-          }: {
-            id: string;
-            label: string;
-            currentDate: Dayjs;
-            timeZoneDate: Dayjs;
-          }) => {
+          ({ id, label, ...rest }: { id: string; label: string }) => {
             const isSelected = selectedLocation?.id === id;
 
             return (
@@ -59,7 +49,7 @@ const LocationsList = () => {
                 onClick={() => {
                   dispatch({
                     type: Actions.SELECTED_LOCATION,
-                    payload: { id, label, currentDate, timeZoneDate },
+                    payload: { id, label, ...rest },
                   });
                 }}
                 onMouseOver={() =>

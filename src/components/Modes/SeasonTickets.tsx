@@ -48,13 +48,13 @@ const SeasonTickets = () => {
           id="season-passes"
           fullWidth
           label={Labels[selectedMode] || labels.CHOOSEPASSTYPE}
-          value={selectedPass?.Id || ""}
+          value={selectedPass?.RateId || ""}
           disabled={!withData || !isEnabled || seasonTickets.length === 1}
           onChange={(event) => {
             const pass = seasonTickets.find(
-              ({ Id }: { Id: string }) => Id === event.target.value
+              ({ Id, RateId }: { RateId: string; Id: string }) =>
+                Id || RateId === event.target.value
             );
-
             dispatch({ type: Actions.SET_PASS, payload: pass });
           }}
         >

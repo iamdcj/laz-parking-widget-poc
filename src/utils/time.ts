@@ -1,7 +1,43 @@
 import dayjs, { Dayjs } from "dayjs";
 import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
+dayjs.extend(utc);
 dayjs.extend(timezone);
+
+export type APITimezones =
+  | "Eastern Standard Time"
+  | "Mountain Standard Time"
+  | "Central Standard Time"
+  | "Pacific Standard Time"
+  | "Alaska Standard Time"
+  | "Hawaiian Standard Time";
+
+export type TimeZoneCodes =
+  "America/New_York"
+  | "America/Denver"
+  | "America/Chicago"
+  | "America/Los_Angeles"
+  | "America/Anchorage"
+  | "Pacific/Honolulu";
+
+export enum FormattedTimezones {
+  "Eastern Standard Time" = "America/New_York",
+  "Mountain Standard Time" = "America/Denver",
+  "Central Standard Time" = "America/Chicago",
+  "Pacific Standard Time" = "America/Los_Angeles",
+  "Alaska Standard Time" = "America/Anchorage",
+  "Hawaiian Standard Time" = "Pacific/Honolulu",
+}
+
+export enum TimezoneCodeToString {
+  "America/New_York" = "Eastern Standard Time",
+  "America/Denver" = "Mountain Standard Time",
+  "America/Chicago" = "Central Standard Time",
+  "America/Los_Angeles" = "Pacific Standard Time",
+  "America/Anchorage" = "Alaska Standard Time",
+  "Pacific/Honolulu" = "Hawaiian Standard Time",
+}
 
 export const returnDate = (date: any, timezone: string) => {
   return dayjs(date).tz(timezone);

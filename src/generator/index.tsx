@@ -115,6 +115,8 @@ const Generator = () => {
         right: 0,
         transform: showSidebar ? "translateX(0)" : "translateX(100%)",
         transition: "transform 200ms ease-in",
+        height: "100%",
+        zIndex: 2
       }}
     >
       <IconButton

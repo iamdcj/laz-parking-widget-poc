@@ -1,5 +1,6 @@
 import { returnTimeFromDuration, transformDuration } from "./time";
 import { Modes, ModesTable } from "../../types";
+import dayjs from "dayjs";
 
 enum modeToWt {
   "PST" = "tmd",
@@ -16,13 +17,12 @@ export const constructBuyLink = (data: any) => {
 
   const urlParams = new URLSearchParams({
     t: mode === "EVT" ? "e" : "r",
-    wt: modeToWt[mode as Modes],
     isocode: "EN",
-    l,
+    l: l.id,
     ...(wk && { wk }),
     ...(aid && { aid }),
     ...(sc && { sc }),
-    ...returnParams(state, mode),
+    ...returnParams({ ...state, location: l }, mode),
   });
 
   return `https://go.lazparking.com/buynow?${urlParams}`;
@@ -32,24 +32,34 @@ export const cleanObject = (object: Record<string, any>) =>
   Object.fromEntries(Object.entries(object).filter(([_, value]) => value));
 
 export const returnParams = (data: any, mode: string): Record<string, any> => {
+  const defautStartDate = data.location?.currentDate;
   let params = data;
 
   switch (mode) {
     case ModesTable.TMD:
+      const initialDateWithOffset = defautStartDate?.add(
+        data.timeDiff,
+        "minutes"
+      );
+
       let start = null;
       let end = null;
 
       if (data.times.start) {
-        start = data.times.start.add(data.timeDiff, "minutes");
+        start = data.times.start;
       }
 
       if (data.times.end) {
-        end = data.times.end.add(data.timeDiff, "minutes");
+        end = data.times.end;
+      }
+
+      if (initialDateWithOffset > start) {
+        start = initialDateWithOffset;
       }
 
       params = {
-        start: start.tz(start.$x.$timezone).format(),
-        end: end.tz(end.$x.$timezone).format(),
+        start: start.utc(),
+        end: end.utc(),
       };
       break;
     case ModesTable.PST:
@@ -60,8 +70,8 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
 
         params = {
           duration,
-          start: times.start.add(data.timeDiff, "minutes").toString(),
-          end: times.end.add(data.timeDiff, "minutes").toString(),
+          start: times.start.add(data.timeDiff, "minutes").utc(),
+          end: times.end.add(data.timeDiff, "minutes").utc(),
         };
       }
       break;
@@ -70,13 +80,31 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
         evid: data.selectedEvent,
       };
       break;
+    case ModesTable.MUP:
+      {
+        let start = dayjs(
+          `${dayjs(defautStartDate).format("YYYY/MM/DD")} ${
+            data.pass.StartTime
+          }`
+        );
+
+        if (defautStartDate > start) {
+          start = defautStartDate;
+        }
+
+        params = {
+          rid: data.pass.RateId,
+          start: start.utc(),
+          end: start.add(data.pass.Duration, "minutes").utc(),
+        };
+      }
+      break;
+    case ModesTable.FEX:
     case ModesTable.FEP:
       params = {
         rid: data.pass,
       };
       break;
-    case ModesTable.MUP:
-    case ModesTable.FEX:
     case ModesTable.FAP: {
       if (data.pass) {
         const { duration, times } = returnTimeFromDuration(
@@ -85,8 +113,8 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
         );
 
         data = {
-          start: times.start.add(data.timeDiff, "minutes").toString(),
-          end: times.end.add(data.timeDiff, "minutes").toString(),
+          start: times.start.add(data.timeDiff, "minutes"),
+          end: times.end.add(data.timeDiff, "minutes"),
           duration,
           rid: data.pass.Id,
           fst: data.pass.IsFixedStartTime,

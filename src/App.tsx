@@ -25,7 +25,7 @@ const Main = () => {
   } = useAppContext();
 
   const widgetTheme = useThemeConfig();
-  const isDevMode = process.env.NODE_ENV === "deveopment";
+  const isDevMode = process.env.NODE_ENV === "development";
 
   useEffect(() => {
     retrieveLanguages();
@@ -47,7 +47,7 @@ const Main = () => {
             position: "relative",
             overflow: "hidden",
             height: "100vh",
-            width: "100vw",
+            maxWidth: "100vw",
           }}
         >
           <VariantSwitch />
