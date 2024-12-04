@@ -137,54 +137,6 @@ grsdefine([], function () {
           }
           return;
         }
-
-        if (TimedMode) {
-          var locationDateString = lazGoLocations[0].TimeZoneDate;
-          locationDateString = locationDateString.split(".")[0];
-          var locationstartDateTime = new Date(locationDateString);
-          var minutes = LAZWidget.UI.TimeDiff();
-          locationstartDateTime.setMinutes(
-            locationstartDateTime.getMinutes() + minutes
-          );
-          var startDate = moment(new Date($("#LAZ_ArriveDateTb").val())).format(
-            "ddd, MMM DD, YYYY"
-          );
-          var startDateStr = startDate + " " + $("#LAZ_ArriveTimeTb").val();
-          //if selected date-time is passed then startDate-time set to current locationTime.
-          if (
-            Date.parse(locationstartDateTime) >
-            Date.parse(new Date(startDateStr))
-          ) {
-            startDateStr = moment(locationstartDateTime).format(
-              "ddd, MMM DD, YYYY hh:mm A"
-            );
-          }
-        }
-
-        if (PassTypeMode) {
-          var timezoneDate = lazGoLocations[0].TimeZoneDate.split(".")[0];
-          var startDate = new Date(timezoneDate);
-          var startDateStr = moment(startDate).format(_dateFormatLib);
-          var pId = $("#PassTypeSel").val();
-          var passObj = $.grep(
-            WidgetSettings.PassTypesJSON,
-            function (value, index) {
-              return value.Id === Number(pId);
-            }
-          )[0];
-
-          var actualTime =
-            moment(startDate).format("YYYY/MM/DD") + " " + passObj.StartTime;
-          if (Date.parse(actualTime) > Date.parse(startDate)) {
-            //for future time, starttime = actualTime
-            startDateStr = moment(actualTime).format(_dateFormatLib);
-          }
-
-          var edate = new Date(startDate);
-          edate.setMinutes(edate.getMinutes() + passObj.Duration);
-          endDateStr =
-            moment(edate).format("ddd, MMM DD, YYYY") + " " + passObj.EndTime;
-        }
       },
     };
   };
