@@ -22,11 +22,11 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const StartEndSelector = ({
-  hideEnd = false,
+  hideEndTime = false,
   startLabel,
   endLabel,
 }: {
-  hideEnd?: boolean;
+  hideEndTime?: boolean;
   startLabel?: string;
   endLabel?: string;
 }) => {
@@ -63,11 +63,12 @@ const StartEndSelector = ({
           timeSteps={{ hours: 1, minutes: 30, seconds: 0 }}
           value={start}
           viewRenderers={{
-            hours: renderDigitalClockTimeView,
+            hours: hideEndTime ? null : renderDigitalClockTimeView,
             minutes: null,
             seconds: null,
           }}
-          onChange={(date) => {
+          format={hideEndTime ? "MM/DD/YYYY" : "MM/DD/YYYY hh:mm a"}
+          onChange={(date) => { 
             dispatch({
               type: Actions.SET_START_TIME,
               payload: returnDate(date, timeZone),
@@ -78,7 +79,7 @@ const StartEndSelector = ({
           }}
           sx={{ width: "100%", mb: 0.5 }}
         />
-        {!hideEnd && (
+        {!hideEndTime && (
           <DateTimePicker
             slotProps={slotProps}
             timezone={timeZone}

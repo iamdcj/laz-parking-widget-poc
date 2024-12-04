@@ -596,7 +596,11 @@ grsdefine(
                         }
                         else
                             LAZWidget.UI.SetDefaultTime($('#LAZ_FixedAccessTimeTb'));
+
+
 						var startDate = $("#LAZ_FixedAccessDateTb").val() === "" ? "" : new Date($("#LAZ_FixedAccessDateTb").val());
+
+						
                      //   startDate = new Date(startDate.format(WidgetSettings.DateFormatLib) + ' ' + $('#LAZ_FixedAccessTimeTb').val());
 						if (startDate !== undefined && startDate !== "") {
 							startDate = new Date(startDate.format(WidgetSettings.DateFormatLib) + ' ' + $('#LAZ_FixedAccessTimeTb').val());

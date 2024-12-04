@@ -91,7 +91,7 @@ const SeasonTickets = () => {
       {showTimePicker && (
         <Box sx={{ mt: 3 }}>
           <StartEndSelector
-            hideEnd
+            hideEndTime
             startLabel={labels.ARRIVALDATE}
             endLabel={labels.DEPARTUREDATE}
           />

@@ -1,4 +1,8 @@
-import { returnTimeFromDuration, transformDuration } from "./time";
+import {
+  fixDateWithTime,
+  returnTimeFromDuration,
+  transformDuration,
+} from "./time";
 import { Modes, ModesTable } from "../../types";
 import dayjs from "dayjs";
 
@@ -68,18 +72,18 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
       break;
     case ModesTable.MUP:
       {
-        let start = `${dayjs(defautStartDate).format("YYYY/MM/DD")} ${
-          data.pass.StartTime
-        }`;
+        let start = fixDateWithTime(defautStartDate, data.pass.StartTime);
 
-        let end = `${dayjs(defautStartDate).add(data.pass.Duration, "minutes").format("YYYY/MM/DD")} ${
-          data.pass.EndTime
-        }`;
+        let end = fixDateWithTime(
+          defautStartDate,
+          data.pass.EndTime,
+          data.pass.Duration
+        );
 
         if (defautStartDate > start) {
           start = defautStartDate;
         }
-        
+
         params = {
           rid: data.pass.RateId,
           start: dayjs(start).utc(),
@@ -97,14 +101,43 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
       break;
     case ModesTable.FAP: {
       if (data.pass) {
-        const { duration, times } = returnTimeFromDuration(
-          data.pass.Duration,
-          data.times.start
-        );
+        let start = data.times.start;
+        let end = null;
+        const diff = data.timeDiff;
+        let duration = data.pass.duration;
+        const initialDate = defautStartDate.add(diff, "minutes");
+
+        if (data.pass.IsFixedStartTime) {
+          if (initialDate === data.times.start) {
+            // var fixedstartDate = new Date(rstartDate.format(WidgetSettings.DateFormatLib) + ' ' + seasonticket[0].StartTime);
+            // 			if (Date.parse(timezoneDate) > Date.parse(fixedstartDate) === true) {
+            // 				//if fixedAccessTime is passed away then set current time of the timezone date
+            // 				var currentTime = timezoneDate.format(WidgetSettings.TimeFormatLib).toLocaleString();
+            // 				$('#LAZ_FixedAccessTimeTb').val(currentTime);
+            // 				nextAvailableDate = new Date(fixedstartDate);
+            // 				nextAvailableDate.setMinutes(nextAvailableDate.getMinutes() + duration);
+            // 			}
+            // 			else {
+            // 				//for same day and future time
+            // 				$('#LAZ_FixedAccessTimeTb').val(seasonticket[0].StartTime);
+            // 			}
+          }
+        }else {
+          // var nextAvailableTime = seasonticket[0].StartTime;
+          // $('#LAZ_FixedAccessTimeTb').val(nextAvailableTime);
+        }
+
+        if (initialDate === data.times.start) {
+          start = initialDate;
+        }
+
+        if (!end) {
+          end = start.add(duration, "minutes");
+        }
 
         data = {
-          start: times.start.add(data.timeDiff, "minutes"),
-          end: times.end.add(data.timeDiff, "minutes"),
+          start: start.utc(),
+          end: end.utc(),
           duration,
           rid: data.pass.Id,
           fst: data.pass.IsFixedStartTime,

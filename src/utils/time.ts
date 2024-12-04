@@ -14,7 +14,7 @@ export type APITimezones =
   | "Hawaiian Standard Time";
 
 export type TimeZoneCodes =
-  "America/New_York"
+  | "America/New_York"
   | "America/Denver"
   | "America/Chicago"
   | "America/Los_Angeles"
@@ -41,6 +41,16 @@ export enum TimezoneCodeToString {
 
 export const returnDate = (date: any, timezone: string) => {
   return dayjs(date).tz(timezone);
+};
+
+export const fixDateWithTime = (
+  date: string,
+  time: string,
+  increment: number = 0
+) => {
+  return `${dayjs(date)
+    .add(increment, "minutes")
+    .format("YYYY/MM/DD")} ${time}`;
 };
 
 export const transformDuration = (duration: string) => {
@@ -90,20 +100,3 @@ export const retrieveTimeDiff = (appStartTime: Dayjs) => {
 
   return dayjs().diff(currentDate, "minutes");
 };
-
-// } else if (times?.start && !times?.end) {
-//   let end = new Date(times.start as string);
-//   end = new Date(end.setMinutes(end.getMinutes() + 120));
-
-//   return {
-//     start: times.start,
-//     end,
-//   };
-// } else if (times?.start && times?.end) {
-//   return times;
-// }
-
-// return {
-//   start: "",
-//   end: "",
-// };
