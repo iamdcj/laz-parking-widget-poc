@@ -10,7 +10,7 @@ import { Dayjs } from "dayjs";
 const LocationsList = () => {
   const theme = useTheme();
   const {
-    state: { locations, selectedLocation, apiKey },
+    state: { locations, selectedLocation, focusedLocation },
     dispatch,
   } = useAppContext();
 
@@ -28,6 +28,7 @@ const LocationsList = () => {
         {filteredLocations.map(
           ({ id, label, ...rest }: { id: string; label: string }) => {
             const isSelected = selectedLocation?.id === id;
+            const isFocused = focusedLocation?.id === id;
 
             return (
               <MenuItem
@@ -35,8 +36,10 @@ const LocationsList = () => {
                 sx={{
                   backgroundColor: isSelected
                     ? theme.palette.primary.main
+                    : isFocused
+                    ? theme.palette.primary.light
                     : "inherit",
-                  color: isSelected ? "#fff" : "inherit",
+                  color: isSelected || isFocused ? "#fff" : "inherit",
                   whiteSpace: "normal",
                   textAlign: "left ",
                   "&:hover": {

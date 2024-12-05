@@ -2,7 +2,7 @@ import { transformDuration } from "./time";
 import {
   cleanObject,
   constructBuyLink,
-  returnParams,
+  returnUrlParams,
 } from "./urls";
 
 
@@ -53,7 +53,7 @@ describe("cleanObject", () => {
 
 describe("returnParams", () => {
   it("return an empty object if all fields are falsy", () => {
-    const UrlParams = returnParams(
+    const UrlParams = returnUrlParams(
       {
         duration: "",
         widgetKey: null,
@@ -76,7 +76,7 @@ describe("returnParams", () => {
     const start = new Date("1987-05-13T09:00:00Z");
     const end = new Date("1987-05-13T12:00:00Z");
 
-    const UrlParams = returnParams(
+    const UrlParams = returnUrlParams(
       {
         start,
         end,

@@ -59,19 +59,14 @@ export const transformDuration = (duration: string) => {
 
   switch (unit.toUpperCase()) {
     case "M":
-      value = value;
-      break;
+      return value;
     case "H":
-      value = value * 60;
-      unit = "M";
-      break;
+      return value * 60;
     case "D":
-      value = value * 24 * 60;
-      unit = "M";
-      break;
+      return value * 24 * 60;
+    default:
+      return 0;
   }
-
-  return value;
 };
 
 export const returnTimeFromDuration = (duration: number, startDate?: Dayjs) => {

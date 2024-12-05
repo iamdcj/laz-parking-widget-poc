@@ -65,10 +65,14 @@ const EventPicker = memo(
         popupIcon={<ExpandMore />}
         fullWidth
         disableClearable
+        open={true}
         onOpen={() => setShowDateTime(false)}
         onClose={() => selectedEvent?.id && setShowDateTime(true)}
         onChange={handleOnEventChange}
         disabled={!isEnabled || events.length <= 1}
+        getOptionDisabled={(option) =>
+          option.Status === "2"
+        }
         renderOption={(props, option) => (
           <EventOption props={props} option={option} />
         )}
@@ -77,18 +81,21 @@ const EventPicker = memo(
             EventId: id,
             EventName,
             EventDate,
+            Status,
           }: {
             EventId: string;
             EventName: string;
             EventDate: string;
+            Status: string;
           }) => {
             let label = EventName;
             const date = new Date(EventDate);
 
             return {
               id,
-              label: label,
+              label,
               date,
+              Status,
             };
           }
         )}

@@ -28,9 +28,6 @@ const EventOption = memo(({ props, option }: { props: any; option: any }) => {
     dayPeriod: dayPeriod.value,
   };
 
-
-  // TODO Status === 1 && sold out
-  
   return (
     <li {...props}>
       <Box display="flex" alignItems="center" gap={1}>
@@ -70,9 +67,17 @@ const EventOption = memo(({ props, option }: { props: any; option: any }) => {
             fontWeight={600}
             lineHeight={1.1}
             mb={0.5}
+            sx={{
+              textDecoration: "line-through",
+            }}
           >
             {option.label}
           </Typography>
+          {option.Status === "2" && (
+            <Typography fontSize={12} color="error">
+              Sold Out
+            </Typography>
+          )}
           <Typography fontSize={12}>
             {displayDate.hour}:{displayDate.minute}
             {displayDate.dayPeriod}

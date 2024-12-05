@@ -1,10 +1,10 @@
+import dayjs from "dayjs";
 import {
   fixDateWithTime,
   returnTimeFromDuration,
   transformDuration,
 } from "./time";
 import { Modes, ModesTable } from "../../types";
-import dayjs from "dayjs";
 
 enum modeToWt {
   "PST" = "tmd",
@@ -15,27 +15,22 @@ enum modeToWt {
   "FEP" = "fex",
   "FEX" = "fex",
 }
-export const returnParams = (data: any, mode: string): Record<string, any> => {
+export const returnUrlParams = (
+  data: any,
+  mode: string
+): Record<string, any> => {
   const defautStartDate = data.location?.currentDate;
+  const initialDateWithOffset = defautStartDate?.add(data.timeDiff, "minutes");
   let params = data;
 
   switch (mode) {
     case ModesTable.TMD:
       {
-        const initialDateWithOffset = defautStartDate?.add(
-          data.timeDiff,
-          "minutes"
-        );
-
-        let start = null;
-        let end = null;
+        let start = data.times.start;
+        let end = data.times.end;
 
         if (data.times.start) {
           start = data.times.start;
-        }
-
-        if (data.times.end) {
-          end = data.times.end;
         }
 
         if (initialDateWithOffset > start) {
@@ -73,7 +68,6 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
     case ModesTable.MUP:
       {
         let start = fixDateWithTime(defautStartDate, data.pass.StartTime);
-
         let end = fixDateWithTime(
           defautStartDate,
           data.pass.EndTime,
@@ -101,8 +95,6 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
       break;
     case ModesTable.FAP: {
       if (data.pass) {
-        const diff = data.timeDiff;
-        const initialDateWithOffset = defautStartDate.add(diff, "minutes");
         let startDate = data.times.start;
         let endDate = null;
         const duration = data.pass.Duration;
@@ -113,10 +105,10 @@ export const returnParams = (data: any, mode: string): Record<string, any> => {
 
         if (initialDateWithOffset > startDate) {
           startDate = initialDateWithOffset;
-        } 
+        }
 
         endDate = startDate.add(duration, "minutes");
-        debugger
+
         params = {
           start: startDate.utc(),
           end: endDate.utc(),
@@ -143,7 +135,7 @@ export const constructBuyLink = (data: any) => {
     ...(wk && { wk }),
     ...(aid && { aid }),
     ...(sc && { sc }),
-    ...returnParams({ ...state, location: l }, mode),
+    ...returnUrlParams({ ...state, location: l }, mode),
   });
 
   return `https://go.lazparking.com/buynow?${urlParams}`;
