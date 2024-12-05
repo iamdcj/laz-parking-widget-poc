@@ -75,8 +75,12 @@ const NavigationMenu = () => {
         {links.map(({ link, label }) => (
           <MenuItem
             onClick={handleClose}
-            sx={{ pr: 0 }}
             key={`menu-item-${label}`}
+            sx={{
+              "&:hover": {
+                background: "#f0f7ff"
+              }
+            }}
           >
             <Link
               href={link}
@@ -88,9 +92,10 @@ const NavigationMenu = () => {
                 justifyContent: "space-between",
                 width: "100%",
                 textDecoration: "none",
+                color: "#000"
               }}
             >
-              {label} <ChevronRight />
+              {label}
             </Link>
           </MenuItem>
         ))}
