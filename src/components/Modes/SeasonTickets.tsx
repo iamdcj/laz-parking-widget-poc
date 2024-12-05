@@ -35,7 +35,7 @@ const SeasonTickets = () => {
     FAP = labels.CHOOSEFIXEDACCESS || labels.CHOOSEFIXEDACCESSTICKET,
   }
 
-  const showTimePicker = isFAP && selectedPass && !selectedPass.FixedStartTime;
+  const showStartTime = isFAP && selectedPass && !selectedPass.FixedStartTime;
 
   return withData ? (
     <>
@@ -48,7 +48,7 @@ const SeasonTickets = () => {
           id="season-passes"
           fullWidth
           label={Labels[selectedMode] || labels.CHOOSEPASSTYPE}
-          value={selectedPass?.RateId || ""}
+          value={selectedPass?.RateId || selectedPass?.Id}
           disabled={!withData || !isEnabled || seasonTickets.length === 1}
           onChange={(event) => {
             const pass = seasonTickets.find(
@@ -88,15 +88,14 @@ const SeasonTickets = () => {
             )}
         </Select>
       </FormControl>
-      {showTimePicker && (
-        <Box sx={{ mt: 3 }}>
-          <StartEndSelector
-            hideEndTime
-            startLabel={labels.ARRIVALDATE}
-            endLabel={labels.DEPARTUREDATE}
-          />
-        </Box>
-      )}
+      <Box sx={{ mt: 3 }}>
+        <StartEndSelector
+          showStartTime={showStartTime}
+          hideEndDate
+          startLabel={labels.ARRIVALDATE}
+          endLabel={labels.DEPARTUREDATE}
+        />
+      </Box>
     </>
   ) : null;
 };
